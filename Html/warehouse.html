@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản Lý Kho</title>
+  <style>
+    /* Reset CSS cơ bản */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #3498db;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    /* Navbar: Link Trang chủ và Hamburger */
+    header nav {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+    }
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    /* Hamburger icon, ẩn trên màn hình lớn */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+    .container {
+      display: flex;
+      min-height: calc(100vh - 80px);
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+    /* Lớp hidden sẽ ẩn sidebar (dành cho mobile) */
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+    .sidebar ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+    /* Styles cho form và bảng */
+    form {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    form input, form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+    form button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      margin-top: 10px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    table th {
+      background-color: #f8f8f8;
+    }
+    /* Ẩn nội dung theo mặc định */
+    .content-section {
+      display: none;
+    }
+    .content-section.active {
+      display: block;
+    }
+    /* Định dạng tiêu đề của section khi active */
+    .content-section.active h2 {
+      text-align: center;
+      font-size: 2em;
+      color: #3498db;
+      margin-bottom: 20px;
+    }
+    .filter-container {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-container input,
+    .filter-container select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+    /* Media Queries cho thiết bị di động */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1000;
+      }
+      .main-content {
+        padding: 10px;
+      }
+      header {
+        padding: 15px;
+      }
+      header nav {
+        left: 10px;
+      }
+      /* Hiển thị hamburger icon */
+      .hamburger {
+        display: flex;
+      }
+    }
+      /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 5px;
+      position: relative;
+    }
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="./index.html">Trang chủ</a>
+      <!-- Hamburger icon hiển thị trên mobile -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+    <h1>Quản Lý Kho</h1>
+  </header>
+  
+  <div class="container">
+    <!-- Sidebar điều hướng -->
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <li><a id="menu-sanpham" href="#">Quản lý sản phẩm</a></li>
+        <li><a id="menu-nhacungcap" href="#">Quản lý nhà cung cấp</a></li>
+        <li><a id="menu-phieunhap" href="#">Lập phiếu nhập kho</a></li>
+        <li><a id="menu-thongke" href="#">Thống kê nhập kho</a></li>
+      </ul>
+    </div>
+    
+    <!-- Nội dung chính -->
+    <div class="main-content">
+      <!-- Phần quản lý sản phẩm -->
+      <div id="section-sanpham" class="content-section active">
+        <h2>Quản lý sản phẩm</h2>
+        <form>
+          <label for="productName">Tên sản phẩm:</label>
+          <input type="text" id="productName" name="productName" placeholder="Nhập tên sản phẩm" required>
+          
+          <label for="description">Mô tả:</label>
+          <input type="text" id="description" name="description" placeholder="Mô tả sản phẩm">
+          
+          <label for="price">Giá:</label>
+          <input type="number" id="price" name="price" placeholder="Nhập giá sản phẩm" required>
+          
+          <label for="quantity">Số lượng:</label>
+          <input type="number" id="quantity" name="quantity" placeholder="Nhập số lượng tồn kho" required>
+          
+          <button type="submit">Thêm sản phẩm</button>
+        </form>
+        
+        <!-- Bộ lọc: Tìm kiếm và sắp xếp sản phẩm -->
+        <div class="filter-container">
+          <input type="text" id="searchProduct" placeholder="Tìm kiếm sản phẩm...">
+          <select id="sortProduct">
+            <option value="">-- Sắp xếp theo --</option>
+            <option value="id">ID</option>
+            <option value="name">Tên sản phẩm</option>
+            <option value="price">Giá</option>
+            <option value="quantity">Số lượng</option>
+          </select>
+          <button id="btnSortProduct">Sắp xếp</button>
+        </div>
+        
+        <h2>Danh sách sản phẩm</h2>
+        <table id="productTable">
+          <thead>
+            <tr>
+              <th data-key="id">ID</th>
+              <th data-key="name">Tên sản phẩm</th>
+              <th data-key="description">Mô tả</th>
+              <th data-key="price">Giá</th>
+              <th data-key="quantity">Số lượng</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dữ liệu mẫu -->
+            <tr>
+              <td>1</td>
+              <td>Sản phẩm A</td>
+              <td>Mô tả A</td>
+              <td>100000</td>
+              <td>50</td>
+              <td>
+                <a href="#">Sửa</a> | <a href="#">Xoá</a>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Sản phẩm B</td>
+              <td>Mô tả B</td>
+              <td>150000</td>
+              <td>30</td>
+              <td>
+                <a href="#">Sửa</a> | <a href="#">Xoá</a>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Sản phẩm C</td>
+              <td>Mô tả C</td>
+              <td>120000</td>
+              <td>70</td>
+              <td>
+                <a href="#">Sửa</a> | <a href="#">Xoá</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Phần quản lý nhà cung cấp -->
+      <div id="section-nhacungcap" class="content-section">
+        <h2>Quản lý nhà cung cấp</h2>
+        <form>
+          <label for="supplierName">Tên nhà cung cấp:</label>
+          <input type="text" id="supplierName" name="supplierName" placeholder="Nhập tên nhà cung cấp" required>
+          
+          <label for="address">Địa chỉ:</label>
+          <input type="text" id="address" name="address" placeholder="Nhập địa chỉ">
+          
+          <label for="phone">Số điện thoại:</label>
+          <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại">
+          
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Nhập email">
+          
+          <button type="submit">Thêm nhà cung cấp</button>
+        </form>
+        
+        <!-- Bộ lọc: Tìm kiếm và sắp xếp nhà cung cấp -->
+        <div class="filter-container">
+          <input type="text" id="searchSupplier" placeholder="Tìm kiếm nhà cung cấp...">
+          <select id="sortSupplier">
+            <option value="">-- Sắp xếp theo --</option>
+            <option value="id">ID</option>
+            <option value="name">Tên nhà cung cấp</option>
+            <option value="phone">Số điện thoại</option>
+          </select>
+          <button id="btnSortSupplier">Sắp xếp</button>
+        </div>
+        
+        <h2>Danh sách nhà cung cấp</h2>
+        <table id="supplierTable">
+          <thead>
+            <tr>
+              <th data-key="id">ID</th>
+              <th data-key="name">Tên nhà cung cấp</th>
+              <th data-key="address">Địa chỉ</th>
+              <th data-key="phone">Số điện thoại</th>
+              <th data-key="email">Email</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dữ liệu mẫu -->
+            <tr>
+              <td>1</td>
+              <td>Nhà cung cấp A</td>
+              <td>Địa chỉ A</td>
+              <td>0123456789</td>
+              <td>emailA@example.com</td>
+              <td>
+                <a href="#">Sửa</a> | <a href="#">Xoá</a>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Nhà cung cấp B</td>
+              <td>Địa chỉ B</td>
+              <td>0987654321</td>
+              <td>emailB@example.com</td>
+              <td>
+                <a href="#">Sửa</a> | <a href="#">Xoá</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Phần lập phiếu nhập kho -->
+      <div id="section-phieunhap" class="content-section">
+        <h2>Lập phiếu nhập kho</h2>
+        <form>
+          <label for="receiptDate">Ngày nhập kho:</label>
+          <input type="date" id="receiptDate" name="receiptDate" required>
+          
+          <label for="supplierSelect">Chọn nhà cung cấp:</label>
+          <select id="supplierSelect" name="supplierSelect" required>
+            <option value="">-- Chọn nhà cung cấp --</option>
+            <option value="1">Nhà cung cấp A</option>
+            <option value="2">Nhà cung cấp B</option>
+          </select>
+          
+          <label for="productSelect">Chọn sản phẩm:</label>
+          <select id="productSelect" name="productSelect" required>
+            <option value="">-- Chọn sản phẩm --</option>
+            <option value="1">Sản phẩm A</option>
+            <option value="2">Sản phẩm B</option>
+          </select>
+          
+          <label for="importQuantity">Số lượng nhập:</label>
+          <input type="number" id="importQuantity" name="importQuantity" placeholder="Nhập số lượng" required>
+          
+          <button type="submit">Tạo phiếu nhập kho</button>
+        </form>
+        
+        <h2>Danh sách phiếu nhập kho</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID Phiếu</th>
+              <th>Ngày nhập</th>
+              <th>Nhà cung cấp</th>
+              <th>Sản phẩm</th>
+              <th>Số lượng</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dữ liệu mẫu -->
+            <tr>
+              <td>PN001</td>
+              <td>2025-03-10</td>
+              <td>Nhà cung cấp A</td>
+              <td>Sản phẩm A</td>
+              <td>100</td>
+              <td>
+                <a href="#" class="view-link">Xem</a> | <a href="#" class="print-link">In</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Phần thống kê nhập kho -->
+      <div id="section-thongke" class="content-section">
+        <h2>Thống kê nhập kho</h2>
+        <form>
+          <label for="monthSelect">Chọn tháng:</label>
+          <select id="monthSelect" name="monthSelect">
+            <option value="">-- Tất cả --</option>
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
+          </select>
+          
+          <label for="yearSelect">Chọn năm:</label>
+          <select id="yearSelect" name="yearSelect">
+            <option value="">-- Tất cả --</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+          </select>
+          
+          <button type="submit">Lọc thống kê</button>
+        </form>
+        
+        <h2>Kết quả thống kê</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID Phiếu</th>
+              <th>Ngày nhập</th>
+              <th>Nhà cung cấp</th>
+              <th>Sản phẩm</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dữ liệu mẫu -->
+            <tr>
+              <td>PN001</td>
+              <td>2025-03-10</td>
+              <td>Nhà cung cấp A</td>
+              <td>Sản phẩm A</td>
+              <td>100</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Modal hiển thị form phiếu nhập kho -->
+    <div id="printModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="modalClose">&times;</span>
+        <h2>Phiếu nhập kho</h2>
+        <div id="receiptDetails">
+          <!-- Nội dung phiếu nhập sẽ được điền ở đây -->
+        </div>
+        <button onclick="window.print()">In</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Toggle sidebar khi click vào hamburger (chỉ dành cho mobile)
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+    });
+
+    // Kiểm tra kích thước màn hình khi load trang và khi resize để hiển thị sidebar (desktop) hay ẩn (mobile)
+    function adjustSidebar() {
+      if(window.innerWidth > 768){
+        sidebar.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('hidden');
+      }
+    }
+    window.addEventListener('load', adjustSidebar);
+    window.addEventListener('resize', adjustSidebar);
+
+    // Chuyển đổi giữa các section
+    const menuSanPham    = document.getElementById('menu-sanpham');
+    const menuNhaCungCap = document.getElementById('menu-nhacungcap');
+    const menuPhieuNhap  = document.getElementById('menu-phieunhap');
+    const menuThongKe    = document.getElementById('menu-thongke');
+    
+    const sectionSanPham    = document.getElementById('section-sanpham');
+    const sectionNhaCungCap = document.getElementById('section-nhacungcap');
+    const sectionPhieuNhap  = document.getElementById('section-phieunhap');
+    const sectionThongKe    = document.getElementById('section-thongke');
+    
+    function showSection(sectionToShow) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      sectionToShow.classList.add('active');
+      // Ẩn sidebar sau khi chọn mục trên mobile
+      if(window.innerWidth <= 768){
+        sidebar.classList.add('hidden');
+      }
+    }
+    
+    menuSanPham.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection(sectionSanPham);
+    });
+    menuNhaCungCap.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection(sectionNhaCungCap);
+    });
+    menuPhieuNhap.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection(sectionPhieuNhap);
+    });
+    menuThongKe.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection(sectionThongKe);
+    });
+    
+    // ---------------------------
+    // Tìm kiếm và sắp xếp cho Sản phẩm
+    // ---------------------------
+    const searchProductInput = document.getElementById('searchProduct');
+    const sortProductSelect  = document.getElementById('sortProduct');
+    const btnSortProduct     = document.getElementById('btnSortProduct');
+    const productTable       = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+
+    searchProductInput.addEventListener('input', function() {
+      const filter = searchProductInput.value.toLowerCase();
+      const rows = productTable.getElementsByTagName('tr');
+      Array.from(rows).forEach(row => {
+        const productName = row.cells[1].textContent.toLowerCase();
+        row.style.display = productName.indexOf(filter) > -1 ? '' : 'none';
+      });
+    });
+
+    btnSortProduct.addEventListener('click', function() {
+      const sortKey = sortProductSelect.value;
+      if (!sortKey) return;
+
+      const rowsArray = Array.from(productTable.querySelectorAll('tr'));
+      rowsArray.sort((a, b) => {
+        let valA, valB;
+        switch(sortKey) {
+          case 'id':
+            valA = parseInt(a.cells[0].textContent);
+            valB = parseInt(b.cells[0].textContent);
+            break;
+          case 'name':
+            valA = a.cells[1].textContent.toLowerCase();
+            valB = b.cells[1].textContent.toLowerCase();
+            break;
+          case 'price':
+            valA = parseFloat(a.cells[3].textContent);
+            valB = parseFloat(b.cells[3].textContent);
+            break;
+          case 'quantity':
+            valA = parseInt(a.cells[4].textContent);
+            valB = parseInt(b.cells[4].textContent);
+            break;
+          default:
+            valA = a.cells[0].textContent;
+            valB = b.cells[0].textContent;
+        }
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
+      });
+      productTable.innerHTML = '';
+      rowsArray.forEach(row => productTable.appendChild(row));
+    });
+
+    // ---------------------------
+    // Tìm kiếm và sắp xếp cho Nhà cung cấp
+    // ---------------------------
+    const searchSupplierInput = document.getElementById('searchSupplier');
+    const sortSupplierSelect  = document.getElementById('sortSupplier');
+    const btnSortSupplier     = document.getElementById('btnSortSupplier');
+    const supplierTable       = document.getElementById('supplierTable').getElementsByTagName('tbody')[0];
+
+    searchSupplierInput.addEventListener('input', function() {
+      const filter = searchSupplierInput.value.toLowerCase();
+      const rows = supplierTable.getElementsByTagName('tr');
+      Array.from(rows).forEach(row => {
+        const supplierName = row.cells[1].textContent.toLowerCase();
+        row.style.display = supplierName.indexOf(filter) > -1 ? '' : 'none';
+      });
+    });
+
+    btnSortSupplier.addEventListener('click', function() {
+      const sortKey = sortSupplierSelect.value;
+      if (!sortKey) return;
+
+      const rowsArray = Array.from(supplierTable.querySelectorAll('tr'));
+      rowsArray.sort((a, b) => {
+        let valA, valB;
+        switch(sortKey) {
+          case 'id':
+            valA = parseInt(a.cells[0].textContent);
+            valB = parseInt(b.cells[0].textContent);
+            break;
+          case 'name':
+            valA = a.cells[1].textContent.toLowerCase();
+            valB = b.cells[1].textContent.toLowerCase();
+            break;
+          case 'phone':
+            valA = a.cells[3].textContent;
+            valB = b.cells[3].textContent;
+            break;
+          default:
+            valA = a.cells[0].textContent;
+            valB = b.cells[0].textContent;
+        }
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
+      });
+      supplierTable.innerHTML = '';
+      rowsArray.forEach(row => supplierTable.appendChild(row));
+    });
+    // Xử lý modal in phiếu nhập kho
+    const printLinks = document.querySelectorAll('.print-link');
+    const printModal = document.getElementById('printModal');
+    const modalClose = document.getElementById('modalClose');
+    const receiptDetails = document.getElementById('receiptDetails');
+
+    printLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Lấy dữ liệu từ dòng phiếu nhập (giả sử dữ liệu nằm trong các ô)
+        const row = this.closest('tr');
+        const id = row.cells[0].textContent;
+        const date = row.cells[1].textContent;
+        const supplier = row.cells[2].textContent;
+        const product = row.cells[3].textContent;
+        const quantity = row.cells[4].textContent;
+        
+        // Điền dữ liệu vào modal (có thể định dạng lại theo ý muốn)
+        receiptDetails.innerHTML = `
+          <p><strong>ID Phiếu:</strong> ${id}</p>
+          <p><strong>Ngày nhập:</strong> ${date}</p>
+          <p><strong>Nhà cung cấp:</strong> ${supplier}</p>
+          <p><strong>Sản phẩm:</strong> ${product}</p>
+          <p><strong>Số lượng:</strong> ${quantity}</p>
+        `;
+        
+        // Hiển thị modal
+        printModal.style.display = 'block';
+      });
+    });
+
+    // Đóng modal khi click vào dấu ×
+    modalClose.addEventListener('click', () => {
+      printModal.style.display = 'none';
+    });
+    // Đóng modal khi click bên ngoài modal-content
+    window.addEventListener('click', (e) => {
+      if(e.target == printModal){
+        printModal.style.display = 'none';
+      }
+    });
+
+  </script>
+</body>
+</html>

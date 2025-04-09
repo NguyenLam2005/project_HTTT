@@ -1,0 +1,151 @@
+.grid {
+    width: 100%; /* Đặt chiều rộng của lưới là 100% */
+    display: block; /* Hiển thị dưới dạng block */
+}
+
+.grid.wide {        
+    max-width: 1200px; /* Đặt chiều rộng tối đa của lưới là 1200px */
+    margin: 0 auto; /* Căn giữa lưới */
+}
+
+.row {
+    display: flex; /* Sử dụng flexbox để sắp xếp các cột */
+    flex-wrap: wrap; /* Cho phép các cột xuống dòng khi không đủ không gian */
+    margin-left: -10px; /* Khoảng cách âm để bù padding của các cột */
+    margin-right: -10px; /* Tương tự bên phải */
+}
+
+.col {
+    padding: 12px 10px; /* Khoảng cách bên trong của cột */
+}
+
+.l-0 {
+    display: none; /* Ẩn cột */
+}
+
+.l-3 {
+    display: block; /* Hiển thị cột */
+    flex: 0 0 25%; /* Chiếm 25% chiều rộng của hàng */
+    max-width: 25%; /* Đặt chiều rộng tối đa là 25% */
+}
+
+.l-4 {
+    display: block; /* Hiển thị cột */
+    flex: 0 0 33.33333%; /* Chiếm 33.33% chiều rộng của hàng */
+    max-width: 33.33333%; /* Đặt chiều rộng tối đa là 33.33% */
+}
+
+.l-6 {
+    display: block; /* Hiển thị cột */
+    flex: 0 0 50%; /* Chiếm 50% chiều rộng của hàng */
+    max-width: 50%; /* Đặt chiều rộng tối đa là 50% */
+}
+
+.l-8 {
+    display: block; /* Hiển thị cột */
+    flex: 0 0 66.66667%; /* Chiếm 66.67% chiều rộng của hàng */
+}
+
+.l-12 {
+    display: block; /* Hiển thị cột */
+    flex: 0 0 100%; /* Chiếm 100% chiều rộng của hàng */
+    max-width: 100%; /* Đặt chiều rộng tối đa là 100% */
+}
+
+/* low resolution PC */
+@media (min-width: 1024px) and (max-width: 1239px) {
+    .wide {
+        width: 984px; /* Đặt chiều rộng của lưới là 984px */
+    }
+    
+    .wide .row {
+        margin-left: -8px; /* Khoảng cách âm để bù padding của các cột */
+        margin-right: -8px; /* Tương tự bên phải */
+    }
+
+    .wide .col {
+        padding: 12px 10px; /* Khoảng cách bên trong của cột */
+    }
+
+    .wide .l-0 {
+        display: none; /* Ẩn cột */
+    }
+
+    .wide .l-3 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 25%; /* Chiếm 25% chiều rộng của hàng */
+        max-width: 25%; /* Đặt chiều rộng tối đa là 25% */
+    }
+
+    .wide.l-4 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 33.33333%; /* Chiếm 33.33% chiều rộng của hàng */
+        max-width: 33.33333%; /* Đặt chiều rộng tối đa là 33.33% */
+    }
+    
+    .wide.l-12 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 100%; /* Chiếm 100% chiều rộng của hàng */
+        max-width: 100%; /* Đặt chiều rộng tối đa là 100% */
+    }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .wide {
+        width: 735px; /* Đặt chiều rộng của lưới là 735px */
+    }
+
+    .row {
+        margin-left: -8px; /* Khoảng cách âm để bù padding của các cột */
+        margin-right: -8px; /* Tương tự bên phải */
+    }
+    
+    .col {
+        padding: 12px 8px; /* Khoảng cách bên trong của cột */
+    }
+
+    .m-0 {
+        display: none; /* Ẩn cột */
+    }
+
+    .m-4 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 33.33333%; /* Chiếm 33.33% chiều rộng của hàng */
+        max-width: 33.33333%; /* Đặt chiều rộng tối đa là 33.33% */
+    }
+
+    .m-12 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 100%; /* Chiếm 100% chiều rộng của hàng */
+        max-width: 100%; /* Đặt chiều rộng tối đa là 100% */
+    }
+}
+
+/* Mobile */
+@media (max-width: 739px) {
+    .row {
+        margin-left: -4px; /* Khoảng cách âm để bù padding của các cột */
+        margin-right: -4px; /* Tương tự bên phải */
+    }
+    
+    .col {
+        padding: 8px 4px; /* Khoảng cách bên trong của cột */
+    }
+
+    .c-0 {
+        display: none; /* Ẩn cột */
+    }
+    
+    .c-6 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 50%; /* Chiếm 50% chiều rộng của hàng */
+        max-width: 50%; /* Đặt chiều rộng tối đa là 50% */
+    }
+
+    .c-12 {
+        display: block; /* Hiển thị cột */
+        flex: 0 0 100%; /* Chiếm 100% chiều rộng của hàng */
+        max-width: 100%; /* Đặt chiều rộng tối đa là 100% */
+    }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tổng Hợp</title>
+    <style>
+        /* Reset CSS cơ bản */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        header nav {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #f8f8f8;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .content-section.active h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        .filter-container {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-container input,
+        .filter-container select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="./index.html">Trang chủ</a>
+        </nav>
+        <h1>Giao Diện Người Quản Lý Doanh Nghiệp</h1>
+    </header>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li><a id="menu-muahang" href="#">Thống kê mua hàng</a></li>
+                <li><a id="menu-banhang" href="#">Thống kê bán hàng</a></li>
+                <li><a id="menu-nhapkho" href="#">Thống kê nhập kho</a></li>
+                <li><a id="menu-quyen" href="#">Quản lý quyền</a></li>
+                <li><a id="menu-tonghop" href="#">Thống kê tổng hợp</a></li>
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Thống kê mua hàng -->
+            <div id="section-muahang" class="content-section active">
+                <h2>Thống kê mua hàng</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DH001</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>2025-03-10</td>
+                            <td>1,500,000</td>
+                            <td>Đã giao</td>
+                        </tr>
+                        <tr>
+                            <td>DH002</td>
+                            <td>Trần Thị B</td>
+                            <td>2025-03-11</td>
+                            <td>2,000,000</td>
+                            <td>Đang xử lý</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Thống kê bán hàng -->
+            <div id="section-banhang" class="content-section">
+                <h2>Thống kê bán hàng</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số đơn hàng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tháng 3</td>
+                            <td>5</td>
+                            <td>10,000,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Thống kê nhập kho -->
+            <div id="section-nhapkho" class="content-section">
+                <h2>Thống kê nhập kho</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Phiếu</th>
+                            <th>Ngày nhập</th>
+                            <th>Nhà cung cấp</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PN001</td>
+                            <td>2025-03-10</td>
+                            <td>Nhà cung cấp A</td>
+                            <td>Sản phẩm A</td>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Quản lý quyền -->
+            <div id="section-quyen" class="content-section">
+                <h2>Quản lý quyền</h2>
+                <p>Người quản lý có toàn quyền truy cập và chỉnh sửa dữ liệu của người mua, người bán và quản lý kho.</p>
+                <ul>
+                    <li>Quyền xem và chỉnh sửa đơn hàng.</li>
+                    <li>Quyền xem và chỉnh sửa hoá đơn bán hàng.</li>
+                    <li>Quyền xem và chỉnh sửa phiếu nhập kho.</li>
+                </ul>
+            </div>
+            <!-- Thống kê tổng hợp -->
+            <div id="section-tonghop" class="content-section">
+                <h2>Thống kê tổng hợp</h2>
+                <p>Người quản lý doanh nghiệp có quyền cao nhất, có thể truy cập và điều chỉnh toàn bộ hệ thống.</p>
+                <p>Thống kê tổng hợp từ các hoạt động:</p>
+                <ul>
+                    <li>Mua hàng</li>
+                    <li>Bán hàng</li>
+                    <li>Nhập kho</li>
+                </ul>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Loại Hoạt Động</th>
+                            <th>Số Lượng</th>
+                            <th>Doanh Thu</th>
+                            <th>Chi Phí</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mua hàng</td>
+                            <td>50</td>
+                            <td>-</td>
+                            <td>500,000,000</td>
+                        </tr>
+                        <tr>
+                            <td>Bán hàng</td>
+                            <td>45</td>
+                            <td>1,000,000,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Nhập kho</td>
+                            <td>30</td>
+                            <td>-</td>
+                            <td>300,000,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Chuyển đổi giữa các section
+        const menuMuaHang = document.getElementById('menu-muahang');
+        const menuBanHang = document.getElementById('menu-banhang');
+        const menuNhapKho = document.getElementById('menu-nhapkho');
+        const menuQuyen = document.getElementById('menu-quyen');
+        const menuTongHop = document.getElementById('menu-tonghop');
+
+        const sectionMuaHang = document.getElementById('section-muahang');
+        const sectionBanHang = document.getElementById('section-banhang');
+        const sectionNhapKho = document.getElementById('section-nhapkho');
+        const sectionQuyen = document.getElementById('section-quyen');
+        const sectionTongHop = document.getElementById('section-tonghop');
+
+        function showSection(sectionToShow) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            sectionToShow.classList.add('active');
+        }
+
+        menuMuaHang.addEventListener('click', () => showSection(sectionMuaHang));
+        menuBanHang.addEventListener('click', () => showSection(sectionBanHang));
+        menuNhapKho.addEventListener('click', () => showSection(sectionNhapKho));
+        menuQuyen.addEventListener('click', () => showSection(sectionQuyen));
+        menuTongHop.addEventListener('click', () => showSection(sectionTongHop));
+    </script>
+</body>
+</html>

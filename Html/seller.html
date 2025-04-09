@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bán Hàng</title>
+    <style>
+        /* Reset CSS cơ bản */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        header nav {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #f8f8f8;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .content-section.active h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        .filter-container {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-container input,
+        .filter-container select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .export-button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .export-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="./index.html">Trang chủ</a>
+        </nav>
+        <h1>Quản Lý Bán Hàng</h1>
+    </header>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li><a id="menu-duyetdon" href="#">Duyệt đơn hàng</a></li>
+                <li><a id="menu-hoadon" href="#">Quản lý hoá đơn</a></li>
+                <li><a id="menu-thongke" href="#">Thống kê bán hàng</a></li>
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Duyệt đơn hàng -->
+            <div id="section-duyetdon" class="content-section active">
+                <h2>Duyệt đơn hàng</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DH001</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>2025-03-10</td>
+                            <td>1,500,000</td>
+                            <td>Chưa duyệt</td>
+                            <td>
+                                <button onclick="approveOrder('DH001')">Duyệt</button>
+                                <button onclick="cancelOrder('DH001')">Huỷ</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DH002</td>
+                            <td>Trần Thị B</td>
+                            <td>2025-03-11</td>
+                            <td>2,000,000</td>
+                            <td>Đã duyệt</td>
+                            <td>
+                                <button disabled>Duyệt</button>
+                                <button onclick="cancelOrder('DH002')">Huỷ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Quản lý hoá đơn -->
+            <div id="section-hoadon" class="content-section">
+                <h2>Quản lý hoá đơn</h2>
+                <div class="filter-container">
+                    <input type="date" id="start-date">
+                    <input type="date" id="end-date">
+                    <button onclick="filterInvoices()">Lọc</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Hoá đơn</th>
+                            <th>Ngày</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HD001</td>
+                            <td>2025-03-10</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>1,500,000</td>
+                            <td>
+                                <button onclick="printInvoice('HD001')">In</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HD002</td>
+                            <td>2025-03-11</td>
+                            <td>Trần Thị B</td>
+                            <td>2,000,000</td>
+                            <td>
+                                <button onclick="printInvoice('HD002')">In</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="export-button" onclick="exportInvoices()">Xuất hoá đơn</button>
+            </div>
+            <!-- Thống kê bán hàng -->
+            <div id="section-thongke" class="content-section">
+                <h2>Thống kê bán hàng</h2>
+                <div class="filter-container">
+                    <select id="monthSelect">
+                        <option value="">-- Chọn tháng --</option>
+                        <option value="1">Tháng 1</option>
+                        <option value="2">Tháng 2</option>
+                        <option value="3">Tháng 3</option>
+                    </select>
+                    <select id="yearSelect">
+                        <option value="">-- Chọn năm --</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                    <button onclick="generateReport()">Thống kê</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số đơn hàng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tháng 3</td>
+                            <td>2</td>
+                            <td>3,500,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="export-button" onclick="exportSalesReport()">Xuất báo cáo</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Chuyển đổi giữa các section
+        const menuDuyetDon = document.getElementById('menu-duyetdon');
+        const menuHoaDon = document.getElementById('menu-hoadon');
+        const menuThongKe = document.getElementById('menu-thongke');
+
+        const sectionDuyetDon = document.getElementById('section-duyetdon');
+        const sectionHoaDon = document.getElementById('section-hoadon');
+        const sectionThongKe = document.getElementById('section-thongke');
+
+        function showSection(sectionToShow) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            sectionToShow.classList.add('active');
+        }
+
+        menuDuyetDon.addEventListener('click', () => showSection(sectionDuyetDon));
+        menuHoaDon.addEventListener('click', () => showSection(sectionHoaDon));
+        menuThongKe.addEventListener('click', () => showSection(sectionThongKe));
+
+        // Duyệt đơn hàng
+        function approveOrder(orderID) {
+            alert(`Đơn hàng ${orderID} đã được duyệt.`);
+        }
+
+        // Huỷ đơn hàng
+        function cancelOrder(orderID) {
+            alert(`Đơn hàng ${orderID} đã bị huỷ.`);
+        }
+
+        // In hoá đơn
+        function printInvoice(invoiceID) {
+            alert(`In hoá đơn ${invoiceID}.`);
+        }
+
+        // Thống kê bán hàng
+        function generateReport() {
+            const month = document.getElementById("monthSelect").value;
+            const year = document.getElementById("yearSelect").value;
+            if (month && year) {
+                alert(`Tạo báo cáo bán hàng cho tháng ${month}/${year}.`);
+                // Add logic to generate sales report for the selected month and year
+            } else {
+                alert("Vui lòng chọn tháng và năm hợp lệ.");
+            }
+        }
+
+        // Export invoices as a CSV file
+        function exportInvoices() {
+            const rows = [
+                ["ID Hoá đơn", "Ngày", "Khách hàng", "Tổng tiền"],
+                ["HD001", "2025-03-10", "Nguyễn Văn A", "1,500,000"],
+                ["HD002", "2025-03-11", "Trần Thị B", "2,000,000"]
+            ];
+            const csvContent = rows.map(e => e.join(",")).join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "invoices.csv";
+            link.click();
+        }
+
+        // Export sales report as a CSV file
+        function exportSalesReport() {
+            const rows = [
+                ["Tháng", "Số đơn hàng", "Doanh thu"],
+                ["Tháng 3", "2", "3,500,000"]
+            ];
+            const csvContent = rows.map(e => e.join(",")).join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "sales_report.csv";
+            link.click();
+        }
+
+        // Filter invoices by date
+        function filterInvoices() {
+            const startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("end-date").value;
+            if (startDate && endDate) {
+                alert(`Lọc hoá đơn từ ${startDate} đến ${endDate}.`);
+                // Add logic to filter invoices based on the selected date range
+            } else {
+                alert("Vui lòng chọn khoảng thời gian hợp lệ.");
+            }
+        }
+
+        // ...existing code...
+    </script>
+</body>
+</html>
