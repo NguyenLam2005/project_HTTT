@@ -1,0 +1,134 @@
+.header{
+    width: 100%;
+    height: 60px;
+    background-color: #101010;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.header__container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+}
+
+.header__logo{
+    width: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.header__logo a{
+    width: 100%;
+    height: 100%;
+}
+
+.header__logo a img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.header__searcbar-container{
+    background-color: #101010;
+    width: 50%;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.header__searcbar-container input{
+    height: 30px;
+    background-color: #211f1f;
+    border-radius: 30px;
+    color: white;
+    padding: 0 40px;
+    width: 75%;
+    font-size: 15px;
+}
+
+.header__searcbar-container i{
+    background-color: #211f1f;
+    font-size: 15px;
+    position: absolute;
+    top: 50%;
+    left: 85px;
+    translate: -50% -50%;
+    z-index: 2;
+}
+
+.header__right-box{
+    display: flex;
+    gap: 20px;
+}
+
+.header__cart{
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+}
+
+.header__cart:hover{
+    background-color: #211f1f;
+    color: orange;
+}
+
+
+.header__account{
+    position: relative;
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.header__account:hover{
+    background-color: #211f1f;
+    color: orange;
+
+
+}
+
+
+.header__account-dropdown{
+    list-style: none;
+    background-color: white;
+    padding: 20px 0;
+    display: none;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    position: absolute;
+    left: 0px;
+    top: 35px;
+    color: black;
+    border: solid orange;
+    border-radius: 5px;
+    
+}
+
+.header__account-dropdown li{
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    font-size: 17px ;
+}
+
+.header__account:hover .header__account-dropdown{
+    display: flex;
+}
