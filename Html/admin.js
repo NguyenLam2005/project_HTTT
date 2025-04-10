@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const product_part = document.querySelector(".product-part");
     const customer_part = document.querySelector(".customer-part");
     const admin_main = document.querySelector(".admin-main");
-    const admin_oder = document.querySelector("#admin-oder");
+    const admin_oder = document.querySelector("#admin-order");
     const admin_product = document.querySelector("#admin-product");
     const admin_customer = document.querySelector("#admin-customer");
     const admin_account = document.querySelector("#admin-account");

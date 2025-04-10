@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="admin.js"></script>
 </head>
 
 <body>
   <div class="sidebar">
     <h2 id="admin">Admin</h2>
     <a href="#">Thống kê</a>
-    <a href="#" id="admin-oder">Đơn hàng</a>
+    <a href="#" id="admin-order">Đơn hàng</a>
     <a href="#" id="admin-product">Sản phẩm</a>
     <a href="#" id="admin-customer">Khách hàng</a>
     <a href="#" id="admin-account">Quản lí tài khoản</a>
@@ -27,7 +28,7 @@
   <div class="admin-main">
     <div class="admin-header">
       <div class="profile">
-        <span>Admin 1</span>
+        <span>Admin</span>
         <img src="../Html/img/account-logo.png" alt="" id="profile" />
       </div>
     </div>
@@ -117,7 +118,7 @@
           </tr>
         </thead>
         <tbody id="product-table-body">
-          <!-- <?php include '../../PHP/PD-Manager.php'; ?> -->
+         
         </tbody>
       </table>
 
@@ -218,7 +219,7 @@
           </tr>
         </thead>
         <tbody id="customer-table-body">
-          <!-- <?php include '../../PHP/CU-Manager.php'?> -->
+  
         </tbody>
       </table>
 
@@ -327,7 +328,7 @@
         <tbody id="account-table-body">
           
           <?php
-          // include '../../PHP/AC-Manager.php';
+            include '../Html/PHP/AC-Manager.php';
           ?>
         </tbody>
       </table>
@@ -487,7 +488,7 @@
         </thead>
         <tbody id="role-table-body">
           <?php
-            // include '../../PHP/PM-Manager.php';
+           
            ?>
         </tbody>
       </table>
@@ -584,13 +585,13 @@
   </div>
 
 
-  <script src="../Html/js/admin/admin.js"></script>
+  <!-- <script src="admin.js"></script> -->
   <!-- <script src="../../JS/PD-editAjax"></script> -->
   <!-- <script src="../../JS/admin/PD-Ajax.js"></script>
   <script src="../../JS/admin/PM-Ajax.js"></script>
   <script src="../../JS/admin/AC-Ajax.js"></script>
   <script src="../../JS/admin/CU-Ajax.js"></script> -->
-
+  
 
 
 </body>
