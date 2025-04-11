@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShopDongHo</title>
   <link rel="stylesheet" href="../Html/css/admin.css">
+  <link rel="stylesheet" href="../Html/css/notificationRegist.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="admin.js"></script>
+  <script src="adminLogin.js"></script>
 </head>
 
 <body>
@@ -28,7 +30,8 @@
   <div class="admin-main">
     <div class="admin-header">
       <div class="profile">
-        <span>Admin</span>
+        <span class= "admin-login" style = "color: red;" onclick = "openModal()">Đăng nhập</span>
+        <span style = "color: red; display: none">Admin</span>
         <img src="../Html/img/account-logo.png" alt="" id="profile" />
       </div>
     </div>
@@ -100,6 +103,30 @@
           </tr> -->
         </tbody>
       </table>
+    </div>
+  </div>
+  
+  <div id="modal" class="modal-overlay" onclick="outsideClick(event)">
+    <div class="modal-child login-required">
+      <p>
+      <i class="fa-solid fa-circle-exclamation">
+      </i>Bạn cần <span class="login-link" onclick="openModal()">đăng nhập</span> để thực hiện chức năng này.
+      </p>
+    </div>
+    <div class="modal-child modal-login">
+      <h2>Đăng nhập</h2>
+      <div id = "admin-Name">
+        <input class = "lg-adminName" type="text" placeholder="Tên đăng nhập" />
+        <div class="error-msg"><i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập tên đăng nhập.</div>
+      </div>
+      <div id = "admin-password">
+        <input class = "lg-password" type="password" placeholder="Mật khẩu" />
+        <div class="error-msg"><i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập mật khẩu.</div>
+      </div>
+      <div class = "btn-admin-login">
+        <button class = "login-btn">Đăng nhập</button>
+        <button class = "close-btn" onclick="closeModal()">Đóng</button>
+      </div>
     </div>
   </div>
   <!-- ----------------------------PRODUCT----------------------------- -->
@@ -592,7 +619,6 @@
   <script src="../../JS/admin/AC-Ajax.js"></script>
   <script src="../../JS/admin/CU-Ajax.js"></script> -->
   
-
 
 </body>
 
