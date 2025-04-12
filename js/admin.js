@@ -14,36 +14,63 @@ document.addEventListener("DOMContentLoaded", function() {
     const profile_part = document.querySelector(".profile-part");
     const account_part = document.querySelector(".account-part");
     const role_part = document.querySelector(".role-part");
+
+    function showToast(message, isSuccess, duration = 2000) {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        toast.style.backgroundColor = isSuccess ? "#4caf50" : "#f44336";
     
+        document.body.appendChild(toast);
     
+        setTimeout(() => {
+            toast.style.animation = "fadeout 0.3s ease forwards";
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    
+        return duration + 300; 
+    }
+    function needLogToUse()
+        {
+            const isLoggedIn = localStorage.getItem("adminJustLoggedIn");
+            if(isLoggedIn === "true") return true;
+            showToast("Bạn cần đăng nhập để tiếp tục.", false);
+            return false;
+        }
     function oderToggle(){
+        if(!needLogToUse()) return;
         oder_part.style.display = "block";
         admin_main.style.display = "none";
         customer_part.style.display = "none";
         product_part.style.display = "none";
         profile_part.style.display = "none";
         account_part.style.display = "none";
-        role_part.style.display = "none";     
+        // role_part.style.display = "none";     
+        console.log("Customer");
     }
     
     function customerToggle(){
+        if(!needLogToUse()) return;
         customer_part.style.display = "block";
         oder_part.style.display = "none";
         admin_main.style.display = "none";
         product_part.style.display = "none";
         profile_part.style.display = "none"; 
         account_part.style.display = "none";
-        role_part.style.display = "none";
+        // role_part.style.display = "none";
+        console.log("Customer");
     }
     
     function productToggle(){
+        if(!needLogToUse()) return;
         product_part.style.display = "block";
         admin_main.style.display = "none";
         customer_part.style.display = "none";
         oder_part.style.display = "none";
         profile_part.style.display = "none"; 
         account_part.style.display = "none";
-        role_part.style.display = "none";  
+        // role_part.style.display = "none";  
+        console.log("Customer");
     }
     
     function returnMain(){
@@ -53,27 +80,31 @@ document.addEventListener("DOMContentLoaded", function() {
         admin_main.style.display = "block";
         profile_part.style.display = "none";
         account_part.style.display = "none";
-        role_part.style.display = "none";
+        // role_part.style.display = "none";
     }
     
     function accountToggle(){
+        if(!needLogToUse()) return;
         oder_part.style.display = "none";
         customer_part.style.display = "none";
         product_part.style.display = "none" 
         admin_main.style.display = "none";
         profile_part.style.display = "none";
         account_part.style.display = "block";
-        role_part.style.display = "none";
+        // role_part.style.display = "none";
+        console.log("Customer");
     }
     
     function roleToggle(){
+        if(!needLogToUse()) return;
         oder_part.style.display = "none";
         customer_part.style.display = "none";
         product_part.style.display = "none" 
         admin_main.style.display = "none";
         profile_part.style.display = "none";
         account_part.style.display = "none";
-        role_part.style.display = "block";
+        // role_part.style.display = "block";
+        console.log("Customer");
     }
     
     admin_oder.addEventListener("click",oderToggle);
@@ -377,4 +408,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.removeEventListener("click", hidePopup);
             }
         });
+        
+        
+
+        
+    
     }
+
+
+
+    

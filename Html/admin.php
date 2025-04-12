@@ -5,13 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShopDongHo</title>
-  <link rel="stylesheet" href="../Html/css/admin.css">
-  <link rel="stylesheet" href="../Html/css/notificationRegist.css">
+  <link rel="stylesheet" href="../Asset/css/admin.css">
+  <link rel="stylesheet" href="../Asset/css/notificationRegist.css">
+  <link rel="stylesheet" href="../Asset/css/toast.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="admin.js"></script>
-  <script src="adminLogin.js"></script>
+  <script src="../js/admin.js"></script>
+  <script src="../js/adminLogin.js"></script>
 </head>
 
 <body>
@@ -24,15 +25,18 @@
     <a href="#" id="admin-account">Quản lí tài khoản</a>
     <a href="#" id="admin-role">Quản lí quyền</a>
 
-    <img src="../Html/img/logo-icon.png" alt="hahaha" />
+    <img src="../Asset/img/logo-icon.png" alt="hahaha" />
   </div>
 
   <div class="admin-main">
     <div class="admin-header">
       <div class="profile">
         <span class= "admin-login" style = "color: red;" onclick = "openModal()">Đăng nhập</span>
-        <span style = "color: red; display: none">Admin</span>
-        <img src="../Html/img/account-logo.png" alt="" id="profile" />
+        <div class="greeting-box" style="display: none;">
+          <span class="greeting-text">Xin chào: <strong class="admin-name">Admin</strong></span>
+          <span class="logout-btn" onclick="logout()">Đăng xuất</span>
+        </div>
+        <img src="../Asset/img/account-logo.png" alt="" id="profile" />
       </div>
     </div>
     <div class="business-process">
@@ -113,21 +117,28 @@
       </i>Bạn cần <span class="login-link" onclick="openModal()">đăng nhập</span> để thực hiện chức năng này.
       </p>
     </div>
-    <div class="modal-child modal-login">
+    <form class="modal-child modal-login adminLogin-form"  method="POST">
       <h2>Đăng nhập</h2>
-      <div id = "admin-Name">
-        <input class = "lg-adminName" type="text" placeholder="Tên đăng nhập" />
-        <div class="error-msg"><i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập tên đăng nhập.</div>
+
+      <div id="admin-Name">
+        <input class="lg-adminName" type="text" name="username" placeholder="Tên đăng nhập" required />
+        <div class="error-msg">
+          <i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập tên đăng nhập.
+        </div>
       </div>
-      <div id = "admin-password">
-        <input class = "lg-password" type="password" placeholder="Mật khẩu" />
-        <div class="error-msg"><i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập mật khẩu.</div>
+
+      <div id="admin-password">
+        <input class="lg-adminPassword" type="password" name="password" placeholder="Mật khẩu" required />
+        <div class="error-msg">
+          <i class="error-symbol fa-solid fa-circle-xmark"></i>Bạn chưa nhập mật khẩu.
+        </div>
       </div>
-      <div class = "btn-admin-login">
-        <button class = "login-btn">Đăng nhập</button>
-        <button class = "close-btn" onclick="closeModal()">Đóng</button>
+
+      <div class="btn-admin-login">
+        <button class="login-btn" type="submit">Đăng nhập</button>
+        <button class="close-btn" type="button" onclick="closeModal()">Đóng</button>
       </div>
-    </div>
+    </form>
   </div>
   <!-- ----------------------------PRODUCT----------------------------- -->
   <div class="product-part">
