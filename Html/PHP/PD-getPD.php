@@ -1,19 +1,16 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
 
     $sql = "
         SELECT 
-            products.*, 
-            subcategories.name AS subcategory_name, 
-            subcategories.id AS subcategory_id, 
+            products.*,
             categories.name AS category_name,
             categories.id AS category_id
         FROM products
-        INNER JOIN subcategories ON products.subcategory_id = subcategories.id
-        INNER JOIN categories ON subcategories.category_id = categories.id
+        INNER JOIN categories ON products.category_id = categories.id
         WHERE products.id = $id
     ";
 

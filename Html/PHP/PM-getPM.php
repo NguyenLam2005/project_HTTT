@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+include __DIR__ . '/config.php';
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $permissionId = $_GET['id'];

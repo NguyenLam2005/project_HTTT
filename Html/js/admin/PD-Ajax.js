@@ -2,17 +2,15 @@ document.addEventListener("click", function (event) {
     if (event.target.classList.contains("fix-btn-product")) {
         let productId = event.target.getAttribute("data-id");
         console.log("Product ID:", productId);
-        fetch(`../PHP/PD-getPD.php?id=${productId}`)
+        fetch(`/project_HTTT/Html/PHP/PD-getPD.php?id=${productId}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
                 if (!data.error) {
-                    
                     document.getElementById("preview-image").src = data.image;
                     document.getElementById("product-id").value = data.id;
-                    document.getElementById("product-nameFIX").value = data.pd_name;
+                    document.getElementById("product-nameFIX").value = data.name;
                     document.getElementById("product-categoryFIX").value = data.category_id;
-                    document.getElementById("product-subcategoryFIX").value = data.subcategory_id;
                     document.getElementById("product-quantityFIX").value = data.quantity;
                     document.getElementById("product-priceFIX").value = data.price;
 
@@ -26,7 +24,10 @@ document.addEventListener("click", function (event) {
                     alert("Không tìm thấy sản phẩm!");
                 }
             })
-            .catch(error => console.error("Lỗi:", error));
+            .catch(error => {
+                console.error("Lỗi:", error);
+                alert("Lỗi khi tải thông tin sản phẩm!");
+            });
     }
 });
 
@@ -70,7 +71,7 @@ document.querySelector(".product-table").addEventListener("click", function (eve
         deleteOverlay.style.display = "block";
         console.log("Product ID:", productId);
         document.getElementById("delete-acp-product").onclick = function () {
-            fetch("../PHP/PD-delete.php", {
+            fetch("/project_HTTT/Html/PHP/PD-delete.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -82,8 +83,13 @@ document.querySelector(".product-table").addEventListener("click", function (eve
                     if (data.success) {
                         event.target.closest("tr").remove();
                     } else {
-                        alert("Xóa sản phẩm thất bại!");
+                        alert(data.message || "Xóa sản phẩm thất bại!");
                     }
+                    deleteOverlay.style.display = "none";
+                })
+                .catch(error => {
+                    console.error("Lỗi:", error);
+                    alert("Lỗi khi xóa sản phẩm!");
                     deleteOverlay.style.display = "none";
                 });
         };
@@ -95,7 +101,7 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
 
     let formData = new FormData(this);
 
-    fetch('../PHP/PD-Add.php', {
+    fetch('/project_HTTT/Html/PHP/PD-Add.php', {
         method: 'POST',
         body: formData
     })
@@ -112,7 +118,6 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
                 <td class='img-admin'><img src="${data.product.image}" alt='' width='50'></td>
                 <td>${data.product.name}</td>
                 <td>${data.product.category_name}</td>
-                <td>${data.product.subcategory_name}</td>
                 <td>${data.product.quantity}</td>
                 <td>${data.product.price}</td>
                 <td><div class='fix-product'>
@@ -130,6 +135,11 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
             alert("Lỗi: " + data.message);
         }
     })
+    .catch(error => {
+        console.error("Lỗi kết nối đến máy chủ:", error);
+        alert("Lỗi kết nối đến máy chủ!");
+    });
+    
 });
 
 document.getElementById("update-form-product").addEventListener("submit", function (event) {
@@ -137,7 +147,7 @@ document.getElementById("update-form-product").addEventListener("submit", functi
     let formData = new FormData(this);
     let productId = document.getElementById("product-id").value;
     console.log("ID sản phẩm:", productId);
-    fetch("../PHP/PD-edit.php", {
+    fetch("/project_HTTT/Html/PHP/PD-edit.php", {
         method: "POST",
         body: formData
     })
@@ -146,17 +156,14 @@ document.getElementById("update-form-product").addEventListener("submit", functi
         if (data.success) {
             alert(data.message);
             console.log(data.product);
-            let priceStr = data.product.price.replace(/\./g, '').replace(' VND', ''); 
-            let priceNumber = parseInt(priceStr, 10);
             let row = document.querySelector(`tr[data-id='${data.product.id}']`);
             if (row) {
                 row.innerHTML = `
                     <td class='img-admin'><img src="${data.product.image}" alt="" width="50"></td>
                     <td>${data.product.name}</td>
                     <td>${data.product.category_name}</td>
-                    <td>${data.product.subcategory_name}</td>
                     <td>${data.product.quantity}</td>
-                    <td>${priceNumber.toLocaleString('vi-VN')} VND</td>
+                    <td>${data.product.price}</td>
                     <td>
                         <div class='fix-product'>
                             <i class='fa-solid fa-pen-to-square fix-btn-product' data-id="${data.product.id}"></i>
@@ -171,8 +178,11 @@ document.getElementById("update-form-product").addEventListener("submit", functi
             document.getElementById("product-plus").style.display = "block";
             document.querySelector(".fix-form-product").style.display = "none";
         } else {
-            alert("Lỗi: " + data.message);
+            alert(data.message || "Lỗi khi cập nhật sản phẩm!");
         }
     })
-    .catch(error => console.error("Lỗi:", error));
+    .catch(error => {
+        console.error("Lỗi:", error);
+        alert("Lỗi khi cập nhật sản phẩm!");
+    });
 });

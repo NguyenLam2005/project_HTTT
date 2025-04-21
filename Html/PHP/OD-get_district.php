@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 if (isset($_POST['province_id'])) {
     $province_id = intval($_POST['province_id']);

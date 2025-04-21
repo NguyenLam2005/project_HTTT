@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $customerId = $_POST['id'] ?? 0;
 
@@ -9,7 +9,7 @@ $sql = "SELECT
             o.totalPrice,
             os.name AS order_status,
             od.product_id,
-            p.pd_name,
+            p.name,
             od.quantity,
             od.price,
             c.fullName
@@ -22,7 +22,7 @@ $sql = "SELECT
         ORDER BY o.id ASC";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $customerId);
+$stmt->bind_param("s", $customerId);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -38,7 +38,7 @@ echo "<i class='fa-solid fa-rotate-left back-customer2'></i>";
 // Duyệt qua kết quả
 while ($row = $result->fetch_assoc()) {
     $orderId = $row['order_id'];
-    $productName = $row['pd_name'];
+    $productName = $row['name'];
     $quantity = $row['quantity'];
     $price = number_format($row['price']);
     $customerName = $row['fullName'];

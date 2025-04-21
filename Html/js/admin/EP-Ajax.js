@@ -26,54 +26,11 @@ document.querySelector(".add-form-employee").addEventListener("submit", function
     let address = document.getElementById("employee-address").value.trim();
     let position = document.getElementById("positionSelect").value;
     
-    if (!fullName) {
-        alert("Vui lòng nhập họ tên!");
-        return;
-    }
-
-    if (fullName.length > 100) {
-        alert("Họ tên quá dài (tối đa 100 ký tự)!");
-        return;
-    }
-
-    if (!email) {
-        alert("Vui lòng nhập email!");
-        return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Email không hợp lệ!");
-        return;
-    }
-
-    if (!phoneNumber) {
-        alert("Vui lòng nhập số điện thoại!");
-        return;
-    }
-
-    if (!/^[0-9]{10,11}$/.test(phoneNumber)) {
-        alert("Số điện thoại không hợp lệ!");
-        return;
-    }
-
-    if (!address) {
-        alert("Vui lòng nhập địa chỉ!");
-        return;
-    }
-
-    if (address.length > 200) {
-        alert("Địa chỉ quá dài (tối đa 200 ký tự)!");
-        return;
-    }
-
-    if (!position) {
-        alert("Vui lòng chọn chức vụ!");
-        return;
-    }
+    
 
     let formData = new FormData(this);
 
-    fetch('/PHP/EP-Add.php', {
+    fetch('/project_HTTT/Html/PHP/EP-Add.php', {
         method: 'POST',
         body: formData
     })
@@ -125,7 +82,7 @@ document.querySelector(".employee-table").addEventListener("click", function (ev
         deleteOverlay.style.display = 'block';
         
         document.getElementById('delete-acp-employee').onclick = function () {
-            fetch('/PHP/EP-Delete.php', {
+            fetch('/project_HTTT/Html/PHP/EP-Delete.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -162,7 +119,7 @@ document.addEventListener("click", function (event) {
         let empId = event.target.getAttribute("data-id");
         
         console.log("employee ID:", empId);
-        fetch(`../../PHP/EP-getEP.php?id=${empId}`)
+        fetch(`/project_HTTT/Html/PHP/EP-getEP.php?id=${empId}`)
             .then(response => response.json())
             .then(data => {
                 if (!data.error) {
@@ -193,87 +150,70 @@ document.addEventListener("click", function (event) {
     }
 });
 
+
 document.getElementById("fix-form-employee").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Validation
-    let fullName = document.getElementById("employee-nameFIX").value.trim();
-    let email = document.getElementById("employee-emailFIX").value.trim();
-    let phoneNumber = document.getElementById("employee-phoneFIX").value.trim();
-    let address = document.getElementById("employee-addressFIX").value.trim();
+    clearErrors(this); // Xóa lỗi cũ
+
+    let fullname = document.getElementById("employee-nameFIX").value;
+    let email = document.getElementById("employee-emailFIX").value;
+    let address = document.getElementById("employee-addressFIX").value;
+    let phonenumber = document.getElementById("employee-phoneFIX").value;
     let position = document.getElementById("positionSelectFIX").value;
-    
-    if (!fullName) {
-        alert("Vui lòng nhập họ tên!");
+
+    let fullnameRegex = /^[a-zA-ZÀ-Ỹà-ỹ\s]+$/;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let phoneRegex = /^0\d{9}$/;
+   
+
+    if (!fullnameRegex.test(fullname)) {
+        showError(document.getElementById("employee-nameFIX"), "Tên không hợp lệ.");
         return;
     }
-
-    if (fullName.length > 100) {
-        alert("Họ tên quá dài (tối đa 100 ký tự)!");
+    if (!emailRegex.test(email)) {
+        showError(document.getElementById("employee-emailFIX"), "Email không hợp lệ.");
         return;
     }
-
-    if (!email) {
-        alert("Vui lòng nhập email!");
-        return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Email không hợp lệ!");
-        return;
-    }
-
-    if (!phoneNumber) {
-        alert("Vui lòng nhập số điện thoại!");
-        return;
-    }
-
-    if (!/^[0-9]{10,11}$/.test(phoneNumber)) {
-        alert("Số điện thoại không hợp lệ!");
-        return;
-    }
-
-    if (!address) {
-        alert("Vui lòng nhập địa chỉ!");
-        return;
-    }
-
-    if (address.length > 200) {
-        alert("Địa chỉ quá dài (tối đa 200 ký tự)!");
-        return;
-    }
-
-    if (!position) {
-        alert("Vui lòng chọn chức vụ!");
+    if (!phoneRegex.test(phonenumber)) {
+        showError(document.getElementById("employee-phoneFIX"), "Số điện thoại không hợp lệ.");
         return;
     }
 
     let formData = new FormData(this);
-
-    fetch('/PHP/EP-Edit.php', {
+    fetch("/project_HTTT/Html/PHP/EP-Edit.php", {
         method: "POST",
         body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Cập nhật nhân viên thành công!");
-            document.querySelector(".fix-form-employee").style.display = "none";
-            document.querySelector(".employee-table").removeAttribute("style");
-            document.getElementById("employee-plus").style.display = "block";
-            document.getElementById("fix-form-employee").reset();
-            updateEmployeeTable();
+            alert(data.message);
+            console.log(data);
+            // Cập nhật giao diện người dùng 
+            let row = document.querySelector(`tr[data-id='${data.employee.id}']`);
+            if (row) {
+                row.innerHTML = `
+                    <td>${row.rowIndex}</td>
+                    <td>${data.employee.id}</td>
+                    <td>${data.employee.fullName}</td>
+                    <td>${data.employee.position_name}</td>
+                    <td>${data.employee.email}</td>
+                    <td>${data.employee.address}</td>
+                    <td>${data.employee.phoneNumber}</td>
+                    <td>
+                        <div class='fix-employee'>
+                            <i class='fa-solid fa-pen-to-square fix-btn-employee' data-id='${data.employee.id}'></i>
+                            <i class='fa-solid fa-trash delete-btn-employee' data-id='${data.employee.id}'></i>
+                        </div>
+                    </td>
+                `;
+            }
+            else
+                console.log("Không tìm thấy tài khoản cần cập nhật!");
         } else {
-            alert("Có lỗi xảy ra: " + data.message);
+            alert("Lỗi: " + data.message);
         }
     })
-    .catch(error => {
-        console.error("Lỗi:", error);
-        alert('Đã xảy ra lỗi trong quá trình xử lý. Vui lòng thử lại sau.');
-    });
-});
+    .catch(error => console.error("Lỗi:", error));
+  });

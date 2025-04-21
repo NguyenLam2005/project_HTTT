@@ -1,5 +1,5 @@
 <?php
-     include 'config.php';
+     include __DIR__ . '/config.php';
      $sql = "SELECT id, name FROM provinces ORDER BY id ASC";
      $result = $conn->query($sql);
      if ($result->num_rows > 0) {

@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $orderId = $_POST['id'] ?? 0;
 // Lấy thông tin địa chỉ và phương thức thanh toán

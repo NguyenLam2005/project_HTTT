@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $sql = "SELECT customers.*, 
                provinces.name AS province_name, 
@@ -24,11 +24,11 @@ if ($result->num_rows > 0) {
                 </select>
               </td>";
         echo "<td style='text-align: center; vertical-align: middle;'>
-                <img src='../../Html/img/ACdetail.png' class='customer-detail' data-id='$cusId' alt='Xem chi tiết'>
+                <img src='/project_HTTT/Html/img/ACdetail.png' class='customer-detail' data-id='$cusId' alt='Xem chi tiết' style='width: 20px; height: 20px; cursor: pointer;'>
               </td>";
         echo "<td style='text-align: center; vertical-align: middle;'>
-              <img src='../../Html/img/' class='history-order' alt='Xem lịch sử'>
-            </td>";
+                <img src='/project_HTTT/Html/img/H-oder.png' class='history-order' data-id='$cusId' alt='Xem lịch sử' style='width: 20px; height: 20px; cursor: pointer;'>
+              </td>";
         echo "<td>
                 <div class='fix-customer'>
                     <i class='fa-solid fa-pen-to-square fix-btn-customer' data-id='$cusId'></i>
@@ -51,8 +51,9 @@ if ($result->num_rows > 0) {
         echo "</div>";
     }
 } else {
-    echo "<tr><td colspan='5' style='text-align: center;'>Không có tài khoản nào</td></tr>";
+    echo "<tr><td colspan='6' style='text-align: center;'>Không có khách hàng nào</td></tr>";
 }
+$conn->close();
 ?>
 
 <div id="delete-overlay-customer">
@@ -111,7 +112,7 @@ if ($result->num_rows > 0) {
             let customerId = event.target.getAttribute("data-id");
             let newStatus = event.target.value;
 
-            fetch("../../PHP/CU-update_status.php", {
+            fetch("/project_HTTT/Html/PHP/CU-update_status.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -120,6 +121,7 @@ if ($result->num_rows > 0) {
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     if (data.success) {
                         alert(`Trạng thái của khách hàng ${customerId} đã được cập nhật!`);
                     } else {
@@ -148,7 +150,7 @@ if ($result->num_rows > 0) {
                 table.style.display = "none";
 
                 // Gửi AJAX để lấy lịch sử đơn hàng
-                fetch("../../PHP/CU-get_order_history.php", {
+                fetch("CU-get_order_history.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"

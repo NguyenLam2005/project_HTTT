@@ -9,7 +9,7 @@ $(document).ready(function () {
                 withCredentials: true
             },
             type: "POST",
-            url: "../PHP/Login_Admin.php",
+            url: "/project_HTTT/Html/PHP/Login_Admin.php",
             dataType: "json",
             data: {
                 "admin-login": true,
@@ -18,7 +18,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 if (res.status === "success") {
-                    window.location.href = "admin.php";
+                    window.location.href = "/project_HTTT/Html/admin.php";
                 } else {
                     $(".error-msg-ad").text(res.message).addClass("show");
                 }

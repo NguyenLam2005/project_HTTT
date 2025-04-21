@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+    include __DIR__ . '/config.php';
     if($_SERVER['REQUEST_METHOD'] === 'POST'&&isset($_POST['id'])){
         $id = $_POST['id'];
         $PM_delete=("DELETE FROM permissions where id = $id");

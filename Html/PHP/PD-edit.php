@@ -1,26 +1,31 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['product-id']; // Lấy ID sản phẩm
+    $id = $_POST['product-id'];
     $name = $_POST['product-name'];
-    $subcategory_id = $_POST['product-subcategory'];
     $quantity = $_POST['product-quantity'];
     $price = $_POST['product-price'];
+    $category_id = $_POST['product-category'];
 
-    $noneIMG = "/Dolce-bakery/assest/PD-Manager/Default.jpg";  // Ảnh mặc định
+    $noneIMG = "/project_HTTT/Html/img/Default.jpg";
     $target_file = $noneIMG;
 
     // Kiểm tra nếu có ảnh mới
     if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLOAD_ERR_OK) {
         $image = $_FILES['product-image']['name'];
-        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Dolce-bakery/assest/PD-Manager/";
+        $target_dir = realpath(__DIR__ . "/../img/product") . "/";
         $target_file = $target_dir . basename($image);
 
+        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+        if (!file_exists($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
         if (move_uploaded_file($_FILES['product-image']['tmp_name'], $target_file)) {
-            $target_file = "/Dolce-bakery/assest/PD-Manager/" . basename($image);
+            $target_file = "/project_HTTT/Html/img/product" . basename($image);
         } else {
             $response = ["success" => false, "message" => "Lỗi khi tải ảnh lên."];
             echo json_encode($response);
@@ -38,48 +43,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
-    $sql = "SELECT subcategories.name AS subcategory_name, categories.name AS category_name
-    FROM subcategories
-    INNER JOIN categories ON subcategories.category_id = categories.id
-    WHERE subcategories.id = ?";
+    $sql = "SELECT categories.name AS category_name
+    FROM categories
+    WHERE categories.id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $subcategory_id);
+    $stmt->bind_param("i", $category_id);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($row = $result->fetch_assoc()) {
-    $subcategory_name = $row["subcategory_name"];
-    $category_name = $row["category_name"];
+        $category_name = $row["category_name"];
     }
     $stmt->close();
 
-    // Cập nhật database
-    $sql = "UPDATE products SET image = ?, pd_name = ?, subcategory_id = ?, quantity = ?, price = ? WHERE id = ?";
+    $sql = "UPDATE products SET name = ?, category_id = ?, quantity = ?, price = ?, image = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiiii", $target_file, $name, $subcategory_id, $quantity, $price, $id);
+    $stmt->bind_param("siidsi", $name, $category_id, $quantity, $price, $target_file, $id);
 
     if ($stmt->execute()) {
         $response = [
             "success" => true,
-            "message" => "Cập nhật sản phẩm thành công!",
+            "message" => "Sản phẩm đã được cập nhật thành công!",
             "product" => [
                 "id" => $id,
                 "image" => $target_file,
                 "name" => $name,
                 "category_name" => $category_name,
-                "subcategory_name" => $subcategory_name,
+                "category_id" => $category_id,
                 "quantity" => $quantity,
                 "price" => number_format($price, 0, ',', '.') . " VND"
             ]
         ];
     } else {
-        $response = ["success" => false, "message" => "Lỗi cập nhật: " . $conn->error];
+        $response = ["success" => false, "message" => "Lỗi: " . $stmt->error];
     }
 
     $stmt->close();
     $conn->close();
-
-    // Trả về JSON
-    header('Content-Type: application/json');
     echo json_encode($response);
     exit();
 }

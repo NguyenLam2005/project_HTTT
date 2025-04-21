@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $sql = "SELECT employeeaccount.*, permissions.name AS p_name, employees.fullName 
         FROM employeeaccount 
@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
                </div>";
     }
 } else {
-    echo "<tr><td colspan='4'>Không có tài khoản nào</td></tr>";
+    echo "<tr><td colspan='5' style='text-align: center;'>Không có tài khoản nào</td></tr>";
 }
 ?>
     <!-- hop thoai xoa AC -->

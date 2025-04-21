@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+    include __DIR__ . '/config.php';
     $sql = "SELECT id, name FROM orderstatus ORDER BY id ASC";
     $result = $conn->query($sql);
     echo "<select name='order-status' class='orderstatus-select form-select' id='filter-status' required >";

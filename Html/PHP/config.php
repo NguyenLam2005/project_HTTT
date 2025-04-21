@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root'; // Tên tài khoản mặc định của XAMPP
 $password = ''; // Mật khẩu mặc định là rỗng
-$dbname = 'dolce_db';
+$dbname = 'db_watch';
 
 $conn = new mysqli($host, $user, $password, $dbname);
 

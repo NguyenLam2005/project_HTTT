@@ -18,11 +18,11 @@
     <form id="admin-login-form">
         <h1>LOGIN ADMIN</h1>
         <div class="input-box-ad">
-            <input type="text" class="admin-username" placeholder="Username" required>
+            <input type="text" class="admin-username" name="admin-username" placeholder="Username" required>
             <i class="fa-solid fa-user-tie"></i>
         </div>
         <div class="input-box-ad">
-            <input type="password" class="admin-password" placeholder="Password" required>
+            <input type="password" class="admin-password" name="admin-password" placeholder="Password" required>
             <i class="fa-solid fa-lock"></i>
         </div>
         <div class="error-msg-ad"></div>
@@ -30,8 +30,8 @@
     </form>
 </div>
 
-<script src="js/Login_admin_ajax.js"></script>
-<script src="js/Logout_admin.js"></script>
+<script src="js/admin/Login_admin_ajax.js"></script>
+<script src="js/admin/Logout_admin.js"></script>
 
 </body>
 

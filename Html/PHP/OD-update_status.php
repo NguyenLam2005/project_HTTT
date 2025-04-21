@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; 
+include __DIR__ . '/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customerId = $_POST['id'];

@@ -2,7 +2,7 @@
 ob_clean(); 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include 'config.php';
+include __DIR__ . '/config.php';
 header('Content-Type: application/json');
 $response = [];
 
@@ -14,58 +14,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userName = $_POST['customer-uname'];
     $password = $_POST['customer-pass'];
 
-    // Lấy trạng thái hiện tại của khách hàng từ database
-    $sql_get_status = "SELECT status FROM customers WHERE id = ?";
-    $stmt_get_status = $conn->prepare($sql_get_status);
-    $stmt_get_status->bind_param("i", $id);
-    $stmt_get_status->execute();
-    $stmt_get_status->bind_result($current_status);
-    $stmt_get_status->fetch();
-    $stmt_get_status->close();
-    $status = $current_status; 
+    // Lấy thông tin hiện tại của khách hàng
+    $sql_get_info = "SELECT status, province_id, district_id, addressDetail FROM customers WHERE id = ?";
+    $stmt_get_info = $conn->prepare($sql_get_info);
+    $stmt_get_info->bind_param("i", $id);
+    $stmt_get_info->execute();
+    $result = $stmt_get_info->get_result();
+    $current_info = $result->fetch_assoc();
+    $stmt_get_info->close();
 
-    $sql_get_address = "SELECT address FROM customers WHERE id = ?";
-    $stmt_get_address = $conn->prepare($sql_get_address);
-    $stmt_get_address->bind_param("i", $id);
-    $stmt_get_address->execute();
-    $stmt_get_address->bind_result($current_address);
-    $stmt_get_address->fetch();
-    $stmt_get_address->close();
-    $address = $current_address; 
+    if (!$current_info) {
+        $response = ["success" => false, "message" => "Không tìm thấy khách hàng"];
+        echo json_encode($response);
+        exit();
+    }
 
-
-    
     // Cập nhật database
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT); 
-    $sql = "UPDATE customers SET userName = ?, email = ?, fullName = ?, phoneNumber = ?, password = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi",$userName, $email, $fullName, $phoneNumber, $hashedPassword, $id);
+    $sql = "UPDATE customers SET userName = ?, email = ?, fullName = ?, phoneNumber = ?";
+    $params = [$userName, $email, $fullName, $phoneNumber];
+    $types = "ssss";
 
+    // Chỉ cập nhật mật khẩu nếu có thay đổi
+    if (!empty($password)) {
+        $sql .= ", password = ?";
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $params[] = $hashedPassword;
+        $types .= "s";
+    }
+
+    $sql .= " WHERE id = ?";
+    $params[] = $id;
+    $types .= "i";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$params);
 
     if ($stmt->execute()) {
+        // Lấy thông tin cập nhật để trả về
+        $sql_get_updated = "SELECT c.*, p.name AS province_name, d.name AS district_name 
+                          FROM customers c
+                          JOIN provinces p ON c.province_id = p.id
+                          JOIN districts d ON c.district_id = d.id
+                          WHERE c.id = ?";
+        $stmt_get_updated = $conn->prepare($sql_get_updated);
+        $stmt_get_updated->bind_param("i", $id);
+        $stmt_get_updated->execute();
+        $result = $stmt_get_updated->get_result();
+        $updated_customer = $result->fetch_assoc();
+        $stmt_get_updated->close();
+
         $response = [
             "success" => true,
             "message" => "Cập nhật thông tin thành công!",
             "customer" => [
-                "id" => $id,
-                "fullName" => $fullName,
-                "status" => $status,
-                "address" => $address,
-                "phoneNumber" => $phoneNumber,
-                "email" => $email,
-                "userName" => $userName
+                "id" => $updated_customer['id'],
+                "fullName" => $updated_customer['fullName'],
+                "userName" => $updated_customer['userName'],
+                "email" => $updated_customer['email'],
+                "phoneNumber" => $updated_customer['phoneNumber'],
+                "status" => $updated_customer['status'],
+                "address" => $updated_customer['addressDetail'] . ", " . 
+                            $updated_customer['district_name'] . ", " . 
+                            $updated_customer['province_name']
             ]
         ];
     } else {
-        $response = ["success" => false, "message" => "Lỗi cập nhật: " . $conn->error];
+        $response = ["success" => false, "message" => "Lỗi khi cập nhật: " . $stmt->error];
     }
-
 
     $stmt->close();
     $conn->close();
-
-    // Trả về JSON
-    header('Content-Type: application/json');
     echo json_encode($response);
     exit();
 }

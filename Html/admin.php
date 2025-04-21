@@ -33,7 +33,7 @@ if (!isset($_SESSION['adminInfo'])) {
     <a href="#" id="admin-account">Quản lí tài khoản</a>
     <a href="#" id="admin-role">Quản lí quyền</a>
    
-    <img src="img/Dolce.png" alt="hahaha" />
+    <img src="img/logo-icon.png" alt="hahaha" />
   </div>
 
   <div class="admin-main">
@@ -62,7 +62,7 @@ if (!isset($_SESSION['adminInfo'])) {
   <div class="profile-part">
     <div class="profile-container">
       <div class="profile-header">
-        <img src="../../assest/admin.jpg" alt="" class="avatar" />
+        <img src="img/admin.jpg" alt="" class="avatar" />
         <div class="user-info">
           <h2><?php echo $_SESSION['adminInfo']['fullName']; ?></h2>
         </div>
@@ -122,8 +122,8 @@ if (!isset($_SESSION['adminInfo'])) {
             <th>Các đơn hàng</th>
           </tr>
         </thead>
-        <tbody>
-          
+        <tbody >
+            
         </tbody>
       </table>
       <div class="order-detail-container1" style="display: none;"></div>
@@ -144,13 +144,14 @@ if (!isset($_SESSION['adminInfo'])) {
             <label for="province">Tỉnh/Thành phố:</label><br>
             <select name="order-province" class="form-select" id="order-province">;
               <option value="">Chọn tỉnh/thành phố</option>";
-              <?php include 'PHP/OD-get_province.php'?>
+              <?php include 'PHP/OD-get_province.php' ?>
         </div>
 
         <div class="form-group">
             <label for="district">Huyện/Quận:</label><br>
             <select id="order-district" name="order-district" class="form-select">
                 <option value="">Chọn huyện/quận</option>
+                <?php include 'PHP/OD-get_district.php' ?>
             </select>
         </div>
 
@@ -166,7 +167,7 @@ if (!isset($_SESSION['adminInfo'])) {
         
         <div class="form-group">
         <label></label><br>
-          <button type="submit" class="form-button"><img src="../../assest/Filter.png" style="height: 17px;"> Lọc</button>
+          <button type="submit" class="form-button"><img src="img/Filter.png" style="height: 17px;"> Lọc</button>
         </div>
       </form>
 
@@ -184,7 +185,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody>
-          <?php include 'PHP/OD-Manager.php' ?>
+        
         </tbody>
       </table>
       <div class="order-detail-container" style="display: none; margin-top: 20px;"></div>
@@ -200,7 +201,6 @@ if (!isset($_SESSION['adminInfo'])) {
             <th style="text-align: center">Hình ảnh sản phẩm</th>
             <th>Tên sản phẩm</th>
             <th>Thể loại</th>
-            <th>Phân loại</th>
             <th>Số lượng</th>
             <th>Giá tiền</th>
             <th id="setting-pro">Cài đặt</th>
@@ -211,7 +211,7 @@ if (!isset($_SESSION['adminInfo'])) {
         </tbody>
       </table>
 
-      <form class="add-form-product" action="../../PHP/PD-Add.php" method="POST" enctype="multipart/form-data">
+      <form class="add-form-product" action="../Html/PHP/PD-Add.php" method="POST" enctype="multipart/form-data">
         <i class="fa-solid fa-rotate-left back-product"></i>
         <div class="form-group">
           <label for="product-image" class="form-label">Ảnh sản phẩm</label>
@@ -226,17 +226,8 @@ if (!isset($_SESSION['adminInfo'])) {
         <div class="form-group">
         <label for="category" class="form-label">Thể loại sản phẩm</label>
         <?php 
-          $selectId = "product-category";
-          $selectName = "product-category";
           include '../Html/PHP/PD-getCategory.php';
         ?>
-        </div>
-
-        <div class="form-group">
-        <label for="subcategory" class="form-label">Phân loại sản phẩm</label>
-        <select name="product-subcategory" id="product-subcategory" class="form-select" required>
-            <option value="">-- Chọn phân loại sản phẩm --</option>
-        </select>
         </div>
 
         <div class="form-group">
@@ -290,24 +281,6 @@ if (!isset($_SESSION['adminInfo'])) {
         </select>
         </div>
 
-        <div class="form-group">
-        <label for="subcategory" class="form-label">*Phân loại sản phẩm</label>
-        <select name="product-subcategory" id="product-subcategoryFIX" class="form-select" required>
-          <?php
-            include '../Html/PHP/config.php';
-            $sql = "SELECT id, name FROM subcategories";
-            $result = $conn->query($sql);
-            echo "  <option value=''>-- Chọn phân loại loại sản phẩm --</option>";
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
-                }
-            } else {
-                echo "<option value=''>Không có phân loại loại nào!</option>";
-            }
-          ?>
-        </select>
-        </div>
 
         <div class="form-group">
           <label for="product-quantity" class="form-label">*Số Lượng</label>
@@ -346,7 +319,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="customer-table-body">
-          <?php include 'PHP/CU-Manager.php' ?>
+          <?php include 'PHP/CU-Manager.php'; ?>
         </tbody>
       </table>
 
@@ -475,7 +448,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="account-table-body">
-          <?php include 'PHP/AC-Manager.php'; ?>
+            <?php include 'PHP/AC-Manager.php'?>
         </tbody>
       </table>
 
@@ -492,7 +465,7 @@ if (!isset($_SESSION['adminInfo'])) {
 
 
 
-      <form class="add-form-account" action="../../PHP/AC-Add.php" method="POST" enctype="multipart/form-data">
+      <form class="add-form-account" action="../Html/PHP/AC-Add.php" method="POST" enctype="multipart/form-data">
         <i class="fa-solid fa-rotate-left back-account"></i>
         <div class="form-group">
           <label for="account-name" class="form-label">Tên đăng nhập</label>
@@ -508,8 +481,8 @@ if (!isset($_SESSION['adminInfo'])) {
         <div class="form-group">
           <label for="account-role" class="form-label" style="color: red;">Cấp quyền</label>
           <div class="role-container">
-            <?php
-            require_once '../Html/PHP/AC-Manager.php'; // Kết nối database
+          <?php
+            include '../Html/PHP/config.php'; // Kết nối database
             // Lấy danh sách quyền từ bảng permissions
             $sql = "SELECT id, name FROM permissions ORDER BY id ASC";
             $result = $conn->query($sql);
@@ -534,7 +507,7 @@ if (!isset($_SESSION['adminInfo'])) {
       </form>
 
 
-      <form class="fix-form-account" id="fix-form-account" action="../../PHP/AC-Edit.php" method="POST"
+      <form class="fix-form-account" id="fix-form-account" action="../Html/PHP/AC-Edit.php" method="POST"
         enctype="multipart/form-data">
         <input type="hidden" id="account-id" name="account-id">
         <i class="fa-solid fa-rotate-left back-account"></i>
@@ -552,7 +525,7 @@ if (!isset($_SESSION['adminInfo'])) {
           <label for="account-role" class="form-label" style="color: red;">Cập nhật quyền</label>
           <div class=role-container>
             <?php
-            require_once '../Html/PHP/AC-Manager.php'; // Kết nối database
+            include '../Html/PHP/config.php'; // Kết nối database
             
             // Lấy danh sách quyền từ bảng permissions
             $sql = "SELECT id, name FROM permissions ORDER BY id ASC";
@@ -586,9 +559,9 @@ if (!isset($_SESSION['adminInfo'])) {
 
   <div class="role-part">
     <div class="role-table-container">
-      <!-- <div id="account-overlay-role">
-        <div class="account-role-container">
-          <img src="../../assest/Chevron down.png" alt="">
+       <div id="account-overlay-role">
+       <!-- <div class="account-role-container"> -->
+         <!--  <img src="../../assest/Chevron down.png" alt="">
           <div class="list-user-role">
             <div class="user-role">user1</div>
             <div class="user-role">user2</div>
@@ -624,13 +597,13 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="role-table-body">
-          <?php include 'PHP/PM-Manager.php'; ?>
+            <?php include 'PHP/PM-Manager.php'?>
         </tbody>
       </table>
 
 
 
-      <form class="add-form-role" id="add-form-role" action="../../PHP/PM-Add.php" method="POST"
+      <form class="add-form-role" id="add-form-role" action="../Html/PHP/PM-Add.php" method="POST"
         enctype="multipart/form-data">
         <i class="fa-solid fa-rotate-left back-role"></i>
         <div class="form-group">
@@ -643,7 +616,7 @@ if (!isset($_SESSION['adminInfo'])) {
           <label for="account-role" class="form-label" style="color: red;">Chức năng</label>
           <div class="role-container">
             <?php
-            require_once '../Html/PHP/PM-Manager.php'; // Kết nối database
+            include '../Html/PHP/config.php'; // Kết nối database
             
             // Lấy  chức năng từ database
             $sql = "SELECT id, name FROM functions ORDER BY id ASC";
@@ -673,7 +646,7 @@ if (!isset($_SESSION['adminInfo'])) {
 
 
 
-      <form id="fix-form-role" class="fix-form-role" action="../../PHP/PM-Edit.php" method="POST"
+      <form id="fix-form-role" class="fix-form-role" action="../Html/PHP/PM-Edit.php" method="POST"
         enctype="multipart/form-data">
         <input type="hidden" id="role-id-f" name="role-id">
         <i class="fa-solid fa-rotate-left back-role"></i>
@@ -685,7 +658,7 @@ if (!isset($_SESSION['adminInfo'])) {
           <label for="account-role" class="form-label" style="color: red;">Chức năng</label>
           <div class="role-container">
             <?php
-            require_once '../Html/PHP/PM-Manager.php'; // Kết nối database
+            include '../Html/PHP/config.php'; // Kết nối database
             // Lấy chức năng từ database
             $sql = "SELECT id, name FROM functions ORDER BY id ASC";
             $result = $conn->query($sql);
@@ -717,7 +690,7 @@ if (!isset($_SESSION['adminInfo'])) {
       </div>
 
 
-
+      </div>
     </div>
   </div>
 
@@ -743,7 +716,7 @@ if (!isset($_SESSION['adminInfo'])) {
         </tbody>
       </table>
 
-      <form class="add-form-employee" action="../../PHP/PD-Add.php" method="POST" enctype="multipart/form-data">
+      <form class="add-form-employee" action="../Html/PHP/PD-Add.php" method="POST" enctype="multipart/form-data">
         <i class="fa-solid fa-rotate-left back-employee"></i>
 
         <div class="form-group">
@@ -770,7 +743,7 @@ if (!isset($_SESSION['adminInfo'])) {
           <label for="employee-position" class="form-label" style="color: red;">Chức vụ</label>
           <div class="role-container">
             <?php
-            require_once '../Html/PHP/EP-Manager.php'; 
+            include '../Html/PHP/config.php'; 
             // Lấy danh sách chức vụ từ bảng positions
             $sql = "SELECT id, name FROM positions ORDER BY id ASC";
             $result = $conn->query($sql);
@@ -824,7 +797,7 @@ if (!isset($_SESSION['adminInfo'])) {
           <label for="employee-position" class="form-label" style="color: red;">Chức vụ</label>
           <div class="role-container">
             <?php
-            require_once '../Html/PHP/EP-Manager.php'; 
+            include '../Html/PHP/config.php'; 
             // Lấy danh sách chức vụ từ bảng positions
             $sql = "SELECT id, name FROM positions ORDER BY id ASC";
             $result = $conn->query($sql);

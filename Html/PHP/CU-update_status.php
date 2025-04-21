@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; // Đảm bảo có kết nối DB
+include __DIR__ . '/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customerId = $_POST['id'];

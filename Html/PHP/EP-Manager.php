@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
 $sql = "SELECT e.*, p.name AS position_name 
         FROM employees e

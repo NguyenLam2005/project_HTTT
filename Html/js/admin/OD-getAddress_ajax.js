@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
   
-        fetch("../../PHP/OD-get_district.php", {
+        fetch("/project_HTTT/Html/PHP/OD-get_district.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",

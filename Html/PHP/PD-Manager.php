@@ -1,21 +1,18 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 
-$sql = "SELECT products.*, subcategories.name AS subcategory_name, categories.name AS category_name 
+$sql = "SELECT products.*, categories.name AS category_name 
         FROM products 
-        INNER JOIN subcategories ON products.subcategory_id = subcategories.id
-        INNER JOIN categories ON subcategories.category_id = categories.id
+        INNER JOIN categories ON products.category_id = categories.id
         ORDER BY products.id ASC";
 $result = $conn->query($sql);
-
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $id = $row['id'];
         echo "<tr data-id='$id'>";
         echo "<td class='img-admin'><img src='" . $row['image'] . "' alt=''></td>";
-        echo "<td>" . $row['pd_name'] . "</td>";
+        echo "<td>" . $row['name'] . "</td>";
         echo "<td>" . $row['category_name'] . "</td>";
-        echo "<td>" . $row['subcategory_name'] . "</td>";
         echo "<td>" . $row['quantity'] . "</td>";
         echo "<td>" . number_format($row['price'], 0, ',', '.') . " VND</td>";
         echo "<td><div class='fix-product'>
