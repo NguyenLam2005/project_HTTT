@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HighTech</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../Css/Client/headpages.css">
+    <link rel="stylesheet" href="../Css/Client/registerCustomer.css">
+    <link rel="stylesheet" href="../Css/Client/loginCustomer.css">
+
+    <link rel="stylesheet" href="../Css/base.css">
+</head>
+<body>
+    <header class="header">
+
+        <div class="header__container">
+            <div class="header__logo">
+                <a href=""><img src="../img/logo.png" alt=""></a>
+            </div>
+    
+            <div class="header__searchbar">
+                <div class="header__searcbar-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="search_infor" placeholder="Nhập tên sản phẩm">
+                </div>
+            </div>
+
+            <div class="header__right-box">
+
+                <div class="header__cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Giỏ hàng</span>
+                </div>
+                <div class="header__account">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="infor__account">Tài khoản</span>
+
+                    <ul class="header__account-dropdown" id="account-dropdown">
+                        <li>Đăng nhập</li>
+                        <li>Đăng kí</li>
+                        <!-- <li>Thông tin tài khoản</li>
+                        <li>Đơn hàng của tôi</li>
+                        <li>Đăng xuất</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="login__wrapper">
+        <div class="login__box">
+            <div class="login__image">
+                <img src="../img/login_img2.png" alt="Login Illustration">
+            </div>
+            <form class="login__form-customer" id="login_form">
+                <h2>Đăng nhập</h2>
+                <input type="text" id="username" placeholder="Tên đăng nhập">
+                <div class="password__container">
+                    <input type="password" id="password" placeholder="Mật khẩu">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <span id="login__error">*Thông tin không hợp lệ</span>
+                <button type="submit">Đăng nhập</button>
+                <p>Bạn chưa có tài khoản? <a href="#">Đăng ký</a></p>
+            </form>
+        </div>
+    </div>
+    
+
+    
+</body>
+</html>

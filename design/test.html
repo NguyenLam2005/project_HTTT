@@ -10,75 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="icon" href="../img/logo-icon.png" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="../Css/Client/grid.css">
-    <link rel="stylesheet" href="../Css/Client/header.css">
+    <link rel="stylesheet" href="../Css/Client/test.css">
 </head>
 
 <body>
-    <header class="header">
-            <div class="grid wide">
-                <div class="header__navbar">
-                    <a href="index.html" class="header__logo">
-                        <img src="../img/logo.png" class="header__logo-img" alt="">
-                    </a>
-                    
-                    <ul class="header__navbar-list">
-                        <li class="header__navbar-item">
-                            <a href="index.html?watch-male" class="header__navbar-item-link">Nam</a>
-                        </li>
-                        <li class="header__navbar-item">
-                            <a href="index.html?watch-female" class="header__navbar-item-link">Nữ</a>
-                        </li>
-                        <li class="header__navbar-item">
-                            <a href="index.html?watch-wall" class="header__navbar-item-link">Treo tường</a>
-                        </li>
-                        <li class="header__navbar-item">
-                            <a href="index.html?watch-wall" class="header__navbar-item-link">Tin tức</a>
-                        </li>
-                    </ul>
-
-
+    <div class="header__navbar">
+        <ul class="header__navbar-list">
+            <li class="nav-item active"><a href="#"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <li class="nav-item"><a href="#">Thương hiệu</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ nam</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ nữ</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ để bàn</a></li>
+            <li class="nav-item"><a href="#">Tin tức</a></li>
+        </ul>
+    </div>
     
-                    <div class="header__right-box">
-                        <div class="header__search" onclick="document.getElementById('search-bar').style.display='flex'">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
+    <script>
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); // Ngăn chuyển trang nếu có href
+            navItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 
-                        <div class="header__cart" onclick="showCartPage()">
-                            <span class="header__cart-icon material-symbols-rounded">shopping_bag</span>
-                            <span class="header__cart-quantity"></span>
-                        </div>
-
-                        <div class="header__user-group">
-                            <div class="header__none-user" onclick="document.getElementById('account__modal').style.display='flex'">
-                                <i class="fa-solid fa-user"></i>
-                            </div>
-    
-                            <div class="header__user">
-                                <span class="header__user-name"></span>
-                                <div class="header__group-menu">
-                                    <a href="index.html?order" class="header__user-order" onclick="showOrderPage()">Đơn hàng của bạn</a>
-                                    <div id="log-out" class="header__log-out" onclick="LogOut()">Đăng xuất</div>
-                                </div>
-                            </div>
-    
-                        </div>
-                    </div>
-
-                    <div id="search-bar" class="header__searchbar">
-                        <div class="header__searcbar-container">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <input id="search-info" type="text" class="header__search-input" placeholder="Nhập tên sản phẩm">
-                            <span onclick="document.getElementById('search-bar').style.display='none'" class="header__searchbar-close">
-                                <i class="fa-solid fa-xmark"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-    </header>
-    
+    </script>
 </body>
 </html>

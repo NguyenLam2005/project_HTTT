@@ -1,0 +1,121 @@
+.login__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #e0f0ff;
+    padding: 20px;
+}
+
+.login__box {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Cột hình ảnh */
+.login__image {
+    flex: 1;
+    background-color: #f7fbff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login__image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Cột form */
+.login__form-customer {
+    flex: 1;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login__form-customer h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.login__form-customer input[type="text"],
+.login__form-customer input[type="password"] {
+    padding: 10px 38px 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.password__container {
+    position: relative;
+}
+
+.password__container i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+}
+
+#login__error {
+    font-size: 13px;
+    font-style: italic;
+    color: red;
+    text-align: center;
+    display: none;
+}
+
+.login__form-customer button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.login__form-customer button:hover {
+    background-color: #0056b3;
+}
+
+.login__form-customer p {
+    text-align: center;
+    font-size: 14px;
+}
+
+.login__form-customer a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.login__form-customer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .login__box {
+        flex-direction: column;
+    }
+
+    .login__image {
+        display: none;
+    }
+}

@@ -6,7 +6,12 @@
     <title>HighTech</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="../Css/Client/header.css">
+    <link rel="stylesheet" href="../Css/Client/headpages.css">
+    <link rel="stylesheet" href="../Css/base.css">
+    <link rel="stylesheet" href="../Css/Client/product.css">
+    <link rel="stylesheet" href="../Css/Client/navbar.css">
+    <link rel="stylesheet" href="../Css/Client/footer.css">
+
 </head>
 <body>
     <header class="header">
@@ -16,12 +21,14 @@
                 <a href=""><img src="../img/logo.png" alt=""></a>
             </div>
     
-            <div class="header__searcbar-container">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search_infor" placeholder="Nhập tên sản phẩm">
+            <div class="header__searchbar">
+                <div class="header__searcbar-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="search_infor" placeholder="Nhập tên sản phẩm">
+                </div>
             </div>
-    
-            <div class="header__right-box">
+
+            <div class="header__right-box"> 
                 <div class="header__cart">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span>Giỏ hàng</span>
@@ -31,21 +38,212 @@
                     <span id="infor__account">Tài khoản</span>
 
                     <ul class="header__account-dropdown" id="account-dropdown">
-                        <li>Đăng nhập</li>
-                        <li>Đăng kí</li>
+                        <li><a href="">Thông tin tài khoản</a></li>
+                        <li>Lịch sử mua hàng</li>
+                        <li>Đăng xuất</li>
+
                         <!-- <li>Thông tin tài khoản</li>
                         <li>Đơn hàng của tôi</li>
                         <li>Đăng xuất</li> -->
                     </ul>
                 </div>
-                
-
-            </div>            
+            </div>
         </div>
-
     </header>
+
+    <div class="slide__box">
+        <img src="../img/slide/slide04.png" alt="" class = "slide active_slide">
+        <img src="../img/slide/slide01.png" alt="" class = "slide">
+        <img src="../img/slide/slide02.png" alt="" class = "slide">
+        <img src="../img/slide/slide03.png" alt="" class = "slide">
+    </div>
+
     <script>
-        //pages
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide__box .slide");
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle("active_slide", i === index);
+            });
+        }
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }, 5000); // Chuyển slide mỗi 3 giây
     </script>
+    <div class="header__navbar">
+        <ul class="header__navbar-list">
+            <li class="nav-item active"><a><i class="fa-solid fa-house-chimney"></i></a></li>
+            <li class="nav-item brand-item"><a>Thương hiệu</a>
+                <ul class="dropdown-brand">
+                    <li class="brand-option">Casio</li>
+                    <li class="brand-option">Seiko</li>
+                    <li class="brand-option">Citizen</li>
+                    <li class="brand-option">...</li> <!-- phần này được hiển thị bằng cách truy vấn vào bảng brand-->
+
+                </ul>
+            </li>
+            <li class="nav-item"><a>Đồng hồ nam</a></li> 
+            <li class="nav-item"><a >Đồng hồ nữ</a></li>
+            <li class="nav-item"><a >Đồng hồ đôi</a></li>     
+            <li class="nav-item"><a >Tin tức</a></li>
+        </ul>
+    </div>
+    <script src="../Js/Client/navbar.js"></script>
+
+    <div class="content_wrapper">
+        <div class="content__infor">
+            <h1>Sản phẩm</h1>
+        </div>
+        <div class="content"> 
+            <!-- phần lọc sản phẩm -->
+             <div class="bnt__filter" id="bnt_filter">
+                Bộ lọc
+                <i class="fa-solid fa-filter"></i>
+             </div>
+            <div class="product__filter" id="product_filter">
+                <div class="filter__item">
+                    <label for="muc_gia">Mức giá</label>
+                    <select name="muc_gia" id="muc_gia">
+                        <option value="">Tất cả</option>
+                        <option value= "1" >Dưới 1.000.000VNĐ</option>
+                        <option value= "2" >Từ 1.000.000VND đến 2.500.000VNĐ</option>
+                        <option value= "3" >Từ 2.500.000VNĐ đến 5.000.000VNĐ</option>
+                        <option value= "4" >Trên 5.000.000VNĐ</option>
+                    </select>
+                </div>
+                <div class="filter__item">
+                    <label for="thuong_hieu">Thương hiệu</label>
+                    <select name="thuong_hieu" id="thuong_hieu">      
+                        <option value="">Tất cả </option>
+                        <option value="">Thương hiệu A</option>
+                        <option value="">Thương hiệu B</option>
+                        <option value="">Thương hiệu C</option>
+                        <option value="">Thương hiệu D</option>
+                    </select>
+                </div>
+                <div class="filter__item">
+                    <label for="gioi_tinh">Giới tính</label>
+                    <select name="gioi_tinh" id="gioi_tinh">        
+                        <option value="">Tất cả</option>
+                        <option value="">Nam</option>
+                        <option value="">Nữ</option>
+                        <option value="">Đôi</option>
+                    </select>
+                </div>
+                <div class="filter__item">
+                    <label for="loai">Loại đồng hồ</label>
+                    <select name="loai" id="loai">      
+                        <option value="">Tất cả</option>
+                        <option value="">Đồng hồ cơ</option>
+                        <option value="">Đồng hồ điện tử</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sort__product" id="sort_product">
+                    <select name="sap_xep" id="sap_xep">  
+                        <option value="0">Mặc định</option> 
+                        <option value="1">Tên sản phẩm</option>
+                        <option value="2">Giá từ thấp lên cao</option>
+                        <option value="3">Giá từ cao xuống thấp</option>
+                    </select>
+            </div>
+    
+            <div class="product__content">
+                <div class="protduct__container">
+                    <div class="product__card">
+                        <img src="../img/product/CasioWorldTimeAE.avif" alt="Đồng hồ 1">
+                        <div class="product__card-content">
+                            <h3>Đồng hồ cổ điểnsádfa sdfsdafkjsah ahfhsdakhf áhfjhskjhaf áhfjksh</h3>
+                            <div class="price">2.500.000₫</div>
+                        </div>
+                    </div>
+                    <div class="product__card">
+                        <img src="../img/product/CasioWorldTimeAE.avif" alt="Đồng hồ 1">
+                        <div class="product__card-content">
+                            <h3>Đồng hồ cổ điển</h3>
+                            <div class="price">2.500.000₫</div>
+                        </div>
+                    </div>
+                    <div class="product__card">
+                        <img src="../img/product/CasioWorldTimeAE.avif" alt="Đồng hồ 1">
+                        <div class="product__card-content">
+                            <h3>Đồng hồ cổ điển</h3>
+                            <div class="price">2.500.000₫</div>
+                        </div>
+                    </div>
+                    <div class="product__card">
+                        <img src="../img/product/CasioWorldTimeAE.avif" alt="Đồng hồ 1">
+                        <div class="product__card-content">
+                            <h3>Đồng hồ cổ điển</h3>
+                            <div class="price">2.500.000₫</div>
+                        </div>
+                    </div>
+                    <div class="product__card">
+                        <img src="../img/product/CasioWorldTimeAE.avif" alt="Đồng hồ 1">
+                        <div class="product__card-content">
+                            <h3>Đồng hồ cổ điển</h3>
+                            <div class="price">2.500.000₫</div>
+                        </div>
+                    </div>
+                    
+                </div>
+    
+                <div class="product__pagination">
+                    <button class="prev-page">«</button>
+                    <button class="page-num active">1</button>
+                    <button class="page-num">2</button>
+                    <button class="page-num">3</button>
+                    <button class="page-num">...</button>
+                    <button class="page-num">10</button>
+                    <button class="next-page">»</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../Js/Client/product.js"></script>
+
+    
+    
+    
+
+    <footer class="footer">
+        <div class="footer__container">
+            <!-- Cột 1: Giới thiệu -->
+            <div class="footer__column">
+                <h3>Về chúng tôi</h3>
+                <p>Chuyên cung cấp đồng hồ chính hãng, bảo hành uy tín, mẫu mã đa dạng và phong cách.</p>
+            </div>
+    
+            <!-- Cột 2: Liên kết nhanh -->
+            <div class="footer__column">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+    
+            <!-- Cột 3: Thông tin liên hệ -->
+            <div class="footer__column">
+                <h3>Liên hệ</h3>
+                <p>📍 123 Đồng hồ street, TP.HCM</p>
+                <p>📞 0123 456 789</p>
+                <p>📧 support@dongho.com</p>
+            </div>
+        </div>
+    
+        <div class="footer__bottom">
+            &copy; 2025 Đồng Hồ Shop. All rights reserved.
+        </div>
+    </footer>
+    
+
 </body>
 </html>
