@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['adminInfo'])) {
-  header("Location: login-admin.php");
+  header("Location: login_admin.php");
   exit();
 }
 ?>
@@ -13,10 +13,10 @@ if (!isset($_SESSION['adminInfo'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bakery admin</title>
-  <link rel="stylesheet" href="../Html/css/admin.css">
+  <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../CSS/user/notificationRegist.css">
+  <link rel="stylesheet" href="css/notificationRegist.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -25,7 +25,7 @@ if (!isset($_SESSION['adminInfo'])) {
 
   <div class="sidebar">
     <h2 id="admin">Admin</h2>
-    <a href="#">Thống kê</a>
+    <a href="#" id="admin-statistic">Thống kê</a>
     <a href="#" id="admin-oder">Đơn hàng</a>
     <a href="#" id="admin-product">Sản phẩm</a>
     <a href="#" id="admin-customer">Khách hàng</a>
@@ -33,14 +33,14 @@ if (!isset($_SESSION['adminInfo'])) {
     <a href="#" id="admin-account">Quản lí tài khoản</a>
     <a href="#" id="admin-role">Quản lí quyền</a>
    
-    <img src="../../assest/Dolce.png" alt="hahaha" />
+    <img src="img/Dolce.png" alt="hahaha" />
   </div>
 
   <div class="admin-main">
     <div class="admin-header">
       <div class="profile">
         <span><?php echo $_SESSION['adminInfo']['fullName']; ?></span>
-        <img src="../../assest/admin.jpg" alt="" id="profile" />
+        <img src="img/admin.jpg" alt="" id="profile" />
       </div>
     </div>
     <div class="business-process">
@@ -79,29 +79,94 @@ if (!isset($_SESSION['adminInfo'])) {
     </div>
   </div>
 
-  <div class="oder-part">
+  <div class="statistic-part">
+    <div class="statistic-table-container">
+    <form id="filter-form-statistic" style="margin-bottom: 10px; display: flex; gap: 5px;">
+
+        <div class="form-group">
+            <label for="fromDate">Số lượng khách hàng:</label><br>
+            <input type="number" id="customer-number" name="customer-number" class="form-input" placeholder="Nhập số lượng" min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="fromDate">Từ ngày:</label><br>
+            <input type="date" id="statistic-start-date" name="start_date" class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label for="toDate">Đến ngày:</label><br>
+            <input type="date" id="statistic-end-date" name="end_date" class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label for="sort">Sắp xếp:</label><br>
+            <select id="statistic-sort" name="statistic-sort" class="form-select" require>
+                <option value="1">Tăng dần</option>
+                <option value="2">Giảm dần</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+        <label></label><br>
+          <button type="submit" class="form-button">Thống kê</button>
+        </div>
+    </form>
+      <h3 style="text-align:center; display: none" class="statistic-title"></h3>
+      <table class="statistic-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã khách hàng</th>
+            <th>Tên khách hàng</th>
+            <th>Tổng tiền mua</th>
+            <th>Các đơn hàng</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <div class="order-detail-container1" style="display: none;"></div>
+
+
+    </div>
+  </div> 
+
+  <div class="order-part">
     <div class="order-table-container">
       <form id="filter-form-order" style="margin-bottom: 10px; display: flex; gap: 5px;">
-        <div>
-          <label for="filter-status">Lọc theo trạng thái:</label>
-          <?php
-            include '../Html/PHP/config.php';
-            $sql = "SELECT id, name FROM orderstatus ORDER BY id ASC";
-            $result = $conn->query($sql);
-            echo "<select name='order-status' class='orderstatus-select' id='filter-status' required>";
-            echo "<option value='0'>Tất cả</option>";
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                echo "<option value='{$row['id']}'>{$row['name']}</option>";
-              }
-            } else {
-              echo "<option value=''>Không có trạng thái nào!</option>"; 
-            }
-            echo "</select>";
-          ?>
+        <div class="form-group">
+          <label for="filter-status">Trạng thái:</label>
+          <?php include 'PHP/OD-get_status.php' ?>
         </div>
-        <div>
-          <button type="submit">Lọc</button>
+       
+        <div class="form-group">
+            <label for="province">Tỉnh/Thành phố:</label><br>
+            <select name="order-province" class="form-select" id="order-province">;
+              <option value="">Chọn tỉnh/thành phố</option>";
+              <?php include 'PHP/OD-get_province.php'?>
+        </div>
+
+        <div class="form-group">
+            <label for="district">Huyện/Quận:</label><br>
+            <select id="order-district" name="order-district" class="form-select">
+                <option value="">Chọn huyện/quận</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fromDate">Từ ngày:</label><br>
+            <input type="date" id="order-start-date" name="start_date" class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label for="toDate">Đến ngày:</label><br>
+            <input type="date" id="order-end-date" name="end_date" class="form-input">
+        </div>
+        
+        <div class="form-group">
+        <label></label><br>
+          <button type="submit" class="form-button"><img src="../../assest/Filter.png" style="height: 17px;"> Lọc</button>
         </div>
       </form>
 
@@ -119,7 +184,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody>
-          <?php include '../Html/PHP/OD-Manager.php' ?>
+          <?php include 'PHP/OD-Manager.php' ?>
         </tbody>
       </table>
       <div class="order-detail-container" style="display: none; margin-top: 20px;"></div>
@@ -142,7 +207,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="product-table-body">
-          <?php include '../Html/PHP/PD-Manager.php'; ?>
+          <?php include 'PHP/PD-Manager.php'; ?>
         </tbody>
       </table>
 
@@ -281,7 +346,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="customer-table-body">
-          <?php include '../Html/PHP/CU-Manager.php' ?>
+          <?php include 'PHP/CU-Manager.php' ?>
         </tbody>
       </table>
 
@@ -344,47 +409,6 @@ if (!isset($_SESSION['adminInfo'])) {
           </div>
         </div> -->
       </div>
-
-
-
-
-
-      <!-- <form class="add-form-customer">
-        <i class="fa-solid fa-rotate-left back-customer"></i>
-
-        <div class="form-group">
-          <label for="product-id" class="form-label">Mã khách hàng</label>
-          <input type="text" id="customer-id" name="customer-id" placeholder="Nhập mã KH" class="form-input" />
-        </div>
-
-        <div class="form-group">
-          <label for="customer-name" class="form-label">Tên khách hàng</label>
-          <input type="text" id="customer-name" name="customer-name" placeholder="Nhập tên khách hàng"
-            class="form-input" />
-        </div>
-
-        <div class="form-group">
-          <label for="product-phone" class="form-label">Số điện thoại</label>
-          <input type="text" id="customer-phone" name="customer-phone" placeholder="Nhập SĐT khách hàng"
-            class="form-input" />
-        </div>
-
-        <div class="form-group">
-          <label for="customer-email" class="form-label">Email</label>
-          <input type="email" id="customer-email" name="customer-email" placeholder="Nhập email" class="form-input" />
-        </div>
-
-        <div class="form-group">
-          <label for="customer-address" class="form-label">Địa chỉ</label>
-          <input type="text" id="custommer-address" name="customer-address" placeholder="Nhập địa chỉ"
-            class="form-input" />
-        </div>
-
-        <div class="form-group text-center">
-          <button type="submit" class="form-button">Thêm Khách Hàng</button>
-        </div>
-      </form> -->
-
 
       <form class="fix-form-customer" id="fix-form-customer" enctype="multipart/form-data">
         <i class="fa-solid fa-rotate-left back-customer"></i>
@@ -451,10 +475,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="account-table-body">
-
-          <?php
-          include '../Html/PHP/AC-Manager.php';
-          ?>
+          <?php include 'PHP/AC-Manager.php'; ?>
         </tbody>
       </table>
 
@@ -603,9 +624,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="role-table-body">
-          <?php
-          include '../Html/PHP/PM-Manager.php';
-          ?>
+          <?php include 'PHP/PM-Manager.php'; ?>
         </tbody>
       </table>
 
@@ -704,7 +723,7 @@ if (!isset($_SESSION['adminInfo'])) {
 
   <!-- employee-part -->
   <div class="employee-part">
-    <div class="employee-table-container" style="display: none;">
+    <div class="employee-table-container">
       <div id="employee-plus">Thêm nhân viên</div>
       <table class="employee-table">
         <thead>
@@ -720,7 +739,7 @@ if (!isset($_SESSION['adminInfo'])) {
           </tr>
         </thead>
         <tbody id="employee-table-body">
-            <?php include '../Html/PHP/EP-Manager.php'?> 
+            <?php include 'PHP/EP-Manager.php'?>
         </tbody>
       </table>
 
@@ -832,15 +851,17 @@ if (!isset($_SESSION['adminInfo'])) {
   </div>
 
 
-  <script src="../Html/js/admin/admin.js"></script>
-  <script src="../Html/js/admin/PD-Ajax.js"></script>
-  <script src="../Html/js/admin/PM-Ajax.js"></script>
-  <script src="../Html/js/admin/AC-Ajax.js"></script>
-  <script src="../Html/js/admin/CU-Ajax.js"></script>
-  <script src="../Html/js/admin/EP-Ajax.js"></script>
-  <script src="../Html/js/admin/Logout_admin.js"></script>
-  <script src="../Html/js/admin/PD-getCategory_ajax.js"></script>
-  <script src="../Html/js/admin/OD-ajax.js"></script>
+  <script src="js/admin/admin.js"></script>
+  <script src="js/admin/PD-Ajax.js"></script>
+  <script src="js/admin/PM-Ajax.js"></script>
+  <script src="js/admin/AC-Ajax.js"></script>
+  <script src="js/admin/CU-Ajax.js"></script>
+  <script src="js/admin/EP-Ajax.js"></script>
+  <script src="js/admin/Logout_admin.js"></script>
+  <script src="js/admin/PD-getCategory_ajax.js"></script>
+  <script src="js/admin/OD-ajax.js"></script>
+  <script src="js/admin/OD-getAddress_ajax.js"></script>
+  <script src="js/admin/ST-ajax.js"></script>
 
 
   <script>

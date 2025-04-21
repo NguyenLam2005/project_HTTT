@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 
         // Nút hiển thị modal
         echo "<td class='role-account'>";
-        echo "<img src='' data-id='$permissionId'>";
+        echo "<img src='../../assest/Download cloud.png' alt='' class='show-userrole' data-id='$permissionId'>";
         echo "</td>";
 
         // Edit
@@ -58,7 +58,7 @@ if ($result->num_rows > 0) {
 ?>
 <div id="account-overlay-role">
     <div class="account-role-container">
-        <img src="" alt="" id="close-modal">
+        <img src="../../assest/Chevron down.png" alt="" id="close-modal">
         <div class="list-user-role" id="account-list"></div>
     </div>
 </div>

@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
         let userId = event.target.getAttribute("data-id");
         let newStatus = event.target.value;
 
-        fetch("../PHP/AC-update_status.php", {
+        fetch("../../PHP/AC-update_status.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"

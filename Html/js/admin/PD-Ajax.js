@@ -2,7 +2,7 @@ document.addEventListener("click", function (event) {
     if (event.target.classList.contains("fix-btn-product")) {
         let productId = event.target.getAttribute("data-id");
         console.log("Product ID:", productId);
-        fetch(`../../PHP/PD-getPD.php?id=${productId}`)
+        fetch(`../PHP/PD-getPD.php?id=${productId}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -70,7 +70,7 @@ document.querySelector(".product-table").addEventListener("click", function (eve
         deleteOverlay.style.display = "block";
         console.log("Product ID:", productId);
         document.getElementById("delete-acp-product").onclick = function () {
-            fetch("../../PHP/PD-delete.php", {
+            fetch("../PHP/PD-delete.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -95,7 +95,7 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
 
     let formData = new FormData(this);
 
-    fetch('../../PHP/PD-Add.php', {
+    fetch('../PHP/PD-Add.php', {
         method: 'POST',
         body: formData
     })
@@ -133,23 +133,21 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
 });
 
 document.getElementById("update-form-product").addEventListener("submit", function (event) {
-    event.preventDefault(); // Ngăn form gửi theo cách mặc định
-
-    let formData = new FormData(this); // Lấy dữ liệu form
+    event.preventDefault();
+    let formData = new FormData(this);
     let productId = document.getElementById("product-id").value;
     console.log("ID sản phẩm:", productId);
-    fetch("../../PHP/PD-edit.php", {
+    fetch("../PHP/PD-edit.php", {
         method: "POST",
         body: formData
     })
-    .then(response => response.json()) // Chuyển phản hồi thành JSON
+    .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message); // Hiển thị thông báo thành công            
+            alert(data.message);
             console.log(data.product);
             let priceStr = data.product.price.replace(/\./g, '').replace(' VND', ''); 
             let priceNumber = parseInt(priceStr, 10);
-            // Cập nhật dòng sản phẩm trên bảng nếu có
             let row = document.querySelector(`tr[data-id='${data.product.id}']`);
             if (row) {
                 row.innerHTML = `
@@ -168,8 +166,10 @@ document.getElementById("update-form-product").addEventListener("submit", functi
                 `;
                 console.log("Cập nhật thành công!");
             }
-            else
-                console.log("Không tìm thấy sản phẩm cần cập nhật!");
+            // Hiển thị lại bảng và nút thêm, ẩn form sửa
+            document.querySelector(".product-table").style.display = "table";
+            document.getElementById("product-plus").style.display = "block";
+            document.querySelector(".fix-form-product").style.display = "none";
         } else {
             alert("Lỗi: " + data.message);
         }

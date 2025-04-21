@@ -6,7 +6,7 @@ document.querySelector(".customer-table").addEventListener("click", function (ev
         let deleteOverlay = document.getElementById('delete-overlay-customer');
         deleteOverlay.style.display = 'block';
         document.getElementById('delete-acp-customer').onclick = function () {
-            fetch('../../PHP/CU-Delete.php', {
+            fetch('../PHP/CU-Delete.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

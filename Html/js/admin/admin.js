@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-const oder_part = document.querySelector(".oder-part");
+const statistic_part = document.querySelector(".statistic-part");
+const oder_part = document.querySelector(".order-part");
 const product_part = document.querySelector(".product-part");
 const customer_part = document.querySelector(".customer-part");
 const admin_main = document.querySelector(".admin-main");
+const admin_statistic = document.querySelector("#admin-statistic");
 const admin_oder = document.querySelector("#admin-oder");
 const admin_product = document.querySelector("#admin-product");
 const admin_customer = document.querySelector("#admin-customer");
@@ -17,9 +19,21 @@ const account_part = document.querySelector(".account-part");
 const role_part = document.querySelector(".role-part");
 const employee_part = document.querySelector(".employee-part");
 
+function statisticToggle(){
+    statistic_part.style.display = "block";
+    oder_part.style.display = "none";
+    admin_main.style.display = "none";
+    customer_part.style.display = "none";
+    product_part.style.display = "none";
+    profile_part.style.display = "none";
+    account_part.style.display = "none";
+    role_part.style.display = "none";
+    employee_part.style.display = "none";
+}
 
 function oderToggle(){
     oder_part.style.display = "block";
+    statistic_part.style.display = "none";
     admin_main.style.display = "none";
     customer_part.style.display = "none";
     product_part.style.display = "none";
@@ -31,6 +45,7 @@ function oderToggle(){
 
 function customerToggle(){
     customer_part.style.display = "block";
+    statistic_part.style.display = "none";
     oder_part.style.display = "none";
     admin_main.style.display = "none";
     product_part.style.display = "none";
@@ -42,6 +57,7 @@ function customerToggle(){
 
 function productToggle(){
     product_part.style.display = "block";
+    statistic_part.style.display = "none";
     admin_main.style.display = "none";
     customer_part.style.display = "none";
     oder_part.style.display = "none";
@@ -52,6 +68,7 @@ function productToggle(){
 }
 
 function returnMain(){
+    statistic_part.style.display = "none";
     oder_part.style.display = "none";
     customer_part.style.display = "none";
     product_part.style.display = "none" 
@@ -95,6 +112,7 @@ function employeeToggle(){
     employee_part.style.display = "block";
 }
 
+admin_statistic.addEventListener("click",statisticToggle);
 admin_oder.addEventListener("click",oderToggle);
 admin_product.addEventListener("click",productToggle);
 admin_customer.addEventListener("click",customerToggle);

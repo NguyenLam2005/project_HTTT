@@ -1,29 +1,38 @@
-    // Lọc đơn hàng theo trạng thái
-    document.addEventListener("DOMContentLoaded", function () {
-        const filterForm = document.getElementById("filter-form-order");
-        const filterSelect = document.getElementById("filter-status");
-        const tableBody = document.querySelector(".order-table tbody");
-    
-        filterForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Ngăn reload trang
-    
-            const selectedStatus = filterSelect.value;
-    
-            fetch("../../PHP/OD-Manager.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `status=${selectedStatus}`
-            })
-            .then(response => response.text())
-            .then(html => {
-                tableBody.innerHTML = html;
-                updateStatusColorEffect(); // cập nhật màu trạng thái
-            })
-            .catch(error => console.error("Lỗi lọc đơn hàng:", error));
-        });
+    // Lọc đơn hàng
+    const filterForm = document.getElementById("filter-form-order");
+    const tableBody = document.querySelector(".order-table tbody");
+
+    filterForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const status = document.getElementById("filter-status").value;
+        const province = document.getElementById("order-province").value;
+        const district = document.getElementById("order-district").value;
+        const startDate = document.getElementById("order-start-date").value;
+        const endDate = document.getElementById("order-end-date").value;
+
+        const formData = new URLSearchParams();
+        formData.append("status", status);
+        formData.append("province_id", province);
+        formData.append("district_id", district);
+        formData.append("start_date", startDate);
+        formData.append("end_date", endDate);
+
+        fetch("../PHP/OD-Manager.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: formData.toString()
+        })
+        .then(response => response.text())
+        .then(html => {
+            tableBody.innerHTML = html;
+            updateStatusColorEffect();
+        })
+        .catch(error => console.error("Lỗi lọc đơn hàng:", error));
     });
+
     
 
     function updateStatusColorEffect() { //Lấy đúng màu trạng thái khi lọc
@@ -37,6 +46,7 @@
     // Dùng ajax xem chi tiết theo từng đơn hàng
     document.addEventListener("DOMContentLoaded", function () {
         const table = document.querySelector(".order-table");
+        const filterForm = document.getElementById("filter-form-order");
         const detailContainer = document.querySelector(".order-detail-container");
 
         document.addEventListener("click", function (event) {
@@ -47,7 +57,7 @@
 
                 table.style.display = "none";
 
-                fetch("../../PHP/OD-get_order_detail.php", {
+                fetch("../PHP/OD-get_order_detail.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -58,6 +68,7 @@
                 .then(html => {
                     detailContainer.innerHTML = html;
                     detailContainer.style.display = "block";
+                    filterForm.style.display = "none";
                 })
                 .catch(error => console.error("Lỗi khi tải chi tiết đơn hàng:", error));
             }
@@ -65,18 +76,28 @@
             if (target.classList.contains("back-orderdetail")) {
                     detailContainer.style.display = "none";
                     table.style.display = "table";
+                    filterForm.style.display = "flex";
                 }
         });
     });
 
-    // Thay đổi trạng thái
+    //Thay đổi trạng thái đơn hàng
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("change", function (event) {
             if (event.target.classList.contains("order-status")) {
                 let orderId = event.target.getAttribute("data-id");
                 let newStatus = event.target.value;
-    
-                fetch("../../PHP/OD-update_status.php", {
+                let currentStatus = event.target.getAttribute("data-old");
+
+            // Không thể chuyển trạng thái về trạng thái bé hơn và không thể chuyển từ "đã giao" sang "đã hủy"
+            if ((parseInt(newStatus) < parseInt(currentStatus)) || ( parseInt(newStatus)==5 && parseInt(currentStatus)==4)) {
+                alert("Không thể thay đổi trạng thái");
+                event.target.value=currentStatus;
+                updateStatusColor(); 
+                return;
+            }
+
+                fetch("../PHP/OD-update_status.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -86,13 +107,10 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Lấy trạng thái hiện tại khi đang lọc
-                        alert(`Trạng thái của đơn hàng ${orderId} đã được cập nhật!`);
                         const currentFilter = document.getElementById("filter-status").value;
     
-                        // Nếu trạng thái có thay đổi thì refetch lại bảng
                         if (currentFilter !== "0") {
-                            fetch("../../PHP/OD-Manager.php", {
+                            fetch("../PHP/OD-Manager.php", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/x-www-form-urlencoded"
@@ -103,10 +121,12 @@
                             .then(html => {
                                 const tableBody = document.querySelector(".order-table tbody");
                                 tableBody.innerHTML = html;
-                                updateStatusColorEffect();
+                                updateStatusColor(); 
                             });
                         } else {
+                            event.target.setAttribute("data-old", newStatus);
                             alert(`Trạng thái của đơn hàng ${orderId} đã được cập nhật!`);
+                            updateStatusColor(); 
                         }
                     } else {
                         alert("Lỗi khi cập nhật trạng thái: " + data.message);
@@ -116,14 +136,17 @@
             }
         });
     
-        // Gán màu trạng thái ban đầu
-        const statusElements = document.querySelectorAll(".order-status");
-        statusElements.forEach(select => {
-            select.addEventListener("change", ChangeStatus);
-            ChangeStatus({ target: select });
-        });
+        // Gán màu trạng thái ban đầu khi load trang
+        updateStatusColor();
     });
     
+
+    function updateStatusColor() {
+        const statusElements = document.querySelectorAll(".order-status");
+        statusElements.forEach(select => {
+            ChangeStatus({ target: select }); 
+        });
+    }
 
     //Màu của select trạng thái
     function ChangeStatus(event) {

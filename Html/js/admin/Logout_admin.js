@@ -5,7 +5,7 @@ $(".logout-btn-admin").click(function () {
     dataType: "json",
     success: function (res) {
       if (res.status === "success") {
-        window.location.href = "login_admin.php";
+        window.location.href = "../../login_admin.php";
       }
     },
     error: function () {

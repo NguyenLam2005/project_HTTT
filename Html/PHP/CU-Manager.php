@@ -1,7 +1,13 @@
 <?php
 include 'config.php';
 
-$sql = "SELECT * FROM customers";
+$sql = "SELECT customers.*, 
+               provinces.name AS province_name, 
+               districts.name AS district_name
+        FROM customers
+        JOIN provinces ON customers.province_id = provinces.id
+        JOIN districts ON customers.district_id = districts.id";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -18,10 +24,10 @@ if ($result->num_rows > 0) {
                 </select>
               </td>";
         echo "<td style='text-align: center; vertical-align: middle;'>
-                <img src='' class='customer-detail' data-id='$cusId' alt='Xem chi tiết'>
+                <img src='../../Html/img/ACdetail.png' class='customer-detail' data-id='$cusId' alt='Xem chi tiết'>
               </td>";
         echo "<td style='text-align: center; vertical-align: middle;'>
-              <img src='' class='history-order' alt='Xem lịch sử'>
+              <img src='../../Html/img/' class='history-order' alt='Xem lịch sử'>
             </td>";
         echo "<td>
                 <div class='fix-customer'>
@@ -31,7 +37,7 @@ if ($result->num_rows > 0) {
               </td>";
         echo "</tr>";
 
-        // Phần hiển thị chi tiết khách hàng
+        // Phần hiển thị chi tiết khách hàng 
         echo "<div class='detail-customer-container' id='detail-customer-$cusId' >";
         echo "    <i class='fa-solid fa-rotate-left back-customer1' data-id='$cusId'></i>";
         echo "    <h2>Thông Tin Tài Khoản</h2>";
@@ -40,7 +46,7 @@ if ($result->num_rows > 0) {
         echo "    <div class='cus-info'><span class='cus-label'>Trạng thái tài khoản:</span><span class='cus-value'>" . ($status == 1 ? "Đang hoạt động" : "Đã khóa") . "</span></div>";
         echo "    <div class='cus-info'><span class='cus-label'>Số điện thoại:</span><span class='cus-value'>" . $row['phoneNumber'] . "</span></div>";
         echo "    <div class='cus-info'><span class='cus-label'>Email:</span><span class='cus-value'>" . $row['email'] . "</span></div>";
-        echo "    <div class='cus-info'><span class='cus-label'>Địa chỉ:</span><span class='cus-value'>" . $row['address'] . "</span></div>";
+        echo "    <div class='cus-info'><span class='cus-label'>Địa chỉ:</span><span class='cus-value'>" . $row['addressDetail'] .", ". $row['district_name'] .", ". $row['province_name'] . "</span></div>";
         echo "    <div class='cus-info'><span class='cus-label'>Tên đăng nhập:</span><span class='cus-value'>" . $row['userName'] . "</span></div>";
         echo "</div>";
     }
@@ -105,7 +111,7 @@ if ($result->num_rows > 0) {
             let customerId = event.target.getAttribute("data-id");
             let newStatus = event.target.value;
 
-            fetch("../PHP/CU-update_status.php", {
+            fetch("../../PHP/CU-update_status.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -142,7 +148,7 @@ if ($result->num_rows > 0) {
                 table.style.display = "none";
 
                 // Gửi AJAX để lấy lịch sử đơn hàng
-                fetch("../PHP/CU-get_order_history.php", {
+                fetch("../../PHP/CU-get_order_history.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
