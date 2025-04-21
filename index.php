@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="./Css/Client/headpages.css">
     <link rel="stylesheet" href="./Css/Client/navbar.css">
-
+    <link rel="stylesheet" href="./Css/Client/footer.css">
     <link rel="stylesheet" href="./Css/Client/loginCustomer.css">
     <link rel="stylesheet" href="./Css/Client/registerCustomer.css">
     <link rel="stylesheet" href="./Css/Client/product.css?v=4564">

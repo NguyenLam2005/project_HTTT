@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Thêm khách hàng
-        $stmt = $conn->prepare("INSERT INTO customers (name, phoneNumber, userName, password, address, status) VALUES (?, ?, ?, ?, ?, 1)");
+        $stmt = $conn->prepare("INSERT INTO customers (fullName, phoneNumber, userName, password, address, status) VALUES (?, ?, ?, ?, ?, 1)");
         $stmt->bind_param("sssss", $fullname, $phone, $username, $hashedPassword, $address);
         if ($stmt->execute()) {
             $customer_id = $stmt->insert_id;
@@ -80,8 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['success' => false, 'error' => $stmt->error]);
         }
         exit;
-
-
     }
 
     if ($action === 'login_customer') {
@@ -108,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['customer'] = [
                     'id' => $user['id'],
                     'username' => $user['userName'],
-                    'name' => $user['name']
+                    'name' => $user['fullName']
                 ];
                 echo json_encode(['exists' => true]);
             } else {

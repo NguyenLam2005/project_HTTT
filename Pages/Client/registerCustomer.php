@@ -32,201 +32,183 @@
     <script>
 
 
-        $(document).ready( function () {
-            //Hiện mật khẩu
-            $(".password__container i").click(function () {
-                let input = $(this).siblings("input");
-                if (input.attr("type") === "password") {
-                    input.attr("type", "text");
-                    $(this).removeClass("fa-eye").addClass("fa-eye-slash");
-                } else {
-                    input.attr("type", "password");
-                    $(this).removeClass("fa-eye-slash").addClass("fa-eye");
-                }
-            });
+$(document).ready(function () {
+    // Hiện mật khẩu
+    $(".password__container i").click(function () {
+        let input = $(this).siblings("input");
+        if (input.attr("type") === "password") {
+            input.attr("type", "text");
+            $(this).removeClass("fa-eye").addClass("fa-eye-slash");
+        } else {
+            input.attr("type", "password");
+            $(this).removeClass("fa-eye-slash").addClass("fa-eye");
+        }
+    });
 
+    // Đăng ký tài khoản
+    function validateInput(input) {
+        const value = input.val().trim();
+        const id = input.attr("id");
+        let isValid = true;
+        let errorMessage = "";
+        const errorElement = $("#error_mes");
 
-            // Đăng ký tài khoản
-            //Hàm kiểm tra và cập nhật lỗi
-            function validateInput(input){
-                const value = input.val().trim();
-                const id = input.attr("id");
-                let isValid = true;
-                let errorMessage = "";
-                const errorElement = $("#error_mes");
+        if (id === "fullname" && value === "") {
+            isValid = false;
+            errorMessage = "Vui lòng nhập họ tên!";
+        }
 
-                //Kiểm tra tên đầy đủ
-                if(id === "fullname" && value === ""){
-                    isValid = false;
-                    errorMessage = "Vui lòng nhập họ tên!";
-                }
+        if (id === "std") {
+            if (value === "") {
+                isValid = false;
+                errorMessage = "Vui lòng nhập số điện thoại!";
+            } else if (!/^0\d{9}$/.test(value)) {
+                isValid = false;
+                errorMessage = "*Số điện thoại không đúng";
+            } else {
+                var formData = new FormData();
+                formData.append("action", "check_sdt");
+                formData.append("sdt", value);
 
-                //Kiểm tra số điện thoại
-                if(id === "std"){
-                    if(value === ""){
-                        isValid = false;
-                        errorMessage = "Vui lòng nhập số điện thoại!";
-                    } else if(!/^0\d{9}$/.test(value)){
-                        isValid = false;
-                        errorMessage = "*Số điện thoại không đúng";
-                    }
-                    else{ //Kiểm tra trùng số điện thoại
-                        var formData = new FormData();
-                        formData.append("action", "check_sdt");
-                        formData.append("sdt", value);
-
-                        $.ajax({
-                            url: '../../Server/Client/account_customer.php',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            dataType: 'json',
-                            success: function(response){
-                                if(response.exists){
-                                    errorElement.text("*Số điện thoại được sử dụng").css("display", "block");
-                                    input.css("border-color", "red");
-                                } else{
-                                    errorElement.css("display","none");
-                                    input.css("border-color", "");
-                                }
-                            },
-                            error: function(){
-                                console.error('Lôĩ khi kiểm tra số điện thoại');
-                            }
-                        });
-                    }
-                }
-
-                //Kiểm tra địa chỉ
-                if(id === "dia_chi" && value ===""){
-                    isValid = false;
-                    errorMessage = "Vui lòng nhập địa chỉ!";
-                }
-
-                //Kiểm tra tên đăng nhập
-                if(id === "username"){
-                    if (value === "") {
-                        isValid = false;
-                        errorMessage = "Vui lòng nhập tên đăng nhập!";
-                        errorElement.text(errorMessage).css("display", "block");
-                        input.css("border-color", "red");
-                    } else if (!/^[a-zA-Z0-9]{6,}$/.test(value)) {
-                        isValid = false;
-                        errorMessage = "*Tên đăng nhập phải có ít nhất 6 ký tự, không chứa ký tự đặc biệt";
-                        errorElement.text(errorMessage).css("display", "block");
-                        input.css("border-color", "red");
-                    } else {
-                        // Tạo đối tượng FormData
-                        var formData = new FormData();
-                        formData.append("action", "check_username");
-                        formData.append("userName", value);
-
-                        // Gửi yêu cầu AJAX kiểm tra tên đăng nhập
-                        $.ajax({
-                            url: '../../Server/Client/account_customer.php',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            dataType: 'json',
-                            success: function (response) {
-                                if (response.exists) {
-                                    errorElement.text("*Tên đăng nhập đã tồn tại").css("display", "block");
-                                    input.css("border-color", "red");
-                                } else {
-                                    errorElement.css("display","none");
-                                    input.css("border-color", "");
-                                }
-                            },
-                            error: function () {
-                                console.error('Lỗi khi kiểm tra tên đăng nhập');
-                            }
-                        });
-                    }
-                }
-
-                // Kiểm tra mật khẩu
-                if (id === "password" && value === "") {
-                    isValid = false;
-                    errorMessage = "Vui lòng nhập mật khẩu";
-                }
-
-                // Kiểm tra nhập lại mật khẩu
-                if (id === "re-pass") {
-                    const password = $("#password").val().trim();
-                    if (value !== password) {
-                        isValid = false;
-                        errorMessage = "Mật khẩu không khớp!";
-                    }
-                }
-
-                // Hiển thị lỗi nếu có
-                if (id !== "username" && id !== "sdt") {
-                    if (!isValid) {
-                        errorElement.text(errorMessage).css("display", "block");
-                        input.css("border-color", "red");
-                    } else {
-                        errorElement.text("").css("display", "none");
-                        input.css("border-color", "");
-                    }
-                }
-                return isValid;
-            }
-
-            $("input").on("input", function(){
-                validateInput($(this));
-            });
-
-            // Kiểm tra tất cả các trường khi submit form
-            $("#register_customer").submit(function (e) {
-                e.preventDefault();
-
-                let formIsValid = true;
-                let firstErrorMessage = "";
-                let firstInvalidInput = null;
-
-                // Kiểm tra tất cả các trường trước khi gửi form
-                $("input").each(function () {
-                    const isValid = validateInput($(this));
-                    if (!isValid && firstErrorMessage === "") {
-                        formIsValid = false;
-                        firstErrorMessage = $("#error_mes").text();
-                        firstInvalidInput = $(this);
+                $.ajax({
+                    url: '../../Server/Client/account_customer.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.exists) {
+                            errorElement.text("*Số điện thoại đã được sử dụng").css("display", "block");
+                            input.css("border-color", "red");
+                        } else {
+                            errorElement.css("display", "none");
+                            input.css("border-color", "");
+                        }
+                    },
+                    error: function () {
+                        console.error('Lỗi khi kiểm tra số điện thoại');
                     }
                 });
+            }
+        }
 
-                if (formIsValid) {
-                    var formData = new FormData(document.getElementById("register_customer"));
-                    formData.append("action", "register_customer");
+        if (id === "dia_chi" && value === "") {
+            isValid = false;
+            errorMessage = "Vui lòng nhập địa chỉ!";
+        }
 
-                    $.ajax({
-                        url: '../../Server/Client/account_customer.php',
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        dataType: 'json',
-                        success: function(response){
-                            if (response.success) {
-                                alert("Đăng ký thành công");
-                                $("#register_customer")[0].reset(); // reset form
-                                window.location.href = "loginCustomer.php";
-                            } else {
-                                alert("Đăng ký thất bại: " + response.error);
-                            }
-                        },
-                        error: function(xhr, status, error){
-                        alert("Lỗi hệ thống: " + error);
+        if (id === "username") {
+            if (value === "") {
+                isValid = false;
+                errorMessage = "Vui lòng nhập tên đăng nhập!";
+            } else if (!/^[a-zA-Z0-9]{6,}$/.test(value)) {
+                isValid = false;
+                errorMessage = "*Tên đăng nhập phải có ít nhất 6 ký tự, không chứa ký tự đặc biệt";
+            } else {
+                var formData = new FormData();
+                formData.append("action", "check_username");
+                formData.append("userName", value);
+
+                $.ajax({
+                    url: '../../Server/Client/account_customer.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.exists) {
+                            errorElement.text("*Tên đăng nhập đã tồn tại").css("display", "block");
+                            input.css("border-color", "red");
+                        } else {
+                            errorElement.css("display", "none");
+                            input.css("border-color", "");
                         }
-                    });
-                }
-                else{
-                    $("#error_mes").text(firstErrorMessage).css("display", "block");
-                    firstInvalidInput.focus();
+                    },
+                    error: function () {
+                        console.error('Lỗi khi kiểm tra tên đăng nhập');
+                    }
+                });
+            }
+        }
+
+        if (id === "password" && value === "") {
+            isValid = false;
+            errorMessage = "Vui lòng nhập mật khẩu";
+        }
+
+        if (id === "re-pass") {
+            const password = $("#password").val().trim();
+            if (value !== password) {
+                isValid = false;
+                errorMessage = "Mật khẩu không khớp!";
+            }
+        }
+
+        if (!isValid) {
+            errorElement.text(errorMessage).css("display", "block");
+            input.css("border-color", "red");
+        } else {
+            errorElement.text("").css("display", "none");
+            input.css("border-color", "");
+        }
+
+        return isValid;
+    }
+
+    $("input").on("input", function () {
+        validateInput($(this));
+    });
+
+    $("#register_customer").submit(function (e) {
+        e.preventDefault();
+
+        let formIsValid = true;
+        let firstErrorMessage = "";
+        let firstInvalidInput = null;
+
+        $("input").each(function () {
+            const isValid = validateInput($(this));
+            if (!isValid && firstErrorMessage === "") {
+                formIsValid = false;
+                firstErrorMessage = $("#error_mes").text();
+                firstInvalidInput = $(this);
+            }
+        });
+
+        if (formIsValid) {
+            var formData = new FormData(document.getElementById("register_customer"));
+            formData.append("action", "register_customer");
+
+            $.ajax({
+                url: '../../Server/Client/account_customer.php',
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);  // In ra dữ liệu để kiểm tra
+                    if (response.success) {
+                        alert("Đăng ký thành công");
+                        $("#register_customer")[0].reset();
+                        window.location.href = "loginCustomer.php";
+                    } else {
+                        alert("Đăng ký thất bại: " + response.error);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("Lỗi hệ thống: " + error);
                 }
             });
-        });
+        } else {
+            $("#error_mes").text(firstErrorMessage).css("display", "block");
+            firstInvalidInput.focus();
+        }
+    });
+});
+
     </script>
 
 <?php include '../../Layout/Client/footer.php'; ?>

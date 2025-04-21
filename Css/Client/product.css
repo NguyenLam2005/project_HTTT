@@ -169,6 +169,7 @@
     color: white;
 }
 
+/* Chi tiết sản phẩm */
 .product__detail{
     display: none;
     position: absolute;
@@ -203,7 +204,7 @@
 
 .loading {
     font-style: italic;
-    color: #888;
+    color: white;
     text-align: center;
     padding: 10px;
 }

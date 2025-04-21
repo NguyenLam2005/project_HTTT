@@ -123,17 +123,17 @@ $(document).ready(function () {
     });
 
     // Click vào card sản phẩm → hiện chi tiết
-    $(document).on('click', '.product__card', function () {
-        let productId = $(this).data('id');
-        $.ajax({
-            url: './Server/Client/product_detail.php',
-            method: 'POST',
-            data: { product_id: productId },
-            success: function (res) {
-                $('.product__detail').html(res).slideDown();
-            }
-        });
-    });
+    // $(document).on('click', '.product__card', function () {
+    //     let productId = $(this).data('id');
+    //     $.ajax({
+    //         url: './Server/Client/product_detail.php',
+    //         method: 'POST',
+    //         data: { product_id: productId },
+    //         success: function (res) {
+    //             $('.product__detail').html(res).slideDown();
+    //         }
+    //     });
+    // });
 
     // Xử lý active cho các mục navbar
     $(document).on('click', '.nav-item', function () {
