@@ -191,7 +191,7 @@ if (!isset($_SESSION['adminInfo'])) {
       <div class="order-detail-container" style="display: none; margin-top: 20px;"></div>
     </div>
   </div>
-  <!-- ----------------------------PRODUCT----------------------------- -->
+  
   <div class="product-part">
     <div class="product-table-container">
       <div id="product-plus">Thêm sản phẩm</div>
@@ -555,35 +555,12 @@ if (!isset($_SESSION['adminInfo'])) {
     </div>
   </div>
 
-  <!-- ROLEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+
 
   <div class="role-part">
     <div class="role-table-container">
-       <div id="account-overlay-role">
-       <!-- <div class="account-role-container"> -->
-         <!--  <img src="../../assest/Chevron down.png" alt="">
-          <div class="list-user-role">
-            <div class="user-role">user1</div>
-            <div class="user-role">user2</div>
-            <div class="user-role">user4</div>
-            <div class="user-role">user5</div>
-            <div class="user-role">user6</div>
-            <div class="user-role">user7</div>
-            <div class="user-role">user8</div>
-            <div class="user-role">user9</div>
-            <div class="user-role">usera</div>
-            <div class="user-role">userb</div>
-            <div class="user-role">userc</div>
-            <div class="user-role">userd</div>
-            <div class="user-role">usere</div>
-            <div class="user-role">userf</div>
-            <div class="user-role">userg</div>
-            <div class="user-role">userh</div>
-            <div class="user-role">userj</div>
-          </div>
-        </div> -->
-      <!-- </div> -->
-
+       <!-- <div id="account-overlay-role"> -->
+    
       <div id="role-plus">Thêm quyền</div>
 
       <table class="role-table">
@@ -692,9 +669,9 @@ if (!isset($_SESSION['adminInfo'])) {
 
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 
-  <!-- employee-part -->
+  
   <div class="employee-part">
     <div class="employee-table-container">
       <div id="employee-plus">Thêm nhân viên</div>
