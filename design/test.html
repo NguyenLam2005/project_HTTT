@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HighTech</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="icon" href="../img/logo-icon.png" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="../Css/Client/test.css">
+</head>
+
+<body>
+    <div class="header__navbar">
+        <ul class="header__navbar-list">
+            <li class="nav-item active"><a href="#"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <li class="nav-item"><a href="#">Thương hiệu</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ nam</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ nữ</a></li>
+            <li class="nav-item"><a href="#">Đồng hồ để bàn</a></li>
+            <li class="nav-item"><a href="#">Tin tức</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); // Ngăn chuyển trang nếu có href
+            navItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+body{
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.header{
+    width: 100%;
+    height: 80px;
+    background-color: #101010;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.header__container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    position: relative;
+}
+
+.header__logo{
+    width: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.header__logo a{
+    width: 100%;
+    height: 100%;
+}
+
+.header__logo a img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/*search bar*/
+.header__searchbar{
+    width: 50%;
+    background-color: #101010;
+}
+
+.header__searcbar-container{
+    padding: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.header__searcbar-container input{
+    height: 30px;
+    background-color: #211f1f;
+    border-radius: 0 30px 30px 0;
+    color: white;
+    width: 75%;
+    font-size: 15px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    padding: 0 10px 0 5px;
+}
+
+.header__searcbar-container i{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px 0 0 30px;
+    background-color: #211f1f;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*right-box*/
+.header__right-box{
+    display: flex;
+    gap: 20px;
+}
+
+
+.header__cart{
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+}
+
+.header__cart:hover{
+    color: orange;
+}
+
+
+.header__account{
+    position: relative;
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.header__account:hover{
+    color: orange;
+
+
+}
+
+
+.header__account-dropdown{
+    list-style: none;
+    background-color: white;
+    padding: 20px 0;
+    display: none;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    position: absolute;
+    left: 0px;
+    top: 35px;
+    color: black;
+    border-radius: 5px;
+    z-index: 1001;
+    
+}
+
+.header__account-dropdown li{
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    font-size: 17px ;
+}
+
+.header__account:hover .header__account-dropdown{
+    display: flex;
+}
+
+.header__account-dropdown li:hover a{
+    color: orange;
+}
+
+.slide__box {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    margin: 126px 0 0 0;
+/* Chiều cao tùy chỉnh theo nhu cầu */
+}
+
+.slide__box .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+}
+
+.slide__box .slide.active_slide {
+    opacity: 1;
+    z-index: 1;
+}
+
+

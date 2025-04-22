@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+
+body,html {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #3e3e3f;
+    scroll-behavior: smooth;
+}
+
+button{
+    all: unset;
+    display: block;
+}
+
