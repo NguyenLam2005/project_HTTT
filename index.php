@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="./Css/base.css">
 
 </head>
+    <script src="./Js/Client/cart.js"></script>
 <body>
 <?php 
 include './Layout/Client/header.php';

@@ -219,3 +219,22 @@
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 }
+
+.product__card-add-btn {
+    background-color: #ffc107;         /* Màu vàng nổi bật */
+    color: #000;                        /* Chữ đen rõ ràng */
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.product__card-add-btn:hover {
+    background-color: #e0a800;         /* Vàng đậm hơn khi hover */
+    transform: scale(1.05);            /* Hiệu ứng phóng nhẹ */
+}

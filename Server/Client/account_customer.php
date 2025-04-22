@@ -3,6 +3,7 @@ require_once __DIR__ . '/../database.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json');
     $action = $_POST['action'] ?? '';
 
     // Kiểm tra số điện thoại có bị trùng
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Thêm khách hàng
-        $stmt = $conn->prepare("INSERT INTO customers (fullName, phoneNumber, userName, password, address, status) VALUES (?, ?, ?, ?, ?, 1)");
+        $stmt = $conn->prepare("INSERT INTO customers (fullName, phoneNumber, userName, password, addressDetail, status) VALUES (?, ?, ?, ?, ?, 1)");
         $stmt->bind_param("sssss", $fullname, $phone, $username, $hashedPassword, $address);
         if ($stmt->execute()) {
             $customer_id = $stmt->insert_id;
