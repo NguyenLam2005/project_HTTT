@@ -18,7 +18,7 @@
         formData.append("start_date", startDate);
         formData.append("end_date", endDate);
 
-        fetch("../PHP/OD-Manager.php", {
+        fetch("/project_HTTT/Html/PHP/OD-Manager.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -57,7 +57,7 @@
 
                 table.style.display = "none";
 
-                fetch("../PHP/OD-get_order_detail.php", {
+                fetch("/project_HTTT/Html/PHP/OD-get_order_detail.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -97,7 +97,7 @@
                 return;
             }
 
-                fetch("../PHP/OD-update_status.php", {
+                fetch("/project_HTTT/Html/PHP/OD-update_status.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
