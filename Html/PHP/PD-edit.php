@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Kiểm tra nếu có ảnh mới
     if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLOAD_ERR_OK) {
         $image = $_FILES['product-image']['name'];
-        $target_dir = realpath(__DIR__ . "/../img/product") . "/";
+        $target_dir = realpath(__DIR__ . "/project_HTTT/Html/img/product") . "/";
         $target_file = $target_dir . basename($image);
 
         // Kiểm tra và tạo thư mục nếu chưa tồn tại

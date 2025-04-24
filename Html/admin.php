@@ -184,8 +184,8 @@ if (!isset($_SESSION['adminInfo'])) {
             <th>Trạng thái</th>
           </tr>
         </thead>
-        <tbody>
-        
+        <tbody id="order-table-body">
+        <?php include 'PHP/OD-Manager.php' ?>
         </tbody>
       </table>
       <div class="order-detail-container" style="display: none; margin-top: 20px;"></div>

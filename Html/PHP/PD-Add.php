@@ -11,24 +11,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
 
-    if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLOAD_ERR_OK) {
-        $image = $_FILES['product-image']['name'];
-        $target_dir = realpath(__DIR__ . "/../img/product") . "/";
-        $target_file = $target_dir . basename($image);
+if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLOAD_ERR_OK) {
+    $image = time() . "_" . basename($_FILES['product-image']['name']);
+    $target_dir = __DIR__ . "/../img/product/";
 
-        // Kiểm tra và tạo thư mục nếu chưa tồn tại
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
-        }
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
 
-        if (move_uploaded_file($_FILES['product-image']['tmp_name'], $target_file)) {
-            $target_file = "/project_HTTT/Html/img/product" . basename($image); 
-        } else {
-            $target_file = $noneIMG;
-        }
+    $target_file_full = $target_dir . $image; // đường dẫn vật lý
+    if (move_uploaded_file($_FILES['product-image']['tmp_name'], $target_file_full)) {
+        $target_file = "/project_HTTT/Html/img/product/" . $image; // đường dẫn web
     } else {
+        error_log("Lỗi không thể ghi file vào: " . $target_file_full);
         $target_file = $noneIMG;
     }
+} else {
+    $target_file = $noneIMG;
+}
+
 
     $sql = "SELECT categories.name AS category_name
     FROM categories

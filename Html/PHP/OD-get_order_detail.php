@@ -34,7 +34,7 @@ if ($row1 = $result1->fetch_assoc()) {
 $stmt1->close();
 // Lấy thông tin sản phẩm
 $sqlProducts = "SELECT 
-                   p.pd_name,
+                   p.name,
                    od.quantity,
                    od.price
                 FROM orderdetail od
@@ -61,7 +61,7 @@ if ($result2->num_rows > 0) {
           <tbody>";
     
     while ($row = $result2->fetch_assoc()) {
-        $product = htmlspecialchars($row['pd_name']);
+        $product = htmlspecialchars($row['name']);
         $quantity = $row['quantity'];
         $price = number_format($row['price']) . " đ";
         echo "<tr>

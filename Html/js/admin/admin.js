@@ -80,6 +80,7 @@ function returnMain(){
 }
 
 function accountToggle(){
+    statistic_part.style.display = "none";
     oder_part.style.display = "none";
     customer_part.style.display = "none";
     product_part.style.display = "none" 
@@ -91,6 +92,7 @@ function accountToggle(){
 }
 
 function roleToggle(){
+    statistic_part.style.display = "none";
     oder_part.style.display = "none";
     customer_part.style.display = "none";
     product_part.style.display = "none" 
@@ -102,6 +104,7 @@ function roleToggle(){
 }
 
 function employeeToggle(){
+    statistic_part.style.display = "none";
     oder_part.style.display = "none";
     customer_part.style.display = "none";
     product_part.style.display = "none" 
