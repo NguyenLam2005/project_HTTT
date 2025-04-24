@@ -24,10 +24,7 @@ if ($result->num_rows > 0) {
                 </select>
               </td>";
          echo "<td>
-         <div style = 'display: flex;'>
-            <span style='margin-left: 10px; font-weight: bold;'>" . htmlspecialchars($permission_name) . "</span>
-         </div>
-    
+            <span style=' font-weight: bold;'>" . htmlspecialchars($permission_name) . "</span>
          </td>";
          echo "<td>
          <div class='fix-account'>

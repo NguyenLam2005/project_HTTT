@@ -56,7 +56,7 @@ if ($result->num_rows > 0){
         echo "<td>" . number_format($row['totalPrice']) . " đ</td>";
         echo "<td>" . htmlspecialchars($row['orderDate']) . "</td>";
         echo "<td style='text-align: center; vertical-align: middle;'>
-                <i class='fa-solid fa-circle-info order-detail' data-id='$orderId' style='cursor:pointer;'></i>
+                <i class='fa-solid fa-circle-info order-detail' data-id='$orderId' style='cursor:pointer; color: #4A90E2;'></i>
               </td>";
         echo "<td>
                 <select class='order-status' data-id='$orderId' data-old='{$row['status']}'>

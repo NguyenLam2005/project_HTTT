@@ -28,7 +28,7 @@ document.querySelector(".add-form-role").addEventListener("submit", function(e) 
                 <td>${data.role.name}</td>
                 <td>${functionsHTML}</td>
                 <td>0</td>
-                <td class='role-account'><img src='../../assest/Download cloud.png' alt='' class='show-userrole' data-id='$permissionId'></td>
+                <td class='role-account'><img src='/project_HTTT/Html/img/Download cloud.png' alt='' class='show-userrole' data-id='$permissionId'></td>
                 <td><div class='fix-role'>
                     <i class='fa-solid fa-pen-to-square fix-btn-role' data-id='${data.role.id}'></i>
                     <i class='fa-solid fa-trash delete-btn-role' data-id='${data.role.id}'></i>

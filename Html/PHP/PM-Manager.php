@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 
         // Nút hiển thị modal
         echo "<td class='role-account'>";
-        echo "<img src='../../assest/Download cloud.png' alt='' class='show-userrole' data-id='$permissionId'>";
+        echo "<img src='/project_HTTT/Html/img/Download cloud.png' alt='' class='show-userrole' data-id='$permissionId'>";
         echo "</td>";
 
         // Edit
@@ -58,7 +58,10 @@ if ($result->num_rows > 0) {
 ?>
 <div id="account-overlay-role">
     <div class="account-role-container">
-        <img src="../../assest/Chevron down.png" alt="" id="close-modal">
+        <div class="modal-header">
+            <h3>Danh sách người dùng</h3>
+            <img src="/project_HTTT/Html/img/Chevron down.png" alt="" id="close-modal">
+        </div>
         <div class="list-user-role" id="account-list"></div>
     </div>
 </div>
@@ -77,14 +80,28 @@ if ($result->num_rows > 0) {
                 userListContainer.innerHTML = "";
 
                 if (usersList[permissionId] && usersList[permissionId].length > 0) {
-                    usersList[permissionId].forEach(function (user) {
+                    // Tạo container cho danh sách
+                    let userListDiv = document.createElement("div");
+                    userListDiv.className = "user-list-container";
+
+                    usersList[permissionId].forEach(function (user, index) {
                         let userDiv = document.createElement("div");
-                        userDiv.className = "role-function";
-                        userDiv.textContent = user;
-                        userListContainer.appendChild(userDiv);
+                        userDiv.className = "user-item";
+                        userDiv.innerHTML = `
+                            <span class="user-number">${index + 1}</span>
+                            <span class="user-name">${user}</span>
+                        `;
+                        userListDiv.appendChild(userDiv);
                     });
+
+                    userListContainer.appendChild(userListDiv);
                 } else {
-                    userListContainer.innerHTML = "<div class='role-function'>Không có người dùng</div>";
+                    userListContainer.innerHTML = `
+                        <div class="no-users-message">
+                            <i class="fa-solid fa-users"></i>
+                            <p>Không có người dùng nào</p>
+                        </div>
+                    `;
                 }
 
                 overlay.style.display = "flex"; // Hiển thị modal
@@ -99,3 +116,4 @@ if ($result->num_rows > 0) {
         });
     });
 </script>
+

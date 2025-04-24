@@ -1189,46 +1189,101 @@ body {
   right: 0;
   z-index: 1;
   display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#account-overlay-role[style*="display: flex"] {
+  display: flex !important;
 }
 
 .account-role-container {
-  width: 20%;
-  height: 40%;
-  background-color: #feead7;
-  border-radius: 20px;
-  padding: 10px 40px;
-  margin: 0 auto;
-  margin-top: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  box-shadow: 0 0 20px 10px rgba(49, 23, 1, 0.2);
-}
-
-.account-role-container img {
-  width: 60%;
-  height: 15%;
-}
-
-.list-user-role {
-  background-color: hwb(0 100% 0%);
+  background-color: #fff;
   border-radius: 10px;
-  width: 100%;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-header {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.user-list-container {
+  max-height: 300px;
   overflow-y: auto;
-  box-shadow: 0 0 20px 10px rgba(83, 10, 61, 0.2);
+  padding: 10px;
 }
 
-.user-role {
-  width: 100%;
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  transition: background-color 0.2s;
 }
 
-.user-role:hover {
-  background-color: thistle;
+.user-item:hover {
+  background-color: #e9ecef;
+}
+
+.user-number {
+  background-color: #4A90E2;
+  color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 0.9em;
+}
+
+.user-name {
+  color: #333;
+  font-size: 1em;
+}
+
+.no-users-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.no-users-message i {
+  font-size: 2em;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+#close-modal {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+
+#close-modal:hover {
+  transform: rotate(180deg);
 }
 
 /* detail */
@@ -1428,6 +1483,64 @@ body {
   border-radius: 6px;
   min-width: 110px;
   z-index: 999;               
+}
+
+.statistic-table th,
+.statistic-table td,
+.order-table th,
+.order-table td,
+.product-table th,
+.product-table td,
+.customer-table th,
+.customer-table td,
+.account-table th,
+.account-table td,
+.role-table th,
+.role-table td,
+.employee-table th,
+.employee-table td,
+.history-order-table th,
+.history-order-table td,
+.order-detail-table th,
+.order-detail-table td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.customer-table td:nth-child(2), 
+.product-table td:nth-child(2),
+.account-table td:nth-child(1), 
+.account-table td:nth-child(2), 
+.employee-table td:nth-child(3), 
+.role-table td:nth-child(2), 
+.history-order-table td:nth-child(1), 
+.order-detail-table td:nth-child(1) { 
+    text-align: left !important;
+    padding-left: 20px !important;
+}
+
+.fix-product,
+.fix-customer,
+.fix-account,
+.fix-role,
+.fix-employee {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.customer-status,
+.account-status,
+.role-status,
+.order-status {
+    margin: 0 auto;
+    display: block;
+}
+
+.customer-table img,
+.role-account img {
+    display: block;
+    margin: 0 auto;
 }
 
 
