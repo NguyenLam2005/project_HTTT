@@ -81,56 +81,120 @@ if (!isset($_SESSION['adminInfo'])) {
 
   <div class="statistic-part">
     <div class="statistic-table-container">
-    <form id="filter-form-statistic" style="margin-bottom: 10px; display: flex; gap: 5px;">
+      <h1 style="text-align: center;">THỐNG KÊ</h1>
+      <div class="form-group">
+        <label for="statistic-choice">Lựa chọn:</label>
+        <select id="statistic-choice" name="statistic-choice" class="form-select" require style="width: 260px;">
+          <option value="">Lựa chọn thống kê</option>
+          <option value="1">Thống kê khách hàng</option>
+          <option value="2">Thống kê sản phẩm</option>
+        </select>
+      </div>
 
-        <div class="form-group">
-            <label for="fromDate">Số lượng khách hàng:</label><br>
-            <input type="number" id="customer-number" name="customer-number" class="form-input" placeholder="Nhập số lượng" min="1">
-        </div>
+      <!-- Thống kê khách hàng -->
+      <div id="statistic-customer" style="display: none;">
+      <h3 style="text-align: left; margin-bottom: 10px;">Thống kê các khách hàng mua nhiều nhất:</h3>
+      <form id="filter-form-customer" style="margin-bottom: 10px; display: flex; gap: 5px;">
+          <div class="form-group">
+              <label for="fromDate">Số lượng khách hàng:</label><br>
+              <input type="number" id="customer-number" name="count" class="form-input" placeholder="Nhập số khách hàng" min="1">
+          </div>
 
-        <div class="form-group">
-            <label for="fromDate">Từ ngày:</label><br>
-            <input type="date" id="statistic-start-date" name="start_date" class="form-input">
-        </div>
+          <div class="form-group">
+              <label for="fromDate">Từ ngày:</label><br>
+              <input type="date" id="statistic-start-date-customer" name="start_date" class="form-input">
+          </div>
 
-        <div class="form-group">
-            <label for="toDate">Đến ngày:</label><br>
-            <input type="date" id="statistic-end-date" name="end_date" class="form-input">
-        </div>
+          <div class="form-group">
+              <label for="toDate">Đến ngày:</label><br>
+              <input type="date" id="statistic-end-date-customer" name="end_date" class="form-input">
+          </div>
 
-        <div class="form-group">
-            <label for="sort">Sắp xếp:</label><br>
-            <select id="statistic-sort" name="statistic-sort" class="form-select" require>
-                <option value="1">Tăng dần</option>
-                <option value="2">Giảm dần</option>
-            </select>
-        </div>
+          <div class="form-group">
+              <label for="sort">Sắp xếp:</label><br>
+              <select id="statistic-sort-customer" name="sort" class="form-select" require>
+                  <option value="1">Tăng dần</option>
+                  <option value="2">Giảm dần</option>
+              </select>
+          </div>
+          
+          <div class="form-group">
+          <label></label><br>
+            <button type="submit" class="form-button">Thống kê</button>
+          </div>
+      </form>
+        <h3 style="text-align:center; display: none" class="statistic-title-customer"></h3>
+        <table class="statistic-customer-table statistic-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã khách hàng</th>
+              <th>Tên khách hàng</th>
+              <th>Tổng tiền mua</th>
+              <th>Các đơn hàng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php include 'PHP/ST-customer_Manager.php' ?>
+          </tbody>
+        </table>
+        <div class="order-detail-container1" style="display: none;"></div>
+      </div>
         
-        <div class="form-group">
-        <label></label><br>
-          <button type="submit" class="form-button">Thống kê</button>
-        </div>
-    </form>
-      <h3 style="text-align:center; display: none" class="statistic-title"></h3>
-      <table class="statistic-table">
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Mã khách hàng</th>
-            <th>Tên khách hàng</th>
-            <th>Tổng tiền mua</th>
-            <th>Các đơn hàng</th>
-          </tr>
-        </thead>
-        <tbody >
-            
-        </tbody>
-      </table>
-      <div class="order-detail-container1" style="display: none;"></div>
+      <!-- Thống kê sản phẩm -->
+      <div id="statistic-product" style="display: none;">
+      <h3 style="text-align: left; margin-bottom: 10px;">Thống kê các sản phẩm bán chạy nhất:</h3>
+      <form id="filter-form-product" style="margin-bottom: 10px; display: flex; gap: 5px;">
+          <div class="form-group">
+              <label for="fromDate">Số sản phẩm:</label><br>
+              <input type="number" id="product-number" name="count" class="form-input" placeholder="Nhập số sản phẩm" min="1">
+          </div>
 
+          <div class="form-group">
+              <label for="fromDate">Từ ngày:</label><br>
+              <input type="date" id="statistic-start-date-product" name="start_date" class="form-input">
+          </div>
+
+          <div class="form-group">
+              <label for="toDate">Đến ngày:</label><br>
+              <input type="date" id="statistic-end-date-product" name="end_date" class="form-input">
+          </div>
+
+          <div class="form-group">
+              <label for="sort">Sắp xếp:</label><br>
+              <select id="statistic-sort-product" name="sort" class="form-select" require>
+                  <option value="1">Tăng dần</option>
+                  <option value="2">Giảm dần</option>
+              </select>
+          </div>
+          
+          <div class="form-group">
+          <label></label><br>
+            <button type="submit" class="form-button">Thống kê</button>
+          </div>
+      </form>
+        <h3 style="text-align:center; display: none" class="statistic-title-product"></h3>
+        <table class="statistic-product-table statistic-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã sản phẩm</th>
+              <th>Tên sản phẩm</th>
+              <th>Giá bán</th>
+              <th>Số lượng bán</th>
+              <th>Tổng tiền</th>
+              <th>Thông tin chi tiết</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php include 'PHP/ST-product_Manager.php' ?>
+          </tbody>
+        </table>
+        
+      </div>
 
     </div>
-  </div> 
+  </div>
 
   <div class="order-part">
     <div class="order-table-container">

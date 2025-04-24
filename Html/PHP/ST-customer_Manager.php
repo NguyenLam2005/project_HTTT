@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/config.php';
+    include 'config.php';
 
     $start_date = $_POST['start_date'] ?? "";
     $end_date = $_POST['end_date'] ?? "";
@@ -36,8 +36,7 @@
             SUM(orders.totalPrice) AS totalAmount,
             GROUP_CONCAT(
                 CONCAT(
-                        '<a href=\"#\" class=\"order-info\" data-id=\"', orders.id, '\">#', orders.id, '</a>',
-                        ' (', DATE_FORMAT(orders.orderDate, '%d/%m/%Y'), ')'
+                        '<a href=\"#\" class=\"order-info\" data-id=\"', orders.id, '\">Đơn hàng 0', orders.id, '</a>'
                 )
                 SEPARATOR '<br>'
             ) AS orderLinks
@@ -70,11 +69,19 @@
             echo "<td>" . htmlspecialchars($row['customer_id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['fullName']) . "</td>";
             echo "<td>" . number_format($row['totalAmount']) . " đ</td>";
-            echo "<td>"   . $row['orderLinks'] .   "</td>"; 
+            echo "<td style='display: flex; justify-content: center; position: relative;'>
+                <i class='fa-solid fa-list order-toggle' data-id='$cusId' style='color: #4F3C3C; cursor: pointer; margin-right: 10px;'></i>
+                <div id='orders-$cusId' class='order-detail-div'>" . $row['orderLinks'] . "</div>
+            </td>"; 
             echo "</tr>";
+
+       
         }
     } else {
         echo "<tr><td colspan='8' style='text-align: center;'>Không có khách hàng nào</td></tr>";
     }
 ?>
+
+
+
 

@@ -136,7 +136,7 @@ $conn->close();
 
     // Hiển thị lịch sử đơn hàng
     document.addEventListener("DOMContentLoaded", function () {
-        let table = document.querySelector(".customer-table");
+        const table = document.querySelector(".customer-table");
         const historyContainer = document.querySelector(".history-order-container");
 
         document.addEventListener("click", function (event) {
@@ -144,13 +144,13 @@ $conn->close();
 
             // Click vào biểu tượng xem lịch sử
             if (target.classList.contains("history-order")) {
-                let cusId = target.closest("tr").getAttribute("data-id");
+                let cusId = target.getAttribute("data-id");
 
                 // Ẩn bảng danh sách
                 table.style.display = "none";
 
                 // Gửi AJAX để lấy lịch sử đơn hàng
-                fetch("CU-get_order_history.php", {
+                fetch("/project_HTTT/Html/PHP/CU-get_order_history.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
