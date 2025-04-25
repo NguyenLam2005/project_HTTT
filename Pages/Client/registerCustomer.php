@@ -7,7 +7,7 @@
             <div class="form__left">
                 <input type="text" name="fullname" id="fullname" placeholder="Họ và tên">
                 <input type="text" name="std" id="std" placeholder="Số điện thoại">
-                <input type="text" placeholder="Địa chỉ" name="dia_chi" id="dia_chi">
+                <input type="text" placeholder="Email" name="email" id="email">
             </div>
             <div class="form__right">
                 <input type="text" name = "userName" id="username" placeholder="Tên đăng nhặp">
@@ -93,10 +93,16 @@ $(document).ready(function () {
             }
         }
 
-        if (id === "dia_chi" && value === "") {
-            isValid = false;
-            errorMessage = "Vui lòng nhập địa chỉ!";
+        if (id === "email") {
+            if (value === "") {
+                isValid = false;
+                errorMessage = "Vui lòng nhập email!";
+            } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+                isValid = false;
+                errorMessage = "*Email không hợp lệ";
+            }
         }
+
 
         if (id === "username") {
             if (value === "") {

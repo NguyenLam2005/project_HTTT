@@ -1,0 +1,186 @@
+#overlayInfo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+}
+
+#InfoUser-container {
+    width: 50%;
+    margin: 125px auto;
+    justify-content: center;
+    background-color: #f5f5f5;
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.InfoUser-Title {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+    position: relative;
+    justify-content: center;
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-radius: 10px 10px 0 0;
+}
+
+.Title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.InfoUser-Title i {
+    position: absolute;
+    left: 20px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.InfoUser-Title i:hover {
+    transition: 0.5s;
+    transform: scale(1.5);
+    cursor: pointer;
+    color: #f59e42;
+}
+
+.InfoUser_Detail {
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 10px;
+}
+.row span{
+    text-align: center;
+    margin-right: 50px;
+    width: 50%;
+}
+.row label{
+    font-weight: bold;
+}
+#Detail{
+    display: flex;
+    align-items: center;
+}
+.Detail{
+    padding: 10px;
+    
+    font-size: x-large;
+    display: block;
+}
+.changed {
+    color: red;
+    font-style: italic;
+    user-select: none;
+}
+
+.changed:hover{
+    cursor: pointer;
+}
+
+.overlayInfoAddress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Lớp đen mờ */
+    z-index: 100;
+    display: none;
+}
+
+.overlayAddressPayment,
+.overlayAddress {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f4f4; /* Nền xám sáng sang trọng */
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+}
+
+.addr-title {
+    text-align: center;
+    color: #2c2c2c; /* Gần đen */
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.addr-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444; /* Xám đậm */
+}
+
+.addr-input {
+    width: 700px;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #bbb;
+    border-radius: 12px;
+    background-color: #fff;
+    margin-bottom: 18px;
+}
+
+.addr-input:focus {
+    border-color: #c0a060; /* Vàng đồng nhạt */
+    outline: none;
+}
+
+.addr-button {
+    width: 96%;
+    padding: 12px;
+    background-color: rgb(255, 193, 7); /* Đen than */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.addr-button:hover {
+    background-color: rgb(204, 154, 5); /* Tối hơn chút */
+}
+
+.addr-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addr-close {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    padding: 0 10px;
+}
+.addr-close:hover{
+    color: red;
+}

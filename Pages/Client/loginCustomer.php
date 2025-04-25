@@ -63,6 +63,7 @@
 
                     success: function(response){
                         if(response.exists){
+                            sessionStorage.setItem("customerInfo", JSON.stringify(response.customer));
                             alert("Đăng nhập thành công!");
                             $('#login_form')[0].reset();
                             window.location.href = '../../index.php';

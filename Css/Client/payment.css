@@ -1,0 +1,283 @@
+body {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#overlay-payment{
+  /* display: none; */
+  position: relative;
+  z-index: 3;
+  background-color:rgb(62, 62, 63);
+  padding: 10px;
+  /* width: 100vw; */
+  /* top: 90px; */
+  padding: 100px;
+}
+#payment-container{
+  position: relative;
+  z-index: 3;
+  display:flex;
+  justify-content:center; 
+  margin: 20px;
+  align-items: stretch;
+  flex: 1;
+  }
+.payment {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #faf5f5;
+  /* z-index: 1; */
+  overflow: auto;
+  display: none;
+}
+.payment-box {
+  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+}
+.order-summary {
+  background: #fff;
+  padding: 30px;
+  height: fit-content;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  box-sizing: border-box;
+  flex: 1;
+  /* min-width: 50%; */
+  height: 790px;
+}
+
+.payment-left-container {
+  background-color: white;
+  padding: 30px;
+  box-sizing: border-box;
+  flex: 1;
+  /* min-width: 50%; */
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 2px solid black;
+  height: 790px;
+}
+#close-payment {
+  
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: red;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: #c0392b; 
+}
+
+
+.payment h3 {
+  font-size: 18px;
+  color: #074c77;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;
+}
+#payment-left-form{
+  gap:10px;
+  margin-left:60px ;
+  display: flex;
+  flex-direction: column;
+  
+  
+}
+
+/* .payment hr {
+  border: 0px solid;
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+} */
+.payment-header{
+  display: flex;
+  gap: 150px;
+  align-items: center;
+}
+.payment-header .header{
+  position: relative;
+  background-color: white;
+  color: rgb(7, 76, 119);
+}
+#atm-options {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.payment-submit-background {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+.submit-payment-btn {
+  background-color: #796af8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-payment-btn:hover {
+  background-color: #796af8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.submit-payment-btn:active {
+  transform: scale(1.01);
+}
+
+.payment .close {
+  right: 20px;
+}
+.payment-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.payment-table th,
+td {
+  padding: 10px 0;
+  text-align: center;
+  vertical-align: middle;
+}
+.payment-table tfoot tr td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+.payment strong {
+  font-weight: 700;
+}
+th.payment-heading {
+  font-size: 18px;
+  width: 70%;
+  color: #074c77;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+}
+.payment-customer-title {
+  margin-top: 20px;
+}
+.payment label {
+  display: inline-block;
+  margin: 20px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.payment input {
+  padding: 5px;
+  width: 200px;
+}
+
+/* AI */
+.payment select {
+  padding: 5px;
+  width: 200px;
+}
+
+
+
+#phone-payment::-webkit-inner-spin-button,
+#phone-payment::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.payment textarea:hover,
+.payment textarea:focus,
+.payment input:hover,
+.payment input:focus {
+  border: 2px solid var(--success-color);
+}
+#cash-on-delivery,
+#atm-payment {
+  width: fit-content;
+}
+
+#card-number::-webkit-inner-spin-button,
+#card-number::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+tbody{
+  width: 110%;
+  overflow-y: auto;
+ 
+  max-height: 300px;
+  display: block;
+  margin-right: 10px;
+}
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  margin-right: 0px;
+}
+thead{
+  display: table;
+  width: 120%;
+  table-layout: fixed; 
+}
+td img{
+  vertical-align: middle;
+}
+.payment-product-name, .payment-quantity, .payment-price{
+  
+  text-align: center;
+  vertical-align: middle;
+}
+  
+
+.error-msg-payment {
+  width: 50%;
+  font-size: small;
+  color: red;
+  font-weight: bold;
+  background-color: #ffe6e6;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  display: none;
+}
+
+.error-msg-payment.show {
+  display: block;
+}
+#submit-payment-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#submit-payment-btn:hover {
+  background-color: #218838;
+}
+
+#note-payment{
+  margin-top: 20px;
+}

@@ -82,8 +82,8 @@
 
 
 #price-total {
-    margin-left: auto;
-    color: #C29545;
+    margin: 16px;
+    color: red;
 }
 
 /* Button mua ngay */
