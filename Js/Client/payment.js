@@ -87,18 +87,19 @@ function changeAddress()
                 let address = dc + ", " + districtName + ", " + provinceName;
 
                 document.querySelector(".payment-customer-address").textContent = address;
+                localStorage.setItem("userAddress", JSON.stringify({
+                    address: address,
+                    addressDetail: dc,
+                    province: tinh,
+                    district: quan
+                }));
             } else {
                 alert("Lỗi: " + res.message);
             }
         }
     });
-    let address = dc + ", " + quan + ", " + tinh;
-    document.querySelector(".payment-customer-address").textContent = address;
-    localStorage.setItem("userAddress", JSON.stringify({
-        addressDetail: dc,
-        province: tinh,
-        district: quan
-    }));
+    
+    
 }
 
 
@@ -126,46 +127,62 @@ function showToast(message, isSuccess, duration = 2000) {
 function invoicePage(){
     const cashPayment = document.querySelector('#cash-on-delivery');
     const atmPayment = document.querySelector('#atm-payment');
-    console.log("A di da phat");
-    if (!cashPayment.checked  && !atmPayment.checked ) {
+    if (!cashPayment.checked && !atmPayment.checked) {
         showToast("Vui lòng chọn hình thức thanh toán!", false);
-        return ; 
+        return;
     }
+
+    const info = getPaymentInfo();
+    if (!info) return; 
+
     window.location.href = "../../Layout/Client/invoice.php";
-    getPaymentInfo();
 }
+
+
 function getPaymentInfo() {
     const ngayDat = document.querySelector('.payment-date').innerText;
     const ghiChu = document.getElementById('note-payment').value;
-    const paymentMethod = document.querySelector('input[name="payment"]:checked');
-
+    const cashPaymentMethod = document.querySelector('#cash-on-delivery');
+    const atmPaymentMethod = document.querySelector('#atm-payment');
+    let phuongThucThanhToan_id = 1;
     let phuongThucThanhToan = 'Chưa chọn';
     let tenNganHang = '';
     let soThe = '';
 
-    if (paymentMethod) {
-        if (paymentMethod.value === 'tm') {
-            phuongThucThanhToan = 'Thanh toán khi nhận hàng';
-        } else if (paymentMethod.value === 'atm') {
-            phuongThucThanhToan = 'Thanh toán bằng ATM';
-            tenNganHang = document.getElementById('bank').value.trim();
-            soThe = document.getElementById('card-number').value.trim();
-            
+    if (cashPaymentMethod.checked) {
+        phuongThucThanhToan = 'Thanh toán khi nhận hàng';
+    } else if (atmPaymentMethod.checked) {
+        phuongThucThanhToan_id = 2;
+        phuongThucThanhToan = 'Thanh toán bằng ATM';
+        tenNganHang = document.getElementById('bank').value.trim();
+        soThe = document.getElementById('card-number').value.trim();
+
+        if (tenNganHang === '') {
+            showToast("Vui lòng chọn ngân hàng!", false);
+            return null;
         }
-    } else {
-        return null;
+        if (soThe === '') {
+            showToast("Vui lòng nhập số tài khoản!", false);
+            return null;
+        }
     }
 
     const paymentInfo = {
         ngayDat,
         ghiChu,
+        phuongThucThanhToan_id,
         phuongThucThanhToan,
         tenNganHang,
         soThe
     };
 
     localStorage.setItem('paymentInfo', JSON.stringify(paymentInfo));
-    console.log('Đã lưu vào localStorage:', paymentInfo);
     return paymentInfo;
+}
+
+
+function backCart()
+{
+    window.location.href = "../../Pages/Client/cart.php";
 }
 

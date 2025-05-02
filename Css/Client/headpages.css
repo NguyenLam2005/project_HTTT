@@ -180,3 +180,131 @@ a{
 }
 
 
+
+.modal-overlay-history {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #f6f5f3; /* tone sáng nhẹ sang trọng */
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.order-title {
+    text-align: center;
+    color: #2e2e2e;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.orders-scroll-area {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.order-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+}
+
+.order-box h4 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 17px;
+}
+
+.order-date {
+    margin-bottom: 10px;
+}
+
+.order-date strong {
+    color: #b88958; /* vàng nâu ánh kim */
+}
+
+.history-order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.history-order-table th,
+.history-order-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.history-order-table thead {
+    background-color: rgb(255, 193, 7); /* màu nền sang trọng */
+    color: #4b3b2a;
+}
+
+.order-summary-history {
+    font-size: 15px;
+    color: #4b3b2a;
+    padding: 10px 0;
+}
+
+.order-summary-history p {
+    margin-bottom: 10px;
+}
+
+.order-summary-history strong {
+    color: #b88958;
+}
+.history-order-table {
+    color: #000;
+}
+
+.close-history-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.cancel-btn,
+.close-history-modal {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.cancel-btn:hover,
+.close-history-modal:hover {
+    background-color: #c0392b;
+}

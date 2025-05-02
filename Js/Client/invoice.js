@@ -14,6 +14,7 @@ let address;
 let note;
 let paymentDate;
 let paymentMethod;
+let paymentMethod_id;
 let province_id;
 let district_id;
 let bankName = "";
@@ -28,13 +29,18 @@ function getInfoSummary() {
     email = customer.email;
     phone = customer.phone;
     address = customer.address;
-
+    if(localStorage.getItem("userAddress"))
+    {
+        let tmpAddress = JSON.parse(localStorage.getItem("userAddress"));
+        address = tmpAddress.address;
+    }
     // Lấy từ localStorage
     let paymentInfo = JSON.parse(localStorage.getItem("paymentInfo"));
 
     if (paymentInfo) {
         note = paymentInfo.ghiChu || "";
         paymentDate = paymentInfo.ngayDat || "";
+        paymentMethod_id = paymentInfo.phuongThucThanhToan_id || "";
         paymentMethod = paymentInfo.phuongThucThanhToan;
         bankName = paymentInfo.tenNganHang || "";
         cardNumber = paymentInfo.soThe || "";
@@ -51,41 +57,6 @@ function getInfoSummary() {
 
     displayItemInSummary();
 }
-
-function checkConditionToPay()
-{
-    let address = document.querySelector(".payment-customer-address");
-    let payByFTF= document.querySelector("#cash-on-delivery");
-    let payByTrans = document.querySelector("#atm-payment");
-    let atmPayment = document.querySelector("#atm-payment");
-    let bankSelect = document.querySelector("#bank");
-    let cardNumber = document.querySelector("#card-number");
-
-    if(address.textContent === "Chưa có"){
-        showToast("Vui lòng nhập địa chỉ.", false);
-        return false;
-    }
-
-    if(!payByFTF.checked && !payByTrans.checked){
-        showErrorPayment(payByFTF, "Vui lòng chọn phương thức thanh toán");
-        return false;
-    }
-    
-    if(atmPayment.checked && bankSelect.value === ""){
-        showErrorPayment(bankSelect, "Vui lòng chọn ngân hàng");
-        return false;
-    }
-
-    
-    if(atmPayment.checked && cardNumber.value == '')
-    {
-        showErrorPayment(cardNumber, "Vui lòng nhập mã số thẻ");
-        cardNumber.focus();
-        return false;
-    }
-    return true;
-}
-
 
 
 function displayItemInSummary() {
@@ -111,11 +82,11 @@ function displayItemInSummary() {
     document.querySelector(".invoice-total-price").innerHTML = totalAmount.toLocaleString('vi-VN') + "đ";
 }
 
-// document.querySelector("#submit-invoice").addEventListener("click", function () {
-//     if(!checkToPaying()) return;
-//     getCartSummary();
-//     savePaymentIntoDatabase();
-// });
+function submitPaying() {
+    if(!checkToPaying()) return;
+    getCartSummary();
+    savePaymentIntoDatabase();
+}
 
 function checkToPaying()
 {
@@ -151,7 +122,7 @@ function getCartSummary() {
     cart.forEach(item => {
         orderItems.push({
             id: item.id,
-            name: item.pd_name,
+            name: item.name,
             quantity: item.quantity,
             price: item.price,
             totalPrice: item.price * item.quantity
@@ -163,20 +134,21 @@ function getCartSummary() {
 function savePaymentIntoDatabase()
 {
     let addressData = JSON.parse(localStorage.getItem("userAddress") || "null");
-    let userSession = JSON.parse(sessionStorage.getItem("userInfo") || "null");
+    let userSession = JSON.parse(sessionStorage.getItem("customerInfo") || "null");
 
     // Ưu tiên localStorage, fallback sang session
     let addressDetail = addressData?.addressDetail || userSession?.addressDetail;
+    console.log(addressDetail);
     let province_id = addressData?.province || userSession?.province_id;
     let district_id = addressData?.district || userSession?.district_id;
     $.ajax({
         type: "POST",
-        url: "../../PHP/users/savePayment.php",
+        url: "http://localhost/project_HTTT/Server/Client/savePayment.php",
         data: {
             // address: address,
             note: note,
             paymentDate: paymentDate,
-            paymentMethod: paymentMethod,
+            paymentMethod: paymentMethod_id,
             addressDetail: addressDetail,
             province_id: province_id,
             district_id: district_id,
@@ -191,7 +163,7 @@ function savePaymentIntoDatabase()
                 console.log("Success");
                 const timeShown = showToast("Thanh toán thành công.", true);
                 setTimeout(() => {
-                    location.reload();
+                    window.location.href = "http://localhost/project_HTTT/index.php";
                 }, timeShown);
             } else {
                 console.log("Fail");

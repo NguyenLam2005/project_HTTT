@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="../../Css/Client/headpages.css">
     <link rel="stylesheet" href="../../Css/Client/navbar.css">
     <link rel="stylesheet" href="../../Css/Client/footer.css">
-    <link rel="stylesheet" href="../../Css/Client/loginCustomer.css">
-    <link rel="stylesheet" href="../../Css/Client/registerCustomer.css">
     <link rel="stylesheet" href="../../Css/Client/cart.css">
     <link rel="stylesheet" href="../../Css/Client/customerInfo.css">
 </head>
@@ -49,7 +47,9 @@
             <div id="payment-container">
                 <div class="payment-left-container">
                     <div class="payment-header">
-                        <button id="close-payment">x</button>
+                    <button id="close-invoice" onclick = "backCart()" style = "width: 200px; color: #007BFF;text-decoration: none;text-align:left;cursor:pointer;">
+                        <i class="fa-solid fa-arrow-left"></i> Quay lại
+                    </button>
                         <h3 class="header">THÔNG TIN THANH TOÁN</h3>
                     </div>
                     
@@ -80,9 +80,6 @@
 
                         </div>
                         <div class="payment-left-footer">
-                            <p id="payment-back-cart" style="display: inline-block; margin-top: 200px; color: #007BFF; text-decoration: none;text-align:left;cursor:pointer;margin-left: 0px;position:relative;top: 80px;">
-                                ← Quay lại giỏ hàng
-                            </p>
                         </div>
                         
                     </form>
@@ -139,7 +136,7 @@
                         <input type="radio" id="atm-payment" name="payment" value="atm" onclick = "togglePaymentOptions()"/>
                         <label for="atm-payment">Thanh toán bằng ATM</label>
                         <div id="atm-options">
-                            <label for="bank">Chọn ngân hàng:</label>
+                            <label for="bank">Chọn ngân hàng:</label>   
                             <select id="bank">
                                 <option value="">Chọn ngân hàng</option>
                                 <option value="vietcombank">Vietcombank</option>
@@ -156,7 +153,7 @@
                     </div>
                     <div id="payment-method-error" class="error-msg-payment"></div>
                     <div class="payment-submit-background">
-                        <button type="submit" id="submit-payment-btn" onclick = "invoicePage()">Thanh toán</button>
+                        <button type="button" id="submit-payment-btn" onclick = "invoicePage()">Thanh toán</button>
                     </div>
                 </form>
 

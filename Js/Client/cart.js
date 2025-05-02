@@ -2,6 +2,12 @@ function backMainPage(){
     window.location.href = "../../index.php";
 }
 function paymentPage(){
+    const cart = sessionStorage.getItem("cart");
+    
+    if (cart && (cart === "[]" || cart.trim() === "")) {
+        showToast("Bạn cần thêm sản phẩm vào giỏ hàng", false);
+        return;
+    }
     window.location.href = "../../Layout/Client/payment.php";
 }
 $(document).ready(function () {

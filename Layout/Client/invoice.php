@@ -89,7 +89,7 @@
                         <input type="checkbox" id="invoice-submit-checkbox" required />
                         <label class="invoice-submit-title"for="invoice-submit-checkbox">Tôi đã đọc và kiểm tra trước khi thanh toán.</label>
                         <br>
-                        <button id="submit-invoice" type="submit">Xác nhận thanh toán</button>
+                        <button id="submit-invoice" type="submit" onclick = "submitPaying()">Xác nhận thanh toán</button>
                     </div>
                 </div>
             </div>

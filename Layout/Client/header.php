@@ -1,81 +1,93 @@
 <?php 
 session_start();
 ?>
-<header class="header">
-<div class="header__container">
-    <div class="header__logo">
-        <a href="http://localhost/project_HTTT/index.php"><img src="http://localhost/project_HTTT/img/logo.png"></a>
-    </div>
-
-    <div class="header__searchbar">
-        <div class="header__searcbar-container">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="search" id="search_infor" placeholder="Nhập tên sản phẩm">
-        </div>
-    </div>
-
-    <div class="header__right-box">
-
-        <div class="header__cart" id = "customer_cart">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Giỏ hàng</span>
-        </div>
-        <div class="header__account">
-            <i class="fa-solid fa-user"></i>
-            <?php if (isset($_SESSION['customer'])): ?>
-                <span id="infor__account"><?= htmlspecialchars($_SESSION['customer']['name']) ?></span>
-                <ul class="header__account-dropdown" id="account-dropdown">
-                    <li id = "info_customer">Thông tin tài khoản</li>
-                    <li id = "order_customer">Đơn hàng của tôi</li>
-                    <li id = "logout_customer"><a>Đăng xuất</a></li>
-                </ul>
-                
-            <?php else: ?>
-                <span id="infor__account">Tài khoản</span>
-                <ul class="header__account-dropdown" id="account-dropdown">
-                    <li><a href="http://localhost/project_HTTT/Pages/Client/loginCustomer.php">Đăng nhập</a></li>
-                    <li><a href="http://localhost/project_HTTT/Pages/Client/registerCustomer.php">Đăng kí</a></li>
-                </ul>
-            <?php endif; ?>
+    <header class="header">
+    <div class="header__container">
+        <div class="header__logo">
+            <a href="http://localhost/project_HTTT/index.php"><img src="http://localhost/project_HTTT/img/logo.png"></a>
         </div>
 
-    </div>
-
-    <div id="overlayInfo">
-        <div id="InfoUser-container">
-            <div class="InfoUser-Title">
-                <h1 class="Title">Thông tin</h1>
-                <i id="Back" class="fa-solid fa-arrow-right-from-bracket"></i>
-            </div>
-            <div class="InfoUser_Detail">
-                
+        <div class="header__searchbar">
+            <div class="header__searcbar-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" id="search_infor" placeholder="Nhập tên sản phẩm">
             </div>
         </div>
-    </div>
-    <div class="overlayInfoAddress"></div>
-        <div class="overlayAddress">
-            <div class="addr-title-wrapper">
-                <h2 class="addr-title">Cập nhật địa chỉ</h2>
-                <span class="addr-close" onclick="closeAddressPopup()">×</span>
+
+        <div class="header__right-box">
+
+            <div class="header__cart" id = "customer_cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Giỏ hàng</span>
+            </div>
+            <div class="header__account">
+                <i class="fa-solid fa-user"></i>
+                <?php if (isset($_SESSION['customer'])): ?>
+                    <span id="infor__account"><?= htmlspecialchars($_SESSION['customer']['name']) ?></span>
+                    <ul class="header__account-dropdown" id="account-dropdown">
+                        <li id = "info_customer">Thông tin tài khoản</li>
+                        <li id = "order_customer" onclick = "openOrderHistory()">Đơn hàng của tôi</li>
+                        <li id = "logout_customer"><a>Đăng xuất</a></li>
+                    </ul>
+                    
+                <?php else: ?>
+                    <span id="infor__account">Tài khoản</span>
+                    <ul class="header__account-dropdown" id="account-dropdown">
+                        <li><a href="http://localhost/project_HTTT/Pages/Client/loginCustomer.php">Đăng nhập</a></li>
+                        <li><a href="http://localhost/project_HTTT/Pages/Client/registerCustomer.php">Đăng kí</a></li>
+                    </ul>
+                <?php endif; ?>
             </div>
 
-            <label for="diaChi" class="addr-label">Địa chỉ cụ thể:</label>
-            <input type="text" class="address addr-input" placeholder="Số nhà, tên đường...">
-
-            <label for="tinh" class="addr-label">Tỉnh / Thành phố:</label>
-            <select class="province addr-input">
-                <option value="">-- Chọn tỉnh / thành phố --</option>
-            </select>
-
-            <label for="quan" class="addr-label">Quận / Huyện:</label>
-            <select class="district addr-input">
-                <option value="">-- Chọn quận / huyện --</option>
-            </select>
-
-            <button class="addr-button" onclick="saveAddress()">Lưu địa chỉ</button>
         </div>
-</div>
-</header>
+
+        <div id="overlayInfo">
+            <div id="InfoUser-container">
+                <div class="InfoUser-Title">
+                    <h1 class="Title">Thông tin</h1>
+                    <i id="Back" class="fa-solid fa-arrow-right-from-bracket"></i>
+                </div>
+                <div class="InfoUser_Detail">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="overlayInfoAddress"></div>
+            <div class="overlayAddress">
+                <div class="addr-title-wrapper">
+                    <h2 class="addr-title">Cập nhật địa chỉ</h2>
+                    <span class="addr-close" onclick="closeAddressPopup()">×</span>
+                </div>
+
+                <label for="diaChi" class="addr-label">Địa chỉ cụ thể:</label>
+                <input type="text" class="address addr-input" placeholder="Số nhà, tên đường...">
+
+                <label for="tinh" class="addr-label">Tỉnh / Thành phố:</label>
+                <select class="province addr-input">
+                    <option value="">-- Chọn tỉnh / thành phố --</option>
+                </select>
+
+                <label for="quan" class="addr-label">Quận / Huyện:</label>
+                <select class="district addr-input">
+                    <option value="">-- Chọn quận / huyện --</option>
+                </select>
+
+                <button class="addr-button" onclick="saveAddress()">Lưu địa chỉ</button>
+            </div>
+
+
+            <div class="modal-overlay-history">
+                <div class="modal-content">
+                    <span class="close-history-modal">&times;</span>
+                    <h3 class="order-title">Đơn hàng đã mua</h3>
+
+                    <div class="orders-scroll-area">
+                        
+                    </div>
+                </div>
+            </div>
+    </div>
+    </header>
 
 <script>
     //truy cập đến giỏ hàng
@@ -165,7 +177,7 @@ loadCustomerInfo();
     })
     $(document).ready(function() {
         // Load danh sách tỉnh cho tất cả .province
-        $.get("../../Server/Client/get_provinces.php", function(data) {
+        $.get("http://localhost/project_HTTT/Server/Client/get_provinces.php", function(data) {
             $(".province").each(function() {
                 $(this).append(data);
             });
@@ -178,7 +190,7 @@ loadCustomerInfo();
             const provinceId = provinceSelect.val();
 
             if (provinceId !== "") {
-                $.post("../../Server/Client/get_districts.php", { province_id: provinceId }, function(data) {
+                $.post("http://localhost/project_HTTT/Server/Client/get_districts.php", { province_id: provinceId }, function(data) {
                     districtSelect.html(data);
                 });
             } else {
@@ -228,4 +240,48 @@ loadCustomerInfo();
         document.querySelector(".overlayInfoAddress").style.display = "none";
         document.querySelector(".overlayAddressPayment").style.display = "none";
     }
+
+    const closeBtn = document.querySelector('.close-history-modal');
+    const modalOverlay = document.querySelector('.modal-overlay-history');
+
+    function openOrderHistory() {
+        loadOrders();
+    }
+
+    closeBtn.addEventListener('click', function () {
+        modalOverlay.style.display = "none";
+    });
+
+    function loadOrders() {
+        fetch('http://localhost/project_HTTT/Server/Client/get_order_history.php')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.orders-scroll-area').innerHTML = data;
+                modalOverlay.style.display = "flex";
+
+                document.querySelectorAll('.cancel-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const orderID = btn.getAttribute('data-order-id');
+                        if (confirm(`Bạn có chắc muốn hủy đơn hàng #${orderID}?`)) {
+                            fetch('http://localhost/project_HTTT/Server/Client/cancelOrder.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: 'orderID=' + orderID
+                            })
+                            .then(res => res.text())
+                            .then(msg => {
+                                alert(msg);
+                                loadOrders(); 
+                            });
+                        }
+                    });
+                });
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+            });
+    }
+
 </script>
