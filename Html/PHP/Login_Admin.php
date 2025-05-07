@@ -1,63 +1,84 @@
 <?php
-include __DIR__ . '/config.php';
+require_once './config.php';
 session_start();
 
 if (isset($_POST['admin-login'])) {
-    $userName = trim($_POST['admin-username']);
-    $passwd = trim($_POST['admin-password']);
-
-    error_log("Login attempt for username: " . $userName);
-    error_log("Raw password input: " . $passwd);
-    error_log("Password length: " . strlen($passwd));
-    error_log("Password encoding: " . mb_detect_encoding($passwd));
+    $userName = $_POST['admin-username'];
+    $passwd = $_POST['admin-password'];
 
     $userName = mysqli_real_escape_string($conn, $userName);
 
-    // Lấy thông tin của tài khoản nhân viên và danh sách các chức năng.
-    $sql = "SELECT ea.*, e.fullName, GROUP_CONCAT(pf.function_id) AS function_ids
-        FROM employeeaccount ea
-        JOIN employees e ON ea.userName = e.id
-        JOIN permissions p ON ea.permission_id = p.id
-        JOIN permission_function pf ON p.id = pf.permission_id
-        WHERE ea.userName = '$userName'
-        GROUP BY ea.id";
-    
-    error_log("SQL query: " . $sql);
-    
-    $result = $conn->query($sql);
-    
-    if ($result) {
-        error_log("Query executed successfully");
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            error_log("Found user: " . json_encode($row));
-            error_log("Stored hashed password: " . $row['password']);
-            
-            if (password_verify($passwd, $row['password'])) {
-                error_log("Password verified successfully");
-                $functionIds = explode(',', $row['function_ids']);
-                $_SESSION['adminInfo'] = [
-                    'adminID' => $row['id'],
-                    'userName' => $row['userName'],
-                    'permission_id' => $row['permission_id'],
-                    'fullName' => $row['fullName'],
-                    'function_ids' => $functionIds
-                ];
+    $sqlAccount = "SELECT * FROM employeeaccount WHERE userName = ?";
+    $stmtAcc = $conn->prepare($sqlAccount);
+    $stmtAcc->bind_param("s", $userName);
+    $stmtAcc->execute();
+    $resultAcc = $stmtAcc->get_result();
 
-                echo json_encode(['status' => 'success']);
-            } else {
-                error_log("Password verification failed");
-                echo json_encode(['status' => 'error', 'message' => 'Sai mật khẩu']);
-            }
-        } else {
-            error_log("No user found with username: " . $userName);
-            echo json_encode(['status' => 'error', 'message' => 'Không tồn tại tài khoản admin']);
-        }
-    } else {
-        error_log("Query failed: " . $conn->error);
-        echo json_encode(['status' => 'error', 'message' => 'Lỗi kết nối cơ sở dữ liệu']);
+    if ($resultAcc->num_rows === 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Tài khoản không tồn tại']);
+        exit;
     }
 
-    exit();
+    $accountRow = $resultAcc->fetch_assoc();
+    $hashedPassword = $accountRow['password'];
+    $status = $accountRow['status'];
+
+    // Kiểm tra mật khẩu
+    if (!password_verify($passwd, $hashedPassword)) {
+        echo json_encode(['status' => 'error', 'message' => 'Sai mật khẩu']);
+        exit;
+    }
+    if ($status == 2){
+        echo json_encode(['status' => 'error', 'message' => 'Tài khoản đã bị khóa']);
+        exit;
+    }
+
+
+    $sql = "SELECT ea.*, e.fullName, e.email, e.phoneNumber, e.address,pf.function_id, pf.ActionID, f.name AS function_name, p.name AS permission_name
+            FROM employeeaccount ea
+            JOIN employees e ON ea.userName = e.id
+            JOIN permissions p ON ea.permission_id = p.id
+            JOIN permission_function pf ON p.id = pf.permission_id
+            JOIN functions f ON pf.function_id = f.id
+            WHERE ea.userName = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $userName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $adminInfo = null;
+    $functions_map = [];
+
+    while ($row = $result->fetch_assoc()) {
+        if (!$adminInfo) {
+            $adminInfo = [
+                'adminID' => $row['id'],
+                'userName' => $row['userName'],
+                'permission_id' => $row['permission_id'],
+                'fullName' => $row['fullName'],
+                'permission_name' => $row['permission_name'],
+                'email' => $row['email'],
+                'phoneNumber' => $row['phoneNumber'],
+                'address' => $row['address'],
+                'status' => $row['status'],
+            ];
+        }
+
+        $fname = $row['function_name'];
+        $action = $row['ActionID'];
+
+        if (!isset($functions_map[$fname])) {
+            $functions_map[$fname] = [];
+        }
+
+        $functions_map[$fname][] = $action;
+    }
+
+    if ($adminInfo) {
+        $_SESSION['adminInfo'] = $adminInfo + ['functions_map' => $functions_map];
+        echo json_encode(['status' => 'success']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Không lấy được phân quyền']);
+    }
 }
 ?>

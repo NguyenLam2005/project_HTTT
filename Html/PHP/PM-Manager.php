@@ -5,17 +5,23 @@ $sql = "SELECT
     p.id AS permission_id,
     p.name AS 'P_NAME', 
     GROUP_CONCAT(DISTINCT f.name ORDER BY f.name SEPARATOR '|') AS 'F_NAME',
+    COUNT(DISTINCT CONCAT(pf.function_id, ':', pf.ActionID)) AS ACTION_COUNT,  -- Đếm tổng số ActionID duy nhất
+    GROUP_CONCAT(DISTINCT pf.ActionID ORDER BY pf.ActionID SEPARATOR '|') AS 'ACTION_LIST',
     COUNT(DISTINCT u.id) AS 'AC_COUNT',
     GROUP_CONCAT(DISTINCT u.userName ORDER BY u.userName SEPARATOR '|') AS 'USER_LIST'
 FROM permissions p
 LEFT JOIN permission_function pf ON p.id = pf.permission_id
 LEFT JOIN functions f ON pf.function_id = f.id
 LEFT JOIN employeeaccount u ON p.id = u.permission_id
-GROUP BY p.id";
+GROUP BY p.id, p.name";
+
+
 
 $result = $conn->query($sql);
 
 $usersList = []; // Mảng chứa danh sách user theo permission_id
+
+
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -26,12 +32,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($row['P_NAME']) . "</td>";
 
         // Chức năng
-        echo "<td class='list-role-function'>";
-        $functions = explode('|', $row['F_NAME']);
-        foreach ($functions as $function) {
-            echo "<div class='role-function'>" . htmlspecialchars($function) . "</div>";
-        }
-        echo "</td>";
+        echo "<td class='list-role-function'>" . $row['ACTION_COUNT'] . "</td>";
 
         // Số lượng tài khoản
         echo "<td>" . $row['AC_COUNT'] . "</td>";
@@ -58,10 +59,7 @@ if ($result->num_rows > 0) {
 ?>
 <div id="account-overlay-role">
     <div class="account-role-container">
-        <div class="modal-header">
-            <h3>Danh sách người dùng</h3>
-            <img src="/project_HTTT/Html/img/Chevron down.png" alt="" id="close-modal">
-        </div>
+        <img src="/project_HTTT/Html/img/Chevron down.png" alt="" id="close-modal">
         <div class="list-user-role" id="account-list"></div>
     </div>
 </div>
@@ -80,28 +78,14 @@ if ($result->num_rows > 0) {
                 userListContainer.innerHTML = "";
 
                 if (usersList[permissionId] && usersList[permissionId].length > 0) {
-                    // Tạo container cho danh sách
-                    let userListDiv = document.createElement("div");
-                    userListDiv.className = "user-list-container";
-
-                    usersList[permissionId].forEach(function (user, index) {
+                    usersList[permissionId].forEach(function (user) {
                         let userDiv = document.createElement("div");
-                        userDiv.className = "user-item";
-                        userDiv.innerHTML = `
-                            <span class="user-number">${index + 1}</span>
-                            <span class="user-name">${user}</span>
-                        `;
-                        userListDiv.appendChild(userDiv);
+                        userDiv.className = "role-function";
+                        userDiv.textContent = user;
+                        userListContainer.appendChild(userDiv);
                     });
-
-                    userListContainer.appendChild(userListDiv);
                 } else {
-                    userListContainer.innerHTML = `
-                        <div class="no-users-message">
-                            <i class="fa-solid fa-users"></i>
-                            <p>Không có người dùng nào</p>
-                        </div>
-                    `;
+                    userListContainer.innerHTML = "<div class='role-function'>Không có người dùng</div>";
                 }
 
                 overlay.style.display = "flex"; // Hiển thị modal
@@ -116,4 +100,3 @@ if ($result->num_rows > 0) {
         });
     });
 </script>
-

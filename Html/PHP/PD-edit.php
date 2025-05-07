@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = $_POST['product-quantity'];
     $price = $_POST['product-price'];
     $category_id = $_POST['product-category'];
+    $supplier_id = $_POST['product-supplier'];
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
     $target_file = $noneIMG;
@@ -55,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 
-    $sql = "UPDATE products SET name = ?, category_id = ?, quantity = ?, price = ?, image = ? WHERE id = ?";
+    $sql = "UPDATE products SET name = ?, category_id = ?, quantity = ?, price = ?, image = ?, supplier_id = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siidsi", $name, $category_id, $quantity, $price, $target_file, $id);
+    $stmt->bind_param("siidsii", $name, $category_id, $quantity, $price, $target_file,$supplier_id ,$id);
 
     if ($stmt->execute()) {
         $response = [

@@ -1,101 +1,98 @@
 <?php
 include __DIR__ . '/config.php';
+$response = []; // Mảng chứa phản hồi
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $role_name = $_POST['role-name']??'';
+    $functions = $_POST['permissions'];
+    $functions_map = [];
 
-header('Content-Type: application/json');
-$response = [];
-
-try {
-    if ($_SERVER["REQUEST_METHOD"] != "POST") {
-        throw new Exception("Phương thức không hợp lệ");
+    // Tách từng phần tử và lưu vào hash map
+    foreach ($functions as $value) {
+        list($function_id, $action_id) = explode('_', $value);
+    
+        // Lưu vào hash map với function_id là key
+        $functions_map[$function_id][] = $action_id;
     }
-
-    if (!$conn) {
-        throw new Exception("Không thể kết nối database");
-    }
-
-    $role_name = trim($_POST['role-name'] ?? '');
-    $functions = $_POST['permissions'] ?? []; 
 
     if (empty($role_name)) {
-        throw new Exception("Vui lòng nhập tên quyền!");
+        $response = ["success" => false, "message" => "Vui lòng nhập tên quyền!"];
+        echo json_encode($response);
+        exit();
+    }
+    if (empty($functions)) {
+        $response = ["success" => false, "message" => "Vui lòng chọn ít nhất 1 chức năng!"];
+        echo json_encode($response);
+        exit();
     }
 
-    if (strlen($role_name) > 50) {
-        throw new Exception("Tên quyền quá dài (tối đa 50 ký tự)");
-    }
+    //check tên quyền trên database
+    $check_stmt = $conn->prepare("SELECT id FROM permissions WHERE name = ?");
+    $check_stmt->bind_param("s", $role_name);
+    $check_stmt->execute();
+    $check_stmt->store_result();
     
-    $function_names = [];
-    if (!empty($functions)) {
-        $placeholders = implode(',', array_fill(0, count($functions), '?'));
-        $sql = "SELECT id, name FROM functions WHERE id IN ($placeholders)";
-        $stmt = $conn->prepare($sql);
-
-        if (!$stmt) {
-            throw new Exception("Lỗi chuẩn bị câu lệnh SQL");
-        }
-
-        $stmt->bind_param(str_repeat('i', count($functions)), ...$functions);
-        if (!$stmt->execute()) {
-            throw new Exception("Lỗi thực thi câu lệnh SQL");
-        }
-
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $function_names[] = $row["name"];
-        }
-        $stmt->close();
+    if ($check_stmt->num_rows > 0) {
+        // Tên quyền đã tồn tại
+        $response = [
+            'success' => false,
+            'message' => 'Tên quyền đã tồn tại. Vui lòng chọn tên khác.'
+        ];
+        echo json_encode($response);
+        $check_stmt->close();
+        exit();
     }
+    $check_stmt->close();
 
-    // Thêm quyền vào bảng permissions
+// Thêm quyền vào bảng permissions nếu nó hợp lệ
     $stmt = $conn->prepare("INSERT INTO permissions (name) VALUES (?)");
-    if (!$stmt) {
-        throw new Exception("Lỗi chuẩn bị câu lệnh SQL");
-    }
-
-    $stmt->bind_param("s", $role_name);
+    $stmt->bind_param("s", $role_name); // Bind role_name vào câu lệnh SQL
     if (!$stmt->execute()) {
-        throw new Exception("Lỗi thêm quyền: " . $conn->error);
+        $response = ["success" => false, "message" => "Lỗi khi thêm quyền: " . $stmt->error];
+        echo json_encode($response);
+        $stmt->close();
+        exit();
     }
 
     $permission_id = $stmt->insert_id;
     $stmt->close();
 
     // Thêm vào bảng permission_function nếu có chọn chức năng
-    if (!empty($functions)) {
-        $stmt = $conn->prepare("INSERT INTO permission_function (permission_id, function_id) VALUES (?, ?)");
-        if (!$stmt) {
-            throw new Exception("Lỗi chuẩn bị câu lệnh SQL");
-        }
-
-        foreach ($functions as $function_id) {
-            $stmt->bind_param("ii", $permission_id, $function_id);
+    $stmt = $conn->prepare("INSERT INTO permission_function (permission_id, function_id, ActionID) VALUES (?, ?, ?)");
+    foreach ($functions_map as $function_id => $action_ids) {
+        foreach ($action_ids as $action_id) {
+            $stmt->bind_param("iis", $permission_id, $function_id, $action_id);
             if (!$stmt->execute()) {
-                throw new Exception("Lỗi thêm chức năng: " . $conn->error);
+                $response = [
+                    'success' => false,
+                    'message' => "Lỗi khi thêm chức năng: " . $stmt->error
+                ];
+                echo json_encode($response);
+                $stmt->close();
+                exit();
             }
         }
-        $stmt->close();
     }
-
+    $stmt->close();
+    $count_stmt = $conn->prepare("SELECT COUNT(*) FROM permission_function WHERE permission_id = ?");
+    $count_stmt->bind_param("i", $permission_id);
+    $count_stmt->execute();
+    $count_stmt->bind_result($function_count); // <-- Gắn kết kết quả vào biến
+    $count_stmt->fetch();                      // <-- Lấy kết quả và gán vào biến
+    $count_stmt->close();                      // <-- Đóng statement
+    // Trả về phản hồi thành công    
     $response = [
-        "success" => true,
-        "message" => "Thêm quyền thành công!",
-        "role" => [
-            "id" => $permission_id,
-            "name" => $role_name,
-            "function_names" => $function_names
-        ]
+        'success' => true,
+        'message' => 'Thêm quyền thành công!',
+        'role' => [
+            'id' => $permission_id,
+            'name' => $role_name,
+            'function_names' => $functions_map // Trả về danh sách tên chức năng
+        ],
+        'function_count' => $function_count // Trả về số lượng chức năng
     ];
 
-} catch (Exception $e) {
-    $response = [
-        "success" => false,
-        "message" => $e->getMessage()
-    ];
-} finally {
-    if (isset($conn)) {
-        $conn->close();
-    }
     echo json_encode($response);
-    exit();
 }
+
+
 ?>

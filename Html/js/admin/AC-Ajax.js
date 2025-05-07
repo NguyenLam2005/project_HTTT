@@ -208,7 +208,7 @@ document.getElementById("fix-form-account").addEventListener("submit", function 
                 </td>
                 <td>
                     <div style='display: flex;'>
-                        <span style='margin-left: 10px; font-weight: bold;'>${data.user.permission_name}</span>
+                        <span style='margin-left: 10px; font-weight: bold; text-align: center;'>${data.user.permission_name}</span>
                     </div>
                 </td>
                 <td>

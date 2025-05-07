@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_id = $_POST['product-category'] ?? null;
     $quantity = $_POST['product-quantity'] ?? null;
     $price = $_POST['product-price'] ?? null;
+    $supplier_id = $_POST['product-supplier'] ?? null;
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
 
@@ -44,9 +45,9 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
     $stmt->close();
 
 
-    $sql = "INSERT INTO products (name, category_id, quantity, price, image) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (name, category_id, quantity, supplier_id, price, image) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siids", $name, $category_id, $quantity, $price, $target_file);
+    $stmt->bind_param("siiids", $name, $category_id, $quantity,$supplier_id ,$price, $target_file);
 
     if ($stmt->execute()) {
         $response = [

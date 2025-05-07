@@ -11,8 +11,8 @@ document.addEventListener("click", function (event) {
                     document.getElementById("product-id").value = data.id;
                     document.getElementById("product-nameFIX").value = data.name;
                     document.getElementById("product-categoryFIX").value = data.category_id;
-                    document.getElementById("product-quantityFIX").value = data.quantity;
                     document.getElementById("product-priceFIX").value = data.price;
+                    document.getElementById("product-supplierFIX").value = data.supplier_id;
 
                     // Ẩn bảng sản phẩm và nút thêm
                     document.querySelector(".product-table").style.display = "none";
