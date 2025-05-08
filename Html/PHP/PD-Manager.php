@@ -1,19 +1,43 @@
 <?php
 include __DIR__ . '/config.php';
 
-$sql = "SELECT products.*, categories.name AS category_name 
+$sql = "SELECT products.*, categories.name AS category_name, brand.name AS brand_name
         FROM products 
         INNER JOIN categories ON products.category_id = categories.id
+        INNER JOIN brand ON products.brand_id = brand.id
         ORDER BY products.id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $id = $row['id'];
+
+        // Truy vấn số lượng sản phẩm từ bảng inventory
+        $sql_inventory = "SELECT COUNT(*) AS quantity
+        FROM inventory
+        WHERE product_id = ? ";
+        $stmt = $conn->prepare($sql_inventory);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $inventory_result = $stmt->get_result();
+        $quantity = 0; // Mặc định là 0
+
+        if ($inventory_row = $inventory_result->fetch_assoc()) {
+        $quantity = $inventory_row["quantity"];
+        }
+        $stmt->close();
+
+        $sql = "UPDATE products SET quantity = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $quantity, $id);
+        $stmt->execute();
+        $stmt->close();
+
         echo "<tr data-id='$id'>";
         echo "<td class='img-admin'><img src='" . $row['image'] . "' alt=''></td>";
         echo "<td>" . $row['name'] . "</td>";
+        echo "<td>" . $row['brand_name'] . "</td>";
         echo "<td>" . $row['category_name'] . "</td>";
-        echo "<td>" . $row['quantity'] . "</td>";
+        echo "<td>" . $quantity . "</td>";
         echo "<td>" . number_format($row['price'], 0, ',', '.') . " VND</td>";
         echo "<td><div class='fix-product'>
               <i class='fa-solid fa-pen-to-square fix-btn-product' data-id='$id'></i>

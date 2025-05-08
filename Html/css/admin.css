@@ -1541,17 +1541,27 @@ body {
 .history-order-table th,
 .history-order-table td,
 .order-detail-table th,
-.order-detail-table td {
+.order-detail-table td,
+.supplier-table th,
+.supplier-table td,
+.import-table th,
+.import-table td {
     text-align: center !important;
     vertical-align: middle !important;
 }
 
 .customer-table td:nth-child(2), 
+.order-table td:nth-child(4),
 .product-table td:nth-child(2),
 .account-table td:nth-child(1), 
 .account-table td:nth-child(2), 
+.account-table td:nth-child(4), 
 .employee-table td:nth-child(3), 
-.role-table td:nth-child(2), 
+.employee-table td:nth-child(4), 
+.employee-table td:nth-child(5), 
+.supplier-table td:nth-child(3), 
+.supplier-table td:nth-child(2), 
+.role-table td:nth-child(1), 
 .history-order-table td:nth-child(1), 
 .order-detail-table td:nth-child(1) { 
     text-align: left !important;
@@ -1565,7 +1575,7 @@ body {
 .fix-employee {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 30px;
 }
 
 .customer-status,

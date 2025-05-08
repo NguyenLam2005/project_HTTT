@@ -6,9 +6,10 @@ $response = []; // Mảng chứa phản hồi
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['product-name'] ?? null;
     $category_id = $_POST['product-category'] ?? null;
-    $quantity = $_POST['product-quantity'] ?? null;
     $price = $_POST['product-price'] ?? null;
     $supplier_id = $_POST['product-supplier'] ?? null;
+    $brand_id = $_POST['product-brand'] ?? null;
+    $quantity = 0;
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
 
@@ -44,10 +45,22 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
     }
     $stmt->close();
 
-
-    $sql = "INSERT INTO products (name, category_id, quantity, supplier_id, price, image) VALUES (?, ?, ?, ?, ?)";
+    $sql = "SELECT brand.name AS brand_name
+    FROM brand
+    WHERE brand.id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siiids", $name, $category_id, $quantity,$supplier_id ,$price, $target_file);
+    $stmt->bind_param("i", $brand_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+    $brand_name = $row["brand_name"];
+    }
+    $stmt->close();
+
+
+    $sql = "INSERT INTO products (name,image,category_id, brand_id,quantity, supplier_id, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssiiiii", $name,$target_file,$category_id, $brand_id ,$quantity,$supplier_id ,$price);
 
     if ($stmt->execute()) {
         $response = [
@@ -59,6 +72,8 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
                 "name" => $name,
                 "category_name" => $category_name,
                 "category_id" => $category_id,
+                "brand_name" => $brand_name,
+                "brand_id" => $brand_id,
                 "quantity" => $quantity,
                 "price" => number_format($price, 0, ',', '.') . " VND"
             ]

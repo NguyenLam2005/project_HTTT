@@ -6,10 +6,10 @@ $response = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['product-id'];
     $name = $_POST['product-name'];
-    $quantity = $_POST['product-quantity'];
     $price = $_POST['product-price'];
     $category_id = $_POST['product-category'];
     $supplier_id = $_POST['product-supplier'];
+    $brand_id = $_POST['product-brand'];
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
     $target_file = $noneIMG;
@@ -56,10 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 
-    $sql = "UPDATE products SET name = ?, category_id = ?, quantity = ?, price = ?, image = ?, supplier_id = ? WHERE id = ?";
+    $sql = "SELECT brand.name AS brand_name
+    FROM brand
+    WHERE brand.id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siidsii", $name, $category_id, $quantity, $price, $target_file,$supplier_id ,$id);
+    $stmt->bind_param("i", $brand_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+    $brand_name = $row["brand_name"];
+    }
+    $stmt->close();
 
+    $stmt = $conn->prepare("SELECT quantity FROM products WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($currentquantity);
+    $stmt->fetch();
+    $stmt->close();
+
+    $sql = "UPDATE products SET name = ?, category_id = ?,brand_id = ?, price = ?, image = ?, supplier_id = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("siiisii", $name, $category_id, $brand_id, $price, $target_file,$supplier_id ,$id);
+
+    
     if ($stmt->execute()) {
         $response = [
             "success" => true,
@@ -70,7 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "name" => $name,
                 "category_name" => $category_name,
                 "category_id" => $category_id,
-                "quantity" => $quantity,
+                "brand_name" => $brand_name,
+                "brand_id" => $brand_id,
+                "quantity" => $currentquantity,
                 "price" => number_format($price, 0, ',', '.') . " VND"
             ]
         ];

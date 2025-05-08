@@ -13,6 +13,7 @@ document.addEventListener("click", function (event) {
                     document.getElementById("product-categoryFIX").value = data.category_id;
                     document.getElementById("product-priceFIX").value = data.price;
                     document.getElementById("product-supplierFIX").value = data.supplier_id;
+                    document.getElementById("product-brandFIX").value = data.brand_id;
 
                     // Ẩn bảng sản phẩm và nút thêm
                     document.querySelector(".product-table").style.display = "none";
@@ -117,6 +118,7 @@ document.querySelector(".add-form-product").addEventListener("submit", function(
             newRow.innerHTML = `
                 <td class='img-admin'><img src="${data.product.image}" alt='' width='50'></td>
                 <td>${data.product.name}</td>
+                <td>${data.product.brand_name}</td>
                 <td>${data.product.category_name}</td>
                 <td>${data.product.quantity}</td>
                 <td>${data.product.price}</td>
@@ -161,6 +163,7 @@ document.getElementById("update-form-product").addEventListener("submit", functi
                 row.innerHTML = `
                     <td class='img-admin'><img src="${data.product.image}" alt="" width="50"></td>
                     <td>${data.product.name}</td>
+                    <td>${data.product.brand_name}</td>
                     <td>${data.product.category_name}</td>
                     <td>${data.product.quantity}</td>
                     <td>${data.product.price}</td>
