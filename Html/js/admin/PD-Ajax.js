@@ -1,3 +1,32 @@
+ // Lọc sản phẩm theo nhà cung cấp
+ document.addEventListener("DOMContentLoaded", function () {
+ let productFilterForm  = document.getElementById("filter-form-product1");
+ let tableBodyProduct1 = document.querySelector("#product-table-body");
+
+ console.log("Form:", productFilterForm);
+ productFilterForm.addEventListener("submit", function (event) {
+     event.preventDefault();
+
+     let supplier = document.getElementById("product-supplier-filter").value;
+
+     let formData = new URLSearchParams();
+     formData.append("supplier", supplier);
+
+     fetch("/project_HTTT/Html/PHP/PD-Manager.php", {
+         method: "POST",
+         headers: {
+             "Content-Type": "application/x-www-form-urlencoded"
+         },
+         body: formData.toString()
+     })
+     .then(response => response.text())
+     .then(html => {
+        tableBodyProduct1.innerHTML = html;
+     })
+     .catch(error => console.error("Lỗi lọc sản phẩm:", error));
+ });
+});
+
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("fix-btn-product")) {
         let productId = event.target.getAttribute("data-id");
@@ -191,3 +220,5 @@ document.getElementById("update-form-product").addEventListener("submit", functi
         alert("Lỗi khi cập nhật sản phẩm!");
     });
 });
+
+   

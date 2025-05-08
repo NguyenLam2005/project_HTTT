@@ -1,10 +1,24 @@
 <?php
 include __DIR__ . '/config.php';
 
+$supplier_id = $_POST['supplier'] ?? "";
+
+$where = [];
+
+if (!empty($supplier_id)) {
+    $where[] = "products.supplier_id = " . intval($supplier_id);
+}
+
+$whereSQL = "";
+if (!empty($where)) {
+    $whereSQL = "WHERE " . implode(" AND ", $where);
+}
+
 $sql = "SELECT products.*, categories.name AS category_name, brand.name AS brand_name
         FROM products 
         INNER JOIN categories ON products.category_id = categories.id
         INNER JOIN brand ON products.brand_id = brand.id
+        $whereSQL
         ORDER BY products.id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {

@@ -277,7 +277,31 @@ if (!isset($_SESSION['adminInfo'])) {
   
   <div class="product-part">
     <div class="product-table-container">
-      <div id="product-plus">Thêm sản phẩm</div>
+    <div id="product-plus">Thêm sản phẩm</div>
+    <form id="filter-form-product1" style="margin-bottom: 10px; display: flex; gap: 5px;">
+      <div class="form-group">
+            <label for="product-supplier" class="form-label">Nhà cung cấp</label>
+            <select name="product-supplier-filter" id="product-supplier-filter" class="form-select" required>
+              <?php
+                include '../../PHP/config.php';
+                $sql = "SELECT id, name FROM suppliers ORDER BY id ASC";
+                $result = $conn->query($sql);
+                echo "  <option value=''>-- Chọn nhà cung cấp --</option>";
+                if ($result && $result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                  }
+                } else {
+                  echo "<option value=''>Không nhà cung cấp nào!</option>";
+                }
+                ?>
+              </select>  
+          </div>
+      <div class="form-group">
+        <label></label><br>
+        <button type="submit" class="form-button"><img src="img/Filter.png" style="height: 17px;"> Lọc</button>
+      </div> 
+    </form>
       <table class="product-table">
         <thead>
           <tr>
@@ -1054,6 +1078,25 @@ if (!isset($_SESSION['adminInfo'])) {
   <div class="import-part">
     <div class="import-table-container">
       <div id="import-plus" >Thêm phiếu nhập</div>
+
+      <form id="filter-form-import" style="margin-bottom: 10px; display: flex; gap: 5px;">
+            
+          <div class="form-group">
+              <label for="fromDate">Từ ngày:</label><br>
+              <input type="date" id="import-start-date" name="start_date" class="form-input">
+          </div>
+
+          <div class="form-group">
+              <label for="toDate">Đến ngày:</label><br>
+              <input type="date" id="import-end-date" name="end_date" class="form-input">
+          </div>
+
+      <div class="form-group">
+        <label></label><br>
+        <button type="submit" class="form-button"><img src="img/Filter.png" style="height: 17px;"> Lọc</button>
+      </div> 
+    </form>
+
       <table class="import-table">
         <thead>
           <tr>

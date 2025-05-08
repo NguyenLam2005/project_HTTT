@@ -1,9 +1,28 @@
 <?php
 include __DIR__ . '/config.php';
 
+$start_date = $_POST['start_date'] ?? "";
+$end_date = $_POST['end_date'] ?? "";
+
+$where = [];
+
+if (!empty($start_date) && !empty($end_date)) {
+    $where[] = "DATE(ip.importDate) BETWEEN '" . $conn->real_escape_string($start_date) . "' AND '" . $conn->real_escape_string($end_date) . "'";
+} elseif (!empty($start_date)) {
+    $where[] = "DATE(ip.importDate) >= '" . $conn->real_escape_string($start_date) . "'";
+} elseif (!empty($end_date)) {
+    $where[] = "DATE(ip.importDate) <= '" . $conn->real_escape_string($end_date) . "'";
+}
+
+$whereSQL = "";
+if (!empty($where)) {
+    $whereSQL = "WHERE " . implode(" AND ", $where);
+}
+
 $sql = "SELECT ip.*, e.fullName AS employee_name, s.name AS supplier_name FROM importreceipts ip
         LEFT JOIN employees e ON ip.employee_id = e.id
         LEFT JOIN suppliers s ON ip.supplier_id = s.id
+        $whereSQL
         ORDER BY ip.importDate ASC";
 $result = $conn->query($sql);
 

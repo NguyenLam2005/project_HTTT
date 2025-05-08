@@ -1,3 +1,36 @@
+
+// Lọc phiếu nhập theo ngày 
+document.addEventListener("DOMContentLoaded", function () {
+    let importFilterForm  = document.getElementById("filter-form-import");
+    let tableBodyimport = document.querySelector("#import-table-body");
+   
+    console.log("Form:", importFilterForm);
+    importFilterForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        let startDate = document.getElementById("import-start-date").value;
+        let endDate = document.getElementById("import-end-date").value;
+        
+   
+        let formData = new URLSearchParams();
+        formData.append("start_date", startDate);
+        formData.append("end_date", endDate);
+   
+        fetch("/project_HTTT/Html/PHP/IP-Manager.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: formData.toString()
+        })
+        .then(response => response.text())
+        .then(html => {
+           tableBodyimport.innerHTML = html;
+        })
+        .catch(error => console.error("Lỗi lọc sản phẩm:", error));
+    });
+   });
+
+
 // Xử lý combobox nhập hàng
 document.addEventListener('DOMContentLoaded', function() {
     const supplierSelect = document.getElementById('supplier-ip');

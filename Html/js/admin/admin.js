@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
         plus_1.style.display = "none";
         fix_form_1.style.display = "none";
         profile_part.style.display = "none";
-
+        document.getElementById("filter-form-product1").style.display = "none";
     }
 
     // function addFormCustomer(){
@@ -337,6 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
         add_form_6.style.display = "block";
         plus_6.style.display = "none";
         profile_part.style.display = "none";
+        document.getElementById("filter-form-import").style.display = "none";
     }
 
     function addFormSupplier() {
@@ -353,6 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
         plus_1.style.display = "none";
         add_form_1.style.display = "none";
         profile_part.style.display = "none";
+        document.getElementById("filter-form-product1").style.display = "none";
     }
 
 
@@ -411,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
         delete_ovl_1.style.display = "none";
         profile_part.style.display = "none";
         import_part.style.display = "none";
+        document.getElementById("filter-form-product1").style.display = "flex";
     }
 
     function returnCustomer() {
@@ -458,6 +461,7 @@ document.addEventListener("DOMContentLoaded", function () {
         delete_ovl_6.style.display = "none";
         profile_part.style.display = "none";
         import_detail.style.display = "none";
+        document.getElementById("filter-form-import").style.display = "flex";
     }
 
     function returnSupplier() {
@@ -479,6 +483,7 @@ document.addEventListener("DOMContentLoaded", function () {
         import_table.style.display = "none";
         import_detail.style.display = "block";
         plus_6.style.display = "none";
+        document.getElementById("filter-form-import").style.display = "none";
     }
 
     function showNofiProduct() {
