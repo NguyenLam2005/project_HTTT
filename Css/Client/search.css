@@ -1,0 +1,236 @@
+.search__box{
+    display: none;
+    width: 100%;
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    background-color: #211f1f;
+    color: white;
+    min-height: 500px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.bnt_show_search_filer{
+    background-color: green;
+    width: 100px;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 5px 0 0 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.bnt_show_search_filer:hover{
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Bóng đậm hơn khi hover */
+}
+
+
+/* Layout 4 cột */
+.search__filter {
+    position: relative;
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Khối từng bộ lọc */
+.filter__search__item {
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Tiêu đề nhóm */
+.name_thuoc_tinh {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Cặp input + label */
+.filter__pair {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.filter__pair div{
+    color: black;
+    font-weight: bold;
+}
+.filter input[type = number]{
+    padding: 5px 7px;
+    border-radius: 5px;
+    height: 25px;
+}
+
+/* Ẩn checkbox mặc định */
+.filter__pair input[type="checkbox"] {
+    display: none;
+}
+
+/* Tạo checkbox tùy chỉnh */
+.filter__pair label {
+    position: relative;
+    padding-left: 28px;
+    line-height: 20px;
+    color: #444;
+    font-size: 15px;
+}
+
+/* Hình vuông giả checkbox */
+.filter__pair label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #999;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+/* Icon check khi được chọn */
+.filter__pair input[type="checkbox"]:checked + label::before {
+    background-color: #007bff;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+/* Thêm dấu tích */
+.filter__pair input[type="checkbox"]:checked + label::after {
+    content: "✔";
+    position: absolute;
+    left: 4px;
+    top: -1px;
+    font-size: 14px;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .search__filter {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .search__filter {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bnt__search__result{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% -50%;
+    color: rgb(141, 253, 253);
+}
+
+.bnt__search__result:hover{
+    text-decoration: underline;
+    color: orange;
+}
+
+.bnt__search__reset{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 90%;
+    translate: -50% -50%;
+    color: white;
+    background-color: rgb(227, 82, 82);
+    padding:3px 5px;
+    border-radius: 5px;
+}
+
+.bnt__search__reset:hover{
+    background-color: red;
+}
+
+/* Hiện sản phẩm */
+
+.product__search{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    max-height: 400px;
+    overflow-y: auto;  
+}
+
+.product__search_item{
+    width: 49%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    background-color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product__search_item:hover{
+    transform: translateY(-7px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+.search__product__img{
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.search__product__img img{
+    width: 100%;
+    object-fit: contain;
+}
+
+.search__product__infor{
+    display: flex 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: calc(100% - 120px);
+}
+
+.s-product__name{
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;       /* Giới hạn 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 50px; /* khoảng 2 dòng */
+    line-height: 1.4;
+    padding: 5px;
+}
+
+.s-product__price{
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    color: orange;
+}
+

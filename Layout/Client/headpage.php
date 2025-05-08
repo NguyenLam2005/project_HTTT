@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../Css/Client/footer.css">
     <link rel="stylesheet" href="../../Css/Client/registerCustomer.css">
     <link rel="stylesheet" href="../../Css/Client/loginCustomer.css">
+    <link rel="stylesheet" href="../../Css/Client/search.css">
+
     <link rel="stylesheet" href="../../Css/base.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

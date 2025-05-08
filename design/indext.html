@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="../Css/Client/product.css">
     <link rel="stylesheet" href="../Css/Client/navbar.css">
     <link rel="stylesheet" href="../Css/Client/footer.css">
+    <link rel="stylesheet" href="../Css/Client/search.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
 </head>
 <body>
@@ -26,7 +30,168 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="search" id="search_infor" placeholder="Nhập tên sản phẩm">
                 </div>
+                <div class="search__box" id="search_box">
+                    <div class="bnt_show_search_filer" id="bnt_show_search_filer">Nâng cao</div><!-- Khi nhấn nút này thì search__filter display block nhấn lại thì display none và reset input-->
+                    <div class="search__filter" id="search_filter">
+                        <!-- Thương hiệu -->
+                        <div class="filter__search__item">
+                            <div class="name_thuoc_tinh">Thương hiệu</div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="brand" value="1" id="t1">
+                                <label for="t1">Casio</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="brand" value="2" id="t2">
+                                <label for="t2">Rolex</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="brand" value="3" id="t3">
+                                <label for="t3">Moiden</label>
+                            </div>
+                        </div>
+
+                        <!-- Loại đồng hồ -->
+                        <div class="filter__search__item">
+                            <div class="name_thuoc_tinh">Loại đồng hồ</div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="category" value="1" id="l1">
+                                <label for="l1">Cơ</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="category" value="2" id="l2">
+                                <label for="l2">Pin</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="category" value="3" id="l3">
+                                <label for="l3">Tào lao</label>
+                            </div>
+                        </div>
+
+                        <!-- Giới tính -->
+                        <div class="filter__search__item">
+                            <div class="name_thuoc_tinh">Giới tính</div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="gender" value="1" id="g1">
+                                <label for="g1">Nam</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="gender" value="2" id="g2">
+                                <label for="g2">Nữ</label>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="checkbox" class="item_filter_search" data-type="gender" value="3" id="g3">
+                                <label for="g3">Cặp đôi</label>
+                            </div>
+                        </div>
+
+                        <!-- Mức giá -->
+                        <div class="filter__search__item">
+                            <div class="name_thuoc_tinh">Mức giá</div>
+                            <div class="filter__pair">
+                                <div>Từ:</div>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="number" class="item_filter_search" >
+                            </div>
+                            <div class="filter__pair">
+                                <div>Đến:</div>
+                            </div>
+                            <div class="filter__pair">
+                                <input type="number" class="item_filter_search">
+                            </div>
+                        </div>
+
+                        <div class="bnt__search__result" id="bnt_search_result">Xem kết quả</div> <!-- Khi nhấn nút này thì search__filter display none và reset input-->
+                        <div class="bnt__search__reset" id = "bnt_search_reset">Reset</div>
+                    </div>
+                    
+                    <div class="search__result" id="search_result">
+                        <!-- Kết quả tìm kiếm -->
+                        <div id="search_infor" class="search__infor">Kết quả tìm kiếm:</div>
+                        <div class="product__search" id="product_search">
+                            <!-- hiện danh sách các kết quả ở đây -->
+                             <div class="product__search_item" data-id = "1">
+                                <div class="search__product__img"><img src="../img/product/K001_403_642_05_01-1.avif" alt=""></div>
+                                <div class="search__product__infor" >
+                                    <h3 class="s-product__name">dsfjgkldjg dslgjldjg sfdfsf sfsfs sffsfs sfs sfsfsfsf sfsfsf sfsfsfffsf sfsfs  sfsfsfs sfsfsf sfsf dgjdlkjl</h3>
+                                    <h3 class="s-product__price">1.000.000 VND</h3>
+                                </div>
+                             </div>
+
+                             <div class="product__search_item">
+                                <div class="search__product__img"><img src="../img/product/K001_403_642_05_01-1.avif" alt=""></div>
+                                <div class="search__product__infor">
+                                    <h3 class="s-product__name">dsfjgkldjg dslgjldjg sfdfsf sfsfs sffsfs sfs sfsfsfsf sfsfsf sfsfsfffsf sfsfs  sfsfsfs sfsfsf sfsf dgjdlkjl</h3>
+                                    <h3 class="s-product__price">1.000.000 VND</h3>
+                                </div>
+                             </div>
+
+                             <div class="product__search_item">
+                                <div class="search__product__img"><img src="../img/product/K001_403_642_05_01-1.avif" alt=""></div>
+                                <div class="search__product__infor">
+                                    <h3 class="s-product__name">dsfjgkldjg dslgjldjg sfdfsf sfsfs sffsfs sfs sfsfsfsf sfsfsf sfsfsfffsf sfsfs  sfsfsfs sfsfsf sfsf dgjdlkjl</h3>
+                                    <h3 class="s-product__price">1.000.000 VND</h3>
+                                </div>
+                             </div>
+
+                             <div class="product__search_item">
+                                <div class="search__product__img"><img src="../img/product/K001_403_642_05_01-1.avif" alt=""></div>
+                                <div class="search__product__infor">
+                                    <h3 class="s-product__name">dsfjgkldjg dslgjldjg sfdfsf sfsfs sffsfs sfs sfsfsfsf sfsfsf sfsfsfffsf sfsfs  sfsfsfs sfsfsf sfsf dgjdlkjl</h3>
+                                    <h3 class="s-product__price">1.000.000 VND</h3>
+                                </div>
+                             </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
             </div>
+
+    <script>
+        $(document).ready(function () {
+            // Nút "Nâng cao"
+            $(document).on('click','#bnt_show_search_filer', function () {
+                $('#search_result').css('display', 'none');
+                $('#search_filter').css('display', 'grid').hide().fadeIn(200);
+            });
+
+
+            // Nút "Xem kết quả"
+            $(document).on('click','#bnt_search_result', function () {
+                $('#search_filter').slideUp(200); // Ẩn filter
+                $('#search_result').css('display', 'grid').hide().fadeIn(200);
+            });
+
+            //Nút reset
+            $(document).on('click', '#bnt_search_reset', function () {
+                $('#search_filter input[type="checkbox"]').prop('checked', false);
+                $('#search_filter input[type="number"]').val('');
+            });
+        });
+
+        // Khi gõ vào ô input, hiện box
+        $('#search_infor').on('input', function () {
+            const keyword = $(this).val().trim();
+            if (keyword !== '') {
+                $('.search__box').fadeIn(100); // hoặc .show()
+                // Gửi Ajax tìm kiếm nếu cần
+            } else {
+                $('.search__box').fadeOut(100); // hoặc .hide()
+            }
+        });
+
+        // Ẩn box khi click ra ngoài
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.header__searchbar').length) {
+                $('.search__box').fadeOut(100);
+            }
+        });
+
+
+    </script>
+
 
             <div class="header__right-box"> 
                 <div class="header__cart">
@@ -73,6 +238,7 @@
             currentIndex = (currentIndex + 1) % totalSlides;
             showSlide(currentIndex);
         }, 5000); // Chuyển slide mỗi 3 giây
+
     </script>
     <div class="header__navbar">
         <ul class="header__navbar-list">
