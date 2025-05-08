@@ -132,6 +132,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-height: 50px;
 }
 
 .product__card-content .price {
@@ -140,7 +141,9 @@
     font-weight: bold;
     margin-top: 8px;
 }
-
+.product__card:hover{
+    cursor: pointer;
+}
 /* ===== PHÂN TRANG ===== */
 .product__pagination {
     display: flex;

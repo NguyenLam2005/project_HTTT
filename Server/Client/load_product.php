@@ -91,7 +91,6 @@ while ($row = $result->fetch_assoc()) {
             <h3>' . htmlspecialchars($row['name']) . '</h3>
             <div class="price">' . number_format($row['price'], 0, ',', '.') . '₫</div>
         </div>
-        <button class="product__card-add-btn" onclick ="addToCart(\'' . $row['id'] . '\')">Thêm sản phẩm</button>
     </div>';
 }
 

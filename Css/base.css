@@ -41,3 +41,7 @@ button{
 }
 
 
+#info_customer:hover,
+#order_customer:hover{
+    color: rgb(255, 165, 0);
+}

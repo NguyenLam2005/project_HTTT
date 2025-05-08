@@ -29,28 +29,48 @@ function showToast(message, isSuccess, duration = 2000) {
 
     return duration + 300; 
 }
-
 function addToCart(productId, quantity = 1) {
+    let currentQuantity = getQuantityFromCartSession(productId);
+    console.log(currentQuantity);
     $.ajax({
-        url: "./Server/Cart/addToCartById.php",
+        url: "http://localhost/project_HTTT/Server/Cart/addToCartById.php",
         type: "POST",
         data: {
             'product_id': productId,
-            'quantity': quantity,
+            'quantityCheck': currentQuantity,
+            'quantity': quantity
         },
         success: function (response) {
+            // alert(response);
             if(response.includes("Bạn cần đăng nhập"))
             {
                 showToast("Bạn cần đăng nhập để mua hàng.", false);
+            } else if (response === "Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!") {
+                showToast('Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!', false);
             }
             else{
+                $('.cart-count').text(response);
+                getCart();
                 showToast("Đã thêm sản phẩm vào giỏ hàng.", true);
             }
         }
     });
-    console.log(productId + ": " + quantity);
+    
+    
 }
-
+function getQuantityFromCartSession(productId) {
+    let cart = sessionStorage.getItem("cart");
+    if (!cart) {
+        return 0; 
+    }
+    cart = JSON.parse(cart);
+    let product = cart.find(item => parseInt(item.id) === parseInt(productId));
+    if (product) {
+        return product.quantity; 
+    } else {
+        return 0; 
+    }
+}
 function getCart() {
     $.ajax({
         url: "../../Server/Cart/getCart.php",
@@ -86,7 +106,7 @@ function displayItemInCart(new_cart) {
                     <div id="quantity-container">
                     <div id="downQuantity" onclick = "decreaseItemInCart(${item.id})"><i class="fa-solid fa-minus"></i></div>
                     <div id="PDCart-Quantity">${item.quantity}</div>
-                    <div id="upQuantity" onclick = "addItemToCart(${item.id},1)"><i class="fa-solid fa-plus"></i></div>
+                    <div id="upQuantity" onclick = "addItemToCart(${item.id},${item.quantity})"><i class="fa-solid fa-plus"></i></div>
                 </div>
                     <div id="delete-icon" onclick = "removeItemFromCart(${item.id})">
                         <i class="fa-regular fa-trash-can"></i>
@@ -106,19 +126,26 @@ function calculateTotal(new_cart) {
     document.querySelector('#price-total').textContent = totalAmout.toLocaleString("vi-VN") + "đ";
 }
 
-
-function addItemToCart(id) {
+function addItemToCart(id, quantityCheck, quantity = 1) {
     $.ajax({
         url: "../../Server/Cart/addToCartById.php",
         type: "POST",
         data: {
-            'product_id': id
+            'product_id': id,
+            'quantityCheck': quantityCheck,
+            'quantity': quantity
         },
-        success: function () {
-            getCart();
+        success: function (response) {
+            if (response === "Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!") {
+                showToast('Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!', false);
+            } else {
+                getCart(() => {
+                    itemQuantityCount();
+                });
+            }
         }
     });
-    console.log("Them san pham: " + id);
+    console.log("Thêm sản phẩm: " + id);
 }
 
 function decreaseItemInCart(id) {

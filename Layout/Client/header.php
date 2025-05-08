@@ -4,7 +4,7 @@ session_start();
 <header class="header">
 <div class="header__container">
     <div class="header__logo">
-        <a href="http://localhost/project_HTTT/index.php"><img src="http://localhost/project_HTTT/img/logo.png"></a>
+        <a href="http://localhost/project_HTTT/index.php"><img src="http://localhost/project_HTTT/Asset/img/logo_WatchStore.png"></a>
     </div>
 
     <div class="header__searchbar">

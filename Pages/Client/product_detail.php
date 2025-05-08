@@ -7,6 +7,7 @@
 
     <!-- Thư viện -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="http://localhost/project_HTTT/Js/Client/cart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="../../Css/base.css">
@@ -70,8 +71,8 @@
                     <p class = "product_detail_description">Mô tả: <br> <?php echo htmlspecialchars($product['description']); ?></p>
                 </div>
                 <div class = "product_detail_infor_footer">
-                    <div class = "add_to_cart_from_detail">Thêm vào giỏ hàng</div>
-                    <div class = "pay_from_detail">Thanh toán</div>
+                    <div class="add_to_cart_from_detail" onclick="addToCart(<?php echo $product['id']; ?>)">Thêm vào giỏ hàng</div>
+                    <!-- <div class = "pay_from_detail">Thanh toán</div> -->
                 </div>
             </div>
             
