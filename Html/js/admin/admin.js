@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
         role_part.style.display = "none";
         employee_part.style.display = "none";
         import_part.style.display = "none";
+        supplier_part.style.display = "none";
         inventory_part.style.display = "block";
     }
 
