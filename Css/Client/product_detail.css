@@ -1,0 +1,122 @@
+/* Toàn bộ trang
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+} */
+
+/* Bao bọc chi tiết sản phẩm */
+.product_detail_wrapper {
+    max-width: 1200px;
+    margin: 100px auto 0;
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Container chi tiết sản phẩm */
+.product_detail_container {
+    display: flex;
+    flex-direction: row; /* Đặt các phần tử theo hàng ngang */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Hình ảnh sản phẩm */
+.product_detail_img {
+    flex: 1;
+    max-width: 600px; /* Đảm bảo hình ảnh không vượt quá 500px */
+}
+
+.product_detail_img img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Nội dung chi tiết sản phẩm */
+.product_detail_content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Thông tin sản phẩm */
+.product_detail_infor {
+    color: #ddd;
+}
+
+/* Tên sản phẩm */
+.product_detail_name {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Giá sản phẩm */
+.product_detail_price {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: #ff9800;
+}
+
+/* Các thông tin sản phẩm khác */
+.product_detail_gender,
+.product_detail_brand,
+.product_detail_category,
+.product_detail_description {
+    font-size: 1.1rem;
+    margin: 5px 0;
+    color: #bbb;
+}
+
+/* Footer thông tin sản phẩm */
+.product_detail_infor_footer {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Các nút hành động */
+.add_to_cart_from_detail, .pay_from_detail {
+    background-color: #ff9800;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    flex: 1;
+}
+
+/* Hiệu ứng hover */
+.add_to_cart_from_detail:hover, .pay_from_detail:hover {
+    background-color: #ff5722;
+}
+
+/* Cải thiện tính di động */
+@media (max-width: 768px) {
+    .product_detail_container {
+        flex-direction: column;
+    }
+
+    .product_detail_img {
+        max-width: 100%;
+    }
+
+    .product_detail_infor_footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add_to_cart_from_detail, .pay_from_detail {
+        margin: 10px 0;
+        width: 100%;
+    }
+}

@@ -70,8 +70,12 @@ $(document).ready(function () {
 
     // Click icon Hiện/Ẩn bộ lọc
     $('#bnt_filter').on('click', function () {
-        $('#product_filter').css("display", "flex");
-        // $('#product_filter').slideToggle();
+        if($('#product_filter').css("display") == 'none'){
+            $('#product_filter').css("display", "flex");
+        }
+        else{
+            $('#product_filter').css("display", "none");
+        }
     });
 
     // Click chọn thương hiệu trong navbar
@@ -122,19 +126,6 @@ $(document).ready(function () {
         loadProducts(page);
     });
 
-    // Click vào card sản phẩm → hiện chi tiết
-    // $(document).on('click', '.product__card', function () {
-    //     let productId = $(this).data('id');
-    //     $.ajax({
-    //         url: './Server/Client/product_detail.php',
-    //         method: 'POST',
-    //         data: { product_id: productId },
-    //         success: function (res) {
-    //             $('.product__detail').html(res).slideDown();
-    //         }
-    //     });
-    // });
-
     // Xử lý active cho các mục navbar
     $(document).on('click', '.nav-item', function () {
         $('.nav-item').removeClass('active');
@@ -145,5 +136,12 @@ $(document).ready(function () {
     $("#thuong_hieu, #gioi_tinh, #loai, #muc_gia, #sap_xep").on("change", function () {
         loadProducts(1); // Gọi lại loadProducts từ trang đầu
     });
-
+    
+    //click hiện chi tiết
+    $(document).on('click', '.product__card', function(){
+        let product_id = $(this).data('id'); // Sử dụng cú pháp .data('id')
+        let link = "http://localhost/project_HTTT/Pages/Client/product_detail.php?id=" + product_id;
+        window.location.href = link;
+    });
+    
 });

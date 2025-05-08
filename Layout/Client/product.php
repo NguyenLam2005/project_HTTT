@@ -46,5 +46,5 @@
 
 <!-- Scripts -->
 <!-- <script src="./Js/Client/navbar.js"></script> -->
-<script src="./Js/Client/product.js?v1.1"></script>
+<script src="./Js/Client/product.js"></script>
 

@@ -79,4 +79,12 @@ $(document).ready(function () {
         });
     }
 
+    //click hiện chi tiết
+    $(document).on('click', '.product__search_item', function(){
+        let product_id = $(this).data('id');
+        let link = "http://localhost/project_HTTT/Pages/Client/product_detail.php?id=" + product_id;
+        window.location.href = link;
+    });
+        
+
 });
