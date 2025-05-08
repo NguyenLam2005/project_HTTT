@@ -334,6 +334,25 @@ if (!isset($_SESSION['adminInfo'])) {
         </div>
 
         <div class="form-group">
+          <label for="product-gender" class="form-label">Giới tính</label>
+          <select name="product-gender" id="product-gender" class="form-select" required>
+          <?php
+            include 'PHP/config.php';
+            $sql = "SELECT id, name FROM genders";
+            $result = $conn->query($sql);
+            echo "  <option value=''>-- Chọn giới tính --</option>";
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                }
+            } else {
+                echo "<option value=''>Không có giới tính nào!</option>";
+            }
+          ?>
+        </select>
+        </div>
+
+        <div class="form-group">
           <label for="product-supplier" class="form-label">Nhà cung cấp</label>
           <select name="product-supplier" id="product-supplier" class="form-select" required>
             <?php
@@ -353,8 +372,13 @@ if (!isset($_SESSION['adminInfo'])) {
         </div>
 
         <div class="form-group">
-          <label for="product-price" class="form-label">Giá nhập (VNĐ)</label>
-          <input type="number" id="product-price" name="product-price" placeholder="Nhập giá nhập" class="form-input" />
+          <label for="product-price" class="form-label">Giá bán(VNĐ)</label>
+          <input type="number" id="product-price" name="product-price" placeholder="Nhập giá" class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-description" class="form-label">Mô tả</label>
+          <input type="text" id="product-description" name="product-description" placeholder="Nhập mô tả" class="form-input" />
         </div>
 
         <div class="form-group text-center">
@@ -417,6 +441,25 @@ if (!isset($_SESSION['adminInfo'])) {
         </div>
 
         <div class="form-group">
+          <label for="product-gender" class="form-label">*Giới tính</label>
+          <select name="product-gender" id="product-genderFIX" class="form-select" required>
+          <?php
+            include 'PHP/config.php';
+            $sql = "SELECT id, name FROM genders";
+            $result = $conn->query($sql);
+            echo "  <option value=''>-- Chọn giới tính --</option>";
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                }
+            } else {
+                echo "<option value=''>Không có giới tính nào!</option>";
+            }
+          ?>
+        </select>
+        </div>
+
+        <div class="form-group">
           <label for="product-supplier" class="form-label">*Nhà cung cấp</label>
           <select name="product-supplier" id="product-supplierFIX" class="form-select" required>
             <?php
@@ -436,9 +479,14 @@ if (!isset($_SESSION['adminInfo'])) {
         </div>
 
         <div class="form-group">
-          <label for="product-price" class="form-label">*Giá nhập (VNĐ)</label>
-          <input type="number" id="product-priceFIX" name="product-price" placeholder="Nhập giá nhập"
+          <label for="product-price" class="form-label">*Giá bán (VNĐ)</label>
+          <input type="number" id="product-priceFIX" name="product-price" placeholder="Nhập giá"
             class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-description" class="form-label">*Mô tả</label>
+          <input type="text" id="product-descriptionFIX" name="product-description" placeholder="Nhập mô tả" class="form-input" />
         </div>
 
         <div class="form-group text-center">

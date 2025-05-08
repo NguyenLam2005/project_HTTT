@@ -1840,7 +1840,8 @@ body {
 }
 
 .form-select,
-.form-input {
+.form-input,
+.form-textarea  {
   margin: 5px;
   padding: 8px;
   min-width: 180px;
