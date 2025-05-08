@@ -50,6 +50,7 @@ a{
 .header__searchbar{
     width: 50%;
     background-color: #101010;
+    position: relative;
 }
 
 .header__searcbar-container{

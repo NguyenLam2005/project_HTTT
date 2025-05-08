@@ -14,12 +14,13 @@
     <link rel="stylesheet" href="./Css/Client/loginCustomer.css">
     <link rel="stylesheet" href="./Css/Client/registerCustomer.css">
     <link rel="stylesheet" href="./Css/Client/product.css?v=4564">
-
+    <link rel="stylesheet" href="./Css/Client/search.css">
 
     <link rel="stylesheet" href="./Css/base.css">
 
 </head>
     <script src="./Js/Client/cart.js"></script>
+    <script src="./Js/Client/search.js"></script>
 <body>
 <?php 
 include './Layout/Client/header.php';
