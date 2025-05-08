@@ -5,7 +5,7 @@ $sql = "SELECT employeeaccount.*, permissions.name AS p_name, employees.fullName
         FROM employeeaccount 
         LEFT JOIN permissions ON employeeaccount.permission_id = permissions.id
         LEFT JOIN employees ON employeeaccount.userName = employees.id
-        ORDER BY employeeaccount.id ASC";
+        ORDER BY employeeaccount.id DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -60,6 +60,15 @@ if ($result->num_rows > 0) {
     if (event.target.classList.contains("account-status")) {
         let userId = event.target.getAttribute("data-id");
         let newStatus = event.target.value;
+        const currentAccountId = window.adminInfo.adminID;
+
+        if (parseInt(currentAccountId) === parseInt(userId) && newStatus==2) {
+            alert("Không thể xóa khóa tài khoản đang đăng nhập");
+            event.target.value = 1;
+            selectEl.classList.remove("changed");
+            selectEl.blur();
+            return;
+        }
 
         fetch("/project_HTTT/Html/PHP/AC-update_status.php", {
             method: "POST",

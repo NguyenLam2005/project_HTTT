@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const admin_supplier = document.querySelector("#admin-supplier");
     const admin_oder = document.querySelector("#admin-oder");
     const admin_product = document.querySelector("#admin-product");
+    const admin_inventory = document.querySelector("#admin-inventory");
     const admin_customer = document.querySelector("#admin-customer");
     const admin_account = document.querySelector("#admin-account");
     const admin_role = document.querySelector("#admin-role");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const employee_part = document.querySelector(".employee-part");
     const supplier_part = document.querySelector(".supplier-part");
     const import_part = this.documentElement.querySelector(".import-part")
+    const inventory_part = document.querySelector(".inventory-part");
 
     function statisticToggle() {
         statistic_part.style.display = "block";
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function oderToggle() {
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function customerToggle() {
@@ -63,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function productToggle() {
@@ -77,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function returnMain() {
@@ -91,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function accountToggle() {
@@ -105,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function roleToggle() {
@@ -119,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function employeeToggle() {
@@ -133,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "block";
         import_part.style.display = "none";
         supplier_part.style.display = "none";
+        inventory_part.style.display = "none";
     }
 
     function importToggle() {
@@ -147,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         supplier_part.style.display = "none";
         import_part.style.display = "block";
+        inventory_part.style.display = "none";
     }
 
     function supplierToggle() {
@@ -161,6 +172,21 @@ document.addEventListener("DOMContentLoaded", function () {
         employee_part.style.display = "none";
         import_part.style.display = "none";
         supplier_part.style.display = "block";
+        inventory_part.style.display = "none";
+    }
+
+    function inventoryToggle() {
+        statistic_part.style.display = "none";
+        oder_part.style.display = "none";
+        customer_part.style.display = "none";
+        product_part.style.display = "none"
+        admin_main.style.display = "none";
+        profile_part.style.display = "none";
+        account_part.style.display = "none";
+        role_part.style.display = "none";
+        employee_part.style.display = "none";
+        import_part.style.display = "none";
+        inventory_part.style.display = "block";
     }
 
     admin_statistic.addEventListener("click", statisticToggle);
@@ -173,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
     admin_employee.addEventListener("click", employeeToggle);
     admin_import.addEventListener("click", importToggle);
     admin_supplier.addEventListener("click", supplierToggle);
+    admin_inventory.addEventListener("click", inventoryToggle);
     // add product
 
     const add_form_1 = document.querySelector(".add-form-product");

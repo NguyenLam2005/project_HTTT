@@ -44,6 +44,7 @@ if (!isset($_SESSION['adminInfo'])) {
       <a href="#" id="admin-role">Quản lí quyền</a>
       <a href="#" id="admin-import">Nhập hàng</a>
       <a href="#" id="admin-supplier">Nhà cung cấp</a>
+      <a href="#" id="admin-inventory">Quản lí tồn kho</a>
     </div>
     <img src="img/logo-icon.png" alt="hahaha" />
   </div>
@@ -52,7 +53,7 @@ if (!isset($_SESSION['adminInfo'])) {
     <div class="admin-header">
       <div class="profile">
         <span><?php echo $_SESSION['adminInfo']['fullName']; ?></span>
-        <img src="img/admin.jpg" alt="" id="profile" />
+        <img src="img/account-logo.png" alt="" id="profile" />
       </div>
     </div>
     <div class="business-process">
@@ -74,18 +75,24 @@ if (!isset($_SESSION['adminInfo'])) {
   <div class="profile-part">
     <div class="profile-container">
       <div class="profile-header">
-        <img src="img/admin.jpg" alt="" class="avatar" />
+        <img src="img/account-logo.png" alt="" class="avatar" />
         <div class="user-info">
           <h2><?php echo $_SESSION['adminInfo']['fullName']; ?></h2>
         </div>
       </div>
       <ul class="menu-profile">
-        <li><a href="#">Thông tin cá nhân</a></li>
         <li>
-          <a href="#">Quyền hạn: <span>...</span></a>
+          <a href="#">Quyền hạn: <span><?php echo $_SESSION['adminInfo']['permission_name']; ?></span></a>
         </li>
-        <li><a href="#">Lịch sử hoạt động</a></li>
-        <li><a href="#">Quản lý quyền</a></li>
+        <li>
+          <a href="#">Địa chỉ mail: <span><?php echo $_SESSION['adminInfo']['email']; ?></span></a>
+        </li>
+        <li>
+          <a href="#">Số điện thoại: <span><?php echo $_SESSION['adminInfo']['phoneNumber']; ?></span></a>
+        </li>
+        <li>
+          <a href="#">Địa chỉ: <span><?php echo $_SESSION['adminInfo']['address']; ?></span></a>
+        </li>
       </ul>
       <button class="logout-btn-admin">Đăng xuất</button>
     </div>
@@ -465,62 +472,7 @@ if (!isset($_SESSION['adminInfo'])) {
 
       <div class="history-order-container">
          <i class="fa-solid fa-rotate-left back-customer2"></i>
-        <!--<div id="cus-identity">
-          <span>Khách hàng:</span>
-          <h4>Nguyễn Toàn Thắng</h4>
-        </div>
-        <h3 style="color: #3C8DBC; text-align: center;">Đơn hàng đã mua</h3>
-        <div class="history-order-wrapper">
-          <div id="order-id">Đơn hàng 1</div>
-          <table class="history-order-table">
-            <thead>
-              <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
-              </tr>
-            </thead>
-            <tbody id="history-order-table-body"> -->
-              <!-- Dữ liệu đơn hàng sẽ được thêm ở đây -->
-               <!-- Dữ liệu tạm -->
-              <!-- <tr>
-                  <td>Bánh thần tài</td>
-                  <td>3</td>
-                  <td>303030</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="order-summary">
-            <p><strong>Tổng tiền:</strong> <span id="total-amount">0đ</span></p>
-            <p><strong>Trạng thái đơn hàng:</strong> <span id="order-status">Chưa xác định</span></p>
-          </div>
-        </div>
 
-        <div class="history-order-wrapper">
-          <div id="order-id">Đơn hàng 1</div>
-          <table class="history-order-table">
-            <thead>
-              <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
-              </tr>
-            </thead>
-            <tbody id="history-order-table-body"> -->
-              <!-- Dữ liệu đơn hàng sẽ được thêm ở đây -->
-               <!-- Dữ liệu tạm -->
-              <!-- <tr>
-                  <td>Bánh thần tài</td>
-                  <td>3</td>
-                  <td>303030</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="order-summary">
-            <p><strong>Tổng tiền:</strong> <span id="total-amount">0đ</span></p>
-            <p><strong>Trạng thái đơn hàng:</strong> <span id="order-status">Chưa xác định</span></p>
-          </div>
-        </div> -->
       </div>
 
       <form class="fix-form-customer" id="fix-form-customer" enctype="multipart/form-data">
@@ -1194,6 +1146,26 @@ if (!isset($_SESSION['adminInfo'])) {
     </div>
   </div>
 
+  <!-- inventory part -->
+  <div class="inventory-part">
+    <div class="inventory-table-container">
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Mã phiếu nhập</th>
+            <th>Ngày nhập</th>
+            <th>Serial</th>
+          </tr>
+        </thead>
+        <tbody id="inventory-table-body">
+          <?php include 'PHP/IV-Manager.php'?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 
   <script src="js/admin/admin.js"></script>
   <script src="js/admin/PD-Ajax.js"></script>
@@ -1226,7 +1198,8 @@ if (!isset($_SESSION['adminInfo'])) {
       "Quản lí tài khoản": "admin-account",
       "Quản lí quyền": "admin-role",
       "Nhập hàng": "admin-import",
-      "Nhà cung cấp": "admin-supplier"
+      "Nhà cung cấp": "admin-supplier",
+      "Quản lí tồn kho": "admin-inventory"
   };
 
   // Mapping chức năng -> tiền tố id
@@ -1238,7 +1211,8 @@ if (!isset($_SESSION['adminInfo'])) {
       "Quản lí tài khoản": "account",
       "Quản lí quyền": "role",
       "Nhập hàng": "import",
-      "Nhà cung cấp": "supplier"
+      "Nhà cung cấp": "supplier",
+      "Quản lí tồn kho": "inventory"
   };
 
   document.addEventListener("DOMContentLoaded", () => {

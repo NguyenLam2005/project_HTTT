@@ -80,7 +80,14 @@ document.querySelector(".employee-table").addEventListener("click", function (ev
         console.log("Employee ID:", employeeId);
         let deleteOverlay = document.getElementById('delete-overlay-employee');
         deleteOverlay.style.display = 'block';
+        const currentAccountId = window.adminInfo.userName;
         
+        if (currentAccountId === employeeId){
+            alert("Không thể xóa nhân viên liên kết với đang đăng nhập!");
+            document.getElementById("delete-overlay-employee").style.display = "none";
+            return;
+        }
+
         document.getElementById('delete-acp-employee').onclick = function () {
             fetch('/project_HTTT/Html/PHP/EP-Delete.php', {
                 method: 'POST',

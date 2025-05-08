@@ -99,6 +99,14 @@ document.querySelector(".account-table").addEventListener("click", function (eve
         console.log("Account ID:", userId);
         let deleteOverlay = document.getElementById('delete-overlay-account');
         deleteOverlay.style.display = 'block';
+        const currentAccountId = window.adminInfo.adminID;
+        
+        if (parseInt(currentAccountId) === parseInt(userId)) {
+            alert("Không thể xóa tài khoản đang đăng nhập");
+            document.getElementById("delete-overlay-account").style.display = "none";
+            return;
+        }
+        
         document.getElementById('delete-acp-account').onclick = function () {
             fetch('/project_HTTT/Html/PHP/AC-Delete.php', {
                 method: 'POST',

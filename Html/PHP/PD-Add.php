@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLOAD_ERR_OK) {
     $image = time() . "_" . basename($_FILES['product-image']['name']);
-    $target_dir = __DIR__ . "/../img/product/";
+    $target_dir = realpath(__DIR__ . "/../../img/product/") . "/";
 
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
@@ -23,7 +23,7 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
 
     $target_file_full = $target_dir . $image; // đường dẫn vật lý
     if (move_uploaded_file($_FILES['product-image']['tmp_name'], $target_file_full)) {
-        $target_file = "/project_HTTT/Html/img/product/" . $image; // đường dẫn web
+        $target_file = "/project_HTTT/img/product/" . $image;
     } else {
         error_log("Lỗi không thể ghi file vào: " . $target_file_full);
         $target_file = $noneIMG;
@@ -58,9 +58,9 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
     $stmt->close();
 
 
-    $sql = "INSERT INTO products (name,image,category_id, brand_id,quantity, supplier_id, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (name,image ,category_id, brand_id,quantity, supplier_id, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiiiii", $name,$target_file,$category_id, $brand_id ,$quantity,$supplier_id ,$price);
+    $stmt->bind_param("ssiiiii", $name,$target_file ,$category_id, $brand_id ,$quantity,$supplier_id ,$price, );
 
     if ($stmt->execute()) {
         $response = [
