@@ -176,4 +176,35 @@ function removeItemFromCart(id) {
     console.log("Xoa san pham: " + id);
 }
 
+function addToCart2(productId, quantity = 1, callback = null) {
+    let currentQuantity = getQuantityFromCartSession(productId);
+    $.ajax({
+        url: "http://localhost/project_HTTT/Server/Cart/addToCartById.php",
+        type: "POST",
+        data: {
+            'product_id': productId,
+            'quantityCheck': currentQuantity,
+            'quantity': quantity
+        },
+        success: function (response) {
+            if (response.includes("Bạn cần đăng nhập")) {
+                showToast("Bạn cần đăng nhập để mua hàng.", false);
+            } else if (response === "Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!") {
+                showToast('Số lượng sản phẩm vượt quá số lượng có sẵn trong kho!', false);
+            } else {
+                $('.cart-count').text(response);
+                getCart();
+                showToast("Đang tới trang thanh toán.....", true);
+                if (callback) callback(); // Gọi callback khi xong
+            }
+        }
+    });
+}
 
+function addToCartAndPaying(productId) {
+    addToCart2(productId, 1, () => {
+        setTimeout(() => {
+            paymentPage(); // Chờ một chút để getCart kịp cập nhật
+        }, 1000);
+    });
+}

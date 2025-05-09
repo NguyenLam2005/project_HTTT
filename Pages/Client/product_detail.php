@@ -73,7 +73,7 @@
                 </div>
                 <div class = "product_detail_infor_footer">
                     <div class="add_to_cart_from_detail" onclick="addToCart(<?php echo $product['id']; ?>)">Thêm vào giỏ hàng</div>
-                    <!-- <div class = "pay_from_detail">Thanh toán</div> -->
+                    <div class = "pay_from_detail" onclick="addToCartAndPaying(<?php echo $product['id']; ?>)">Thanh toán</div>
                 </div>
             </div>
             

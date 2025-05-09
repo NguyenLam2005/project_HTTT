@@ -108,6 +108,7 @@ body {
     text-align: center;
     transition: background-color 0.3s ease;
     flex: 1;
+    user-select: none;
 }
 
 /* Hiệu ứng hover */

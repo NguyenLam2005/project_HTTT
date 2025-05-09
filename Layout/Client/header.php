@@ -2,6 +2,11 @@
 session_start();
 ?>
 <header class="header">
+    <script>
+    const sessionData = <?= json_encode($_SESSION); ?>;
+    console.log("Session hiện tại:", sessionData.customer.address);
+</script>
+
 <div class="header__container">
     <div class="header__logo">
         <a href="http://localhost/project_HTTT/index.php"><img src="http://localhost/project_HTTT/Asset/img/logo_WatchStore.png"></a>
@@ -326,7 +331,9 @@ session_start();
 loadCustomerInfo();
 
     function loadCustomerInfo(){
-        let customerData = JSON.parse(sessionStorage.getItem("customerInfo"));
+        const sessionData = <?= json_encode($_SESSION); ?>;
+        sessionStorage.setItem("customerInfo", JSON.stringify(sessionData.customer));
+        let customerData = sessionData.customer;
         let html = `
         <div class="row">
             <label for="account" class="Detail">Tài khoản: </label>
