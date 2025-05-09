@@ -221,7 +221,9 @@ a{
     overflow-y: auto;
     padding-right: 10px;
 }
-
+.orders-scroll-area p{
+    color: black;
+}
 .order-box {
     background: #fff;
     border-radius: 10px;
