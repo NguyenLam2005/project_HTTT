@@ -23,6 +23,21 @@ body {
     flex-direction: row; /* Đặt các phần tử theo hàng ngang */
     gap: 20px;
     padding: 20px;
+    position: relative;
+}
+
+.back__home{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: white;
+    z-index: 1;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.back__home:hover{
+    color: orange;
 }
 
 /* Hình ảnh sản phẩm */

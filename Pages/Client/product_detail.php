@@ -58,6 +58,7 @@
     ?>
 <div class = "product_detail_wrapper">
     <div class = "product_detail_container">
+    <div class = "back__home" id = "back_home"><i class="fa-solid fa-arrow-left"></i></div>
             <div class = "product_detail_img">
                 <img src="<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             </div>
@@ -78,6 +79,13 @@
             
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#back_home').click(function() {
+                window.history.back();
+            });
+        });
+    </script>
 
 
 <?php include '../../Layout/Client/footer.php'; ?>
