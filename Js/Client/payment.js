@@ -125,8 +125,14 @@ function showToast(message, isSuccess, duration = 2000) {
 }
 
 function invoicePage(){
+    const addressPayment = document.querySelector('.payment-customer-address');
     const cashPayment = document.querySelector('#cash-on-delivery');
     const atmPayment = document.querySelector('#atm-payment');
+    if(addressPayment.textContent === 'Chưa có'){
+        showToast("Vui lòng cung cấp địa chỉ!", false);
+        return;
+    }
+
     if (!cashPayment.checked && !atmPayment.checked) {
         showToast("Vui lòng chọn hình thức thanh toán!", false);
         return;
@@ -161,7 +167,7 @@ function getPaymentInfo() {
             showToast("Vui lòng chọn ngân hàng!", false);
             return null;
         }
-        if (soThe === '') {
+        if (soThe === '') { 
             showToast("Vui lòng nhập số tài khoản!", false);
             return null;
         }
