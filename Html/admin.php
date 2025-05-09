@@ -46,28 +46,28 @@ if (!isset($_SESSION['adminInfo'])) {
       <a href="#" id="admin-supplier">Nhà cung cấp</a>
       <a href="#" id="admin-inventory">Quản lí tồn kho</a>
     </div>
-    <img src="img/logo-icon.png" alt="hahaha" />
+    <img src="/project_HTTT/Asset/img/logo_WatchStore.png" alt="hahaha" />
   </div>
 
   <div class="admin-main">
     <div class="admin-header">
       <div class="profile">
         <span><?php echo $_SESSION['adminInfo']['fullName']; ?></span>
-        <img src="img/account-logo.png" alt="" id="profile" />
+        <img src="/project_HTTT/Asset/img/logo_WatchStore.png" alt="" id="profile" />
       </div>
     </div>
     <div class="business-process">
       <div class="card">
         <h3>Số đơn hàng</h3>
-        <p>0</p>
+        <p class="order-count"></p>
       </div>
       <div class="card">
-        <h3>Doanh thu</h3>
-        <p>0</p>
+        <h3 class="revenue">Doanh thu</h3>
+        <p></p>
       </div>
       <div class="card">
-        <h3>Tỷ lệ tăng trưởng</h3>
-        <p>0</p>
+        <h3>Lãi</h3>
+        <p class="profit"></p>
       </div>
     </div>
   </div>
@@ -1271,6 +1271,7 @@ if (!isset($_SESSION['adminInfo'])) {
   <script src="js/admin/ST-ajax.js"></script>
   <script src="js/admin/SP-ajax.js"></script>
   <script src="js/admin/IP-ajax.js"></script>
+  <script src="js/admin/bussiness-process.js"></script>
 
   <script>
   window.adminInfo = <?php echo json_encode($_SESSION['adminInfo']); ?>;

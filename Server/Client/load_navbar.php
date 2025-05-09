@@ -21,7 +21,7 @@ foreach ($genders as $gender) {
 }
 
 // Loại đồng hồ
-$navbarHTML .= '<li class="nav-item" id = "news_watch"><a>Tin tức</a></li>';
+$navbarHTML .= '<li class="nav-item" id = "news_watch"><a href="https://vnexpress.net/tag/dong-ho-257904">Tin tức</a></li>';
 
 // Trả về dưới dạng JSON
 $response = [

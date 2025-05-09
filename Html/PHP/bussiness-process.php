@@ -1,4 +1,4 @@
-<!-- 
+<?php
 include __DIR__ . '/config.php';
 
 $sql = "SELECT 
@@ -10,7 +10,7 @@ $sql = "SELECT
         JOIN orderdetail od ON o.id = od.order_id
         JOIN (
             SELECT ird.product_id, ird.unitPrice
-            FROM importreceipt_detail ird
+            FROM importreceipt_details ird
             JOIN (
                 SELECT product_id, MAX(ir.importDate) AS latest_date
                 FROM importreceipt_details ird2
@@ -32,4 +32,4 @@ echo json_encode([
 ]);
 
 $conn->close();
- -->
+?>
