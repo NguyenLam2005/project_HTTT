@@ -229,7 +229,6 @@ session_start();
                 <div class="modal-content">
                     <span class="close-history-modal">&times;</span>
                     <h3 class="order-title">Đơn hàng đã mua</h3>
-
                     <div class="orders-scroll-area">
                         
                     </div>

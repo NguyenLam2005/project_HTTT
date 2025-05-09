@@ -1,6 +1,7 @@
 <div class="slide__box">
-        <img src="./img/slide/slide04.png" alt="" class = "slide active_slide">
-        <img src="./img/slide/slide01.png" alt="" class = "slide">
+        <img src="./img/slide/slide00.jpg" alt="" class = "slide active_slide">
+        <img src="./img/slide/slide07.png" alt="" class = "slide">
+        <img src="./img/slide/slide05.avif" alt="" class = "slide">
         <img src="./img/slide/slide02.png" alt="" class = "slide">
         <img src="./img/slide/slide03.png" alt="" class = "slide">
     </div>
