@@ -1140,6 +1140,7 @@ if (!isset($_SESSION['adminInfo'])) {
                 <th>Ảnh sản phẩm</th>
                 <th>Thể loại</th>
                 <th>Giá bán</th>
+                <th>Tồn kho</th>
               </tr>
             </thead>
             <tbody>
@@ -1154,10 +1155,10 @@ if (!isset($_SESSION['adminInfo'])) {
           <input type="number" id="quantity" class="form-input" placeholder="Nhập số lượng" />
 
           <label for="import-price">Giá nhập:</label>
-          <input type="number" id="import-price" class="form-input" placeholder="Nhập giá nhập" />
+          <input type="text" id="import-price" class="form-input" placeholder="Nhập giá nhập" />
 
           <label for="profit-percent">% Lãi:</label>
-          <input type="number" id="profit-percent" class="form-input" placeholder="" readonly/>
+          <input type="text" id="profit-percent" class="form-input" placeholder="" readonly/>
 
           <button id="add-product-btn-ip" class="form-button">Thêm sản phẩm</button>
         </div>
