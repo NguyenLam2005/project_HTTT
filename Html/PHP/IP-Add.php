@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include __DIR__ . '/config.php';
 header('Content-Type: application/json');
 
 // Nhận dữ liệu từ AJAX (JSON)

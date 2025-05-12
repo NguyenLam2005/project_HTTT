@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Xử lý combobox nhập hàng
 document.addEventListener('DOMContentLoaded', function() {
     const supplierSelect = document.getElementById('supplier-ip');
+    const brandSelect = document.getElementById('brand-ip');
     const productTableBody = document.querySelector('.import-table-show tbody');
     let totalAmount = 0;
 
@@ -48,12 +49,61 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-    // Khi chọn nhà cung cấp
-    supplierSelect.addEventListener('change', function() {
+     supplierSelect.addEventListener('change', function() {
         const supplierId = this.value;
+        brandSelect.innerHTML = '<option value="">Chọn thương hiệu</option>';
         productTableBody.innerHTML = '';
         if (supplierId) {
-            fetch(`/project_HTTT/Html/PHP/IP-getProductsByCategoryAndSupplier.php?supplier_id=${supplierId}`)
+            fetch(`/project_HTTT/Html/PHP/IP-getBrandBySupplier.php?supplier_id=${supplierId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        data.brand.forEach(brand => {
+                            brandSelect.innerHTML += `<option value="${brand.id}">${brand.name}</option>`;
+                        });
+                    }
+                });
+        }
+    });
+
+
+    // // Khi chọn nhà cung cấp
+    // supplierSelect.addEventListener('change', function() {
+    //     const supplierId = this.value;
+    //     productTableBody.innerHTML = '';
+    //     if (supplierId) {
+    //         fetch(`/project_HTTT/Html/PHP/IP-getProductsByCategoryAndSupplier.php?supplier_id=${supplierId}`)
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 if (data.success) {
+    //                     data.products.forEach(product => {
+    //                         const formattedPrice = parseFloat(product.price)
+    //                         .toLocaleString('vi-VN', {
+    //                             maximumFractionDigits: 0
+    //                         }) + 'VNĐ';
+
+    //                         // Thêm sản phẩm vào bảng
+    //                         productTableBody.innerHTML += `
+    //                             <tr data-product-id="${product.id}">
+    //                                 <td>${product.name}</td>
+    //                                 <td><img src="${product.image}" alt="" style="max-width:60px;max-height:60px;"></td>
+    //                                 <td>${product.category_name}</td>
+    //                                 <td>${formattedPrice}</td>
+    //                                 <td>${product.quantity}</td>
+    //                             </tr>
+    //                         `;
+    //                     });
+    //                 }
+    //             });
+    //     }
+    // });
+
+    brandSelect.addEventListener('change', function() {
+        const brandId = this.value;
+        const supplierId = supplierSelect.value;
+        productTableBody.innerHTML = '';
+        if (brandId && supplierId) {
+            fetch(`/project_HTTT/Html/PHP/IP-getProductsByBrandAndSupplier.php?brand_id=${brandId}&supplier_id=${supplierId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
@@ -181,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         newRow.innerHTML = `
             <td>${selectedProduct.name}</td>
             <td>${quantity}</td>
-            <td>${importPrice}</td>
+            <td>${parseFloat(importPrice.replace(/\D/g, ''))}</td>
             <td>${profitPercent}%</td>
             <td>${total}</td>
             <td style='text-align: center; vertical-align: middle;'><i class='fa-solid fa-trash' style='cursor:pointer'></i></td>
@@ -412,12 +462,18 @@ document.addEventListener('click', function(e) {
                     // Chỉ hiển thị sản phẩm của phiếu nhập hiện tại
                     if (data.details && data.details.length > 0) {
                         data.details.forEach(detail => {
-                            const profitPercent = ((detail.product_price - detail.unitPrice) / detail.unitPrice * 100).toFixed(2);
+                            const unitPrice = parseFloat(detail.unitPrice);
+                            const productPrice = parseFloat(detail.product_price);
+
+                            let profitPercent = '0.00';
+                            if (unitPrice > 0 && productPrice > 0) {
+                                profitPercent = (((productPrice - unitPrice) / unitPrice) * 100).toFixed(2);
+                            }
                             tbody.innerHTML += `
                                 <tr>
                                     <td>${detail.product_name}</td>
                                     <td>${detail.quantity}</td>
-                                    <td>${detail.unitPrice.toLocaleString('vi-VN')}VNĐ</td>
+                                    <td>${unitPrice.toLocaleString('vi-VN')} VNĐ</td>
                                     <td>${profitPercent}%</td>
                                     <td>${detail.subtotal.toLocaleString('vi-VN')}VNĐ</td>
                                 </tr>

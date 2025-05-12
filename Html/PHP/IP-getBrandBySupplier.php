@@ -4,18 +4,19 @@ header('Content-Type: application/json');
 
 if (isset($_GET['supplier_id'])) {
     $supplier_id = intval($_GET['supplier_id']);
-    $sql = "SELECT DISTINCT c.id, c.name FROM categories c
-            JOIN products p ON c.id = p.category_id
-            WHERE p.supplier_id = ?";
+    $sql = "SELECT DISTINCT b.id, b.name FROM brand b
+            JOIN products p ON b.id = p.brand_id
+            JOIN suppliers s ON s.id = p.supplier_id
+            WHERE s.id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $supplier_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $categories = [];
+    $brand = [];
     while ($row = $result->fetch_assoc()) {
-        $categories[] = $row;
+        $brand[] = $row;
     }
-    echo json_encode(['success' => true, 'categories' => $categories]);
+    echo json_encode(['success' => true, 'brand' => $brand]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Thiếu supplier_id']);
 }

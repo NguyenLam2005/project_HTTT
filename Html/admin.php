@@ -1129,6 +1129,9 @@ if (!isset($_SESSION['adminInfo'])) {
           <select id="supplier-ip" class="form-select">
             <option value="">Chọn nhà cung cấp</option>
           </select>
+          <select id="brand-ip" class="form-select">
+            <option value="">Chọn thương hiệu</option>
+          </select>
         </div>
 
         <!-- Bảng sản phẩm -->
