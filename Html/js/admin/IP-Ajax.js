@@ -221,8 +221,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         // Tính thành tiền
-        const total = (parseFloat(importPrice) * parseInt(quantity)).toFixed(0);
-        totalAmount = totalAmount + parseFloat(total);
+        const cleanImportPrice = getRawPrice(importPrice);
+        const total = (cleanImportPrice * parseInt(quantity)).toFixed(0);
+        totalAmount += parseFloat(total);
 
         // Thêm vào bảng sản phẩm trong phiếu nhập
         const importListBody = document.querySelector('.imported-product-list-section tbody');
