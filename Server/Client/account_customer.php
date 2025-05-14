@@ -13,7 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("s", $sdt);
         $stmt->execute();
         $stmt->store_result();
-        echo json_encode(['exists' => $stmt->num_rows > 0]);
+        if ($stmt->num_rows > 0) {
+            echo json_encode(["exists" => TRUE]);
+        } else {
+            echo json_encode(["exists" => FALSE]);
+        }
         exit;
     }
     // Kiểm tra email có bị trùng
@@ -23,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
-        echo json_encode(['exists' => $stmt->num_rows > 0]);
+        if ($stmt->num_rows > 0) {
+            echo json_encode(["exists" => TRUE]);
+        } else {
+            echo json_encode(["exists" => FALSE]);
+        }
         exit;
     }
     // Kiểm tra tên đăng nhập có bị trùng
@@ -33,7 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();
-        echo json_encode(['exists' => $stmt->num_rows > 0]);
+        if ($stmt->num_rows > 0) {
+            echo json_encode(["exists" => TRUE]);
+        } else {
+            echo json_encode(["exists" => FALSE]);
+        }
         exit;
     }
 
