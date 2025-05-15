@@ -45,6 +45,7 @@ document.addEventListener("click", function (event) {
                     document.getElementById("product-brandFIX").value = data.brand_id;
                     document.getElementById("product-genderFIX").value = data.gender_id;
                     document.getElementById("product-descriptionFIX").value = data.description;
+                    document.getElementById("product-warrantyFIX").value = data.warrantyPeriod;
 
                     // Ẩn bảng sản phẩm và nút thêm
                     document.querySelector(".product-table").style.display = "none";
@@ -114,6 +115,13 @@ document.querySelector(".product-table").addEventListener("click", function (eve
                 .then((data) => {
                     if (data.success) {
                         event.target.closest("tr").remove();
+                        let inventorytableBody = document.querySelector("#inventory-table-body");
+                        fetch("/project_HTTT/Html/PHP/IV-Manager.php")
+                        .then(response => response.text())
+                        .then(html => {
+                            // Cập nhật lại nội dung bảng
+                            inventorytableBody.innerHTML = html; 
+                        })
                     } else {
                         alert(data.message || "Xóa sản phẩm thất bại!");
                     }

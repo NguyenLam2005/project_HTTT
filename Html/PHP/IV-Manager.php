@@ -3,7 +3,8 @@ include __DIR__ . '/config.php';
 
 $sql = "SELECT i.*, p.id AS product_id , p.name AS product_name, ip.importDate FROM inventory i
         INNER JOIN products p ON i.product_id=p.id
-        INNER JOIN importreceipts ip ON i.importID=ip.id";
+        INNER JOIN importreceipts ip ON i.importID=ip.id
+        WHERE i.is_deleted = 0";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

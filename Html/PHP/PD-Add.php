@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $brand_id = $_POST['product-brand'] ?? null;
     $gender_id = $_POST['product-gender'] ?? null;
     $description = $_POST['product-description'] ?? null;
+    $warranty = $_POST['product-warranty'] ?? null;
     $quantity = 0;
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
@@ -60,9 +61,9 @@ if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == UPLO
     $stmt->close();
 
 
-    $sql = "INSERT INTO products (name,image ,description,gender_id,category_id, brand_id,quantity, supplier_id, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (name,image ,description,gender_id,category_id, brand_id,quantity, supplier_id, price, warrantyPeriod ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssiiiiii", $name,$target_file , $description , $gender_id ,$category_id, $brand_id ,$quantity,$supplier_id ,$price, );
+    $stmt->bind_param("sssiiiiiii", $name,$target_file , $description , $gender_id ,$category_id, $brand_id ,$quantity,$supplier_id ,$price,$warranty);
 
     if ($stmt->execute()) {
         $response = [

@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $brand_id = $_POST['product-brand'];
     $gender_id = $_POST['product-gender'];
     $description = $_POST['product-description'];
+    $warranty = $_POST['product-warranty'];
 
     $noneIMG = "/project_HTTT/Html/img/Default.jpg";
     $target_file = $noneIMG;
@@ -77,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->fetch();
     $stmt->close();
 
-    $sql = "UPDATE products SET name = ?, description = ? , gender_id = ? ,category_id = ?,brand_id = ?, price = ?, image = ?, supplier_id = ? WHERE id = ?";
+    $sql = "UPDATE products SET name = ?, description = ? , gender_id = ? ,category_id = ?,brand_id = ?, price = ?, image = ?, supplier_id = ?, warrantyPeriod = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiiiisii", $name, $description , $gender_id , $category_id, $brand_id, $price, $target_file,$supplier_id ,$id);
+    $stmt->bind_param("ssiiiisiii", $name, $description , $gender_id , $category_id, $brand_id, $price, $target_file,$supplier_id , $warranty ,$id);
 
     
     if ($stmt->execute()) {

@@ -46,7 +46,7 @@ document.querySelector(".add-form-supplier").addEventListener("submit", function
         return response.json();
     })
     .then(data => {
-        let tableBody = document.querySelector("#supplier-table-body");
+        let tableBody = document.getElementById("supplier-table-body");
         if (data.success) {
             alert(data.message);
             console.log(data);

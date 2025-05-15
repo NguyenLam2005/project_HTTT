@@ -4,6 +4,7 @@ include __DIR__ . '/config.php';
 $sql = "SELECT e.*, p.name AS position_name 
         FROM employees e
         JOIN positions p ON e.position_id = p.id
+        WHERE e.is_deleted = 0
         ORDER BY e.id ASC";
 
 $result = $conn->query($sql);

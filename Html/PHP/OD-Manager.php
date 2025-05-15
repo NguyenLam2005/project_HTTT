@@ -41,7 +41,7 @@ $sql = "SELECT
         FROM orders
         JOIN customers ON orders.customer_id = customers.id
         $whereSQL
-        ORDER BY orderDate ASC";
+        ORDER BY order_id ASC";
 
 $temp=0;
 $result = $conn->query($sql);

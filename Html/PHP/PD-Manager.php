@@ -18,7 +18,7 @@ $sql = "SELECT products.*, categories.name AS category_name, brand.name AS brand
         FROM products 
         INNER JOIN categories ON products.category_id = categories.id
         INNER JOIN brand ON products.brand_id = brand.id
-        $whereSQL
+        $whereSQL AND products.is_deleted = 0
         ORDER BY products.id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
         // Truy vấn số lượng sản phẩm từ bảng inventory
         $sql_inventory = "SELECT COUNT(*) AS quantity
         FROM inventory
-        WHERE product_id = ? ";
+        WHERE product_id = ? AND is_deleted = 0";
         $stmt = $conn->prepare($sql_inventory);
         $stmt->bind_param("i", $id);
         $stmt->execute();

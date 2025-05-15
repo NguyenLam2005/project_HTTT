@@ -30,8 +30,6 @@ if (!isset($_SESSION['adminInfo'])) {
 </head>
 
 <body>
-  
-
   <div class="sidebar">
     <h2 id="admin">Admin</h2>
     <div id="ad-menu">
@@ -45,6 +43,7 @@ if (!isset($_SESSION['adminInfo'])) {
       <a href="#" id="admin-import">Nhập hàng</a>
       <a href="#" id="admin-supplier">Nhà cung cấp</a>
       <a href="#" id="admin-inventory">Quản lí tồn kho</a>
+      <a href="#" id="admin-warranty">Bảo hành</a>
     </div>
     <img src="/project_HTTT/Asset/img/logo_WatchStore.png" alt="hahaha" />
   </div>
@@ -405,6 +404,11 @@ if (!isset($_SESSION['adminInfo'])) {
           <input type="text" id="product-description" name="product-description" placeholder="Nhập mô tả" class="form-input" />
         </div>
 
+        <div class="form-group">
+          <label for="product-warranty" class="form-label">Số ngày bảo hành</label>
+          <input type="number" id="product-warranty" name="product-warranty" placeholder="Nhập số ngày bảo hành" class="form-input" />
+        </div>
+
         <div class="form-group text-center">
           <button type="submit" class="form-button" id="accept-addPD">Thêm Sản Phẩm</button>
         </div>
@@ -511,6 +515,11 @@ if (!isset($_SESSION['adminInfo'])) {
         <div class="form-group">
           <label for="product-description" class="form-label">*Mô tả</label>
           <input type="text" id="product-descriptionFIX" name="product-description" placeholder="Nhập mô tả" class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-warranty" class="form-label">*Số ngày bảo hành</label>
+          <input type="number" id="product-warrantyFIX" name="product-warranty" placeholder="Nhập số ngày bảo hành" class="form-input" />
         </div>
 
         <div class="form-group text-center">
@@ -1261,6 +1270,26 @@ if (!isset($_SESSION['adminInfo'])) {
     </div>
   </div>
 
+  <!-- warranty part -->
+  <div class="warranty-part">
+    <div class="warranty-table-container">
+      <table class="warranty-table">
+        <thead>
+          <tr>
+            <th>Serial</th>
+            <th>Tên sản phẩm</th>
+            <th>Mã hóa đơn</th>
+            <th>Ngày bán</th>
+            <th>Hạn bảo hành</th>
+          </tr>
+        </thead>
+        <tbody id="warranty-table-body">
+          <?php include 'PHP/WR-Manager.php'?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 
   <script src="js/admin/admin.js"></script>
   <script src="js/admin/PD-Ajax.js"></script>
@@ -1295,7 +1324,8 @@ if (!isset($_SESSION['adminInfo'])) {
       "Quản lí quyền": "admin-role",
       "Nhập hàng": "admin-import",
       "Nhà cung cấp": "admin-supplier",
-      "Quản lí tồn kho": "admin-inventory"
+      "Quản lí tồn kho": "admin-inventory",
+      "Bảo hành": "admin-warranty"
   };
 
   // Mapping chức năng -> tiền tố id
@@ -1308,7 +1338,8 @@ if (!isset($_SESSION['adminInfo'])) {
       "Quản lí quyền": "role",
       "Nhập hàng": "import",
       "Nhà cung cấp": "supplier",
-      "Quản lí tồn kho": "inventory"
+      "Quản lí tồn kho": "inventory",
+      "Bảo hành": "warranty"
   };
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -1349,6 +1380,27 @@ if (!isset($_SESSION['adminInfo'])) {
   });
   // document.getElementById("admin-account").style.display = "block";
   // document.getElementById("admin-role").style.display = "block";
+
+   // Gọi PHP xóa bảo hành hết hạn
+  fetch('PHP/WR-Delete.php')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data.message);
+
+      // Sau khi xóa xong, load lại bảng bảo hành
+      let warrantytableBody = document.querySelector("#warranty-table-body");
+      fetch("PHP/WR-Manager.php")
+        .then(response => response.text())
+        .then(html => {
+          warrantytableBody.innerHTML = html;
+        })
+        .catch(err => {
+          console.error("Lỗi khi tải bảng bảo hành:", err);
+        });
+    })
+    .catch(err => {
+      console.error("Lỗi khi gọi WR-Delete.php:", err);
+    });
 
 </script>
 

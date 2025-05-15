@@ -107,8 +107,22 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        let producttableBody = document.querySelector("#product-table-body");
+                        fetch("/project_HTTT/Html/PHP/PD-Manager.php")
+                        .then(response => response.text())
+                        .then(html => {
+                            // Cập nhật lại nội dung bảng
+                            producttableBody.innerHTML = html; 
+                        })
+                        let inventorytableBody = document.querySelector("#inventory-table-body");
+                        fetch("/project_HTTT/Html/PHP/IV-Manager.php")
+                        .then(response => response.text())
+                        .then(html => {
+                            // Cập nhật lại nội dung bảng
+                            inventorytableBody.innerHTML = html; 
+                        })
+                        
                         const currentFilter = document.getElementById("filter-status").value;
-    
                         if (currentFilter !== "0") {
                             fetch("../PHP/OD-Manager.php", {
                                 method: "POST",
