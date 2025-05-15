@@ -136,3 +136,16 @@ body {
         width: 100%;
     }
 }
+
+.product_warrantyPeriod{
+    background-color: red;
+    color: white;
+    padding: 7px;
+    font-size: 18px;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+
+}

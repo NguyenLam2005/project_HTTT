@@ -56,6 +56,9 @@
     $result4 = $conn->query($sql4);
     $gender = $result4->fetch_assoc();
 
+    function lamTronNgayThanhNam($soNgay) {
+        return round($soNgay / 182.5) * 0.5;
+    }
 
     ?>
 <div class = "product_detail_wrapper">
@@ -72,6 +75,7 @@
                     <p class = "product_detail_brand">Hãng sản xuất: <?php echo htmlspecialchars($brand['name']); ?></p>
                     <p class = "product_detail_category">Loại sản phẩm: <?php echo htmlspecialchars($category['name']); ?></p>
                     <p class = "product_detail_description">Mô tả: <br> <?php echo htmlspecialchars($product['description']); ?></p>
+                    <p class = "product_warrantyPeriod"> Bảo hành chính hãng: <?php echo lamTronNgayThanhNam($product['warrantyPeriod']); ?> Năm</p>
                 </div>
                 <div class = "product_detail_infor_footer">
                     <div class="add_to_cart_from_detail" onclick="addToCart(<?php echo $product['id']; ?>)">Thêm vào giỏ hàng</div>
