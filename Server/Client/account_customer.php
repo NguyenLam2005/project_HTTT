@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     
         if ($user) {
-            if ((int)$user['status'] === 0) {
+            if ((int)$user['status'] === 2) {
                 // Tài khoản bị khóa
                 echo json_encode(['exists' => false, 'blocked' => true]);
                 exit;

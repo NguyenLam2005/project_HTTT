@@ -420,7 +420,7 @@ loadCustomerInfo();
                     $('.address').val('');
                     $('.province').val('');
                     $('.district').val('');
-                    loadCustomerInfo();
+                    document.querySelector('.InfoUser_Detail .value-wrapper .content').textContent = res.user.address;
                     // setUserInfoPayment();
                     document.querySelector(".overlayAddress").style.display = "none";
                     document.getElementById("overlayInfo").style.display = "block";

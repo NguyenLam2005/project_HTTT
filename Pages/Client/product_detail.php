@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="http://localhost/project_HTTT/Js/Client/cart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://localhost/project_HTTT/Js/Client/search.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="../../Css/base.css">
     <link rel="stylesheet" href="../../Css/Client/payment.css">
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="../../Css/Client/registerCustomer.css">
     <link rel="stylesheet" href="../../Css/Client/cart.css">
     <link rel="stylesheet" href="../../Css/Client/customerInfo.css">
+    <link rel="stylesheet" href="http://localhost/project_HTTT/Css/Client/search.css">
 </head>
     <?php
     include("../../Server/database.php");
