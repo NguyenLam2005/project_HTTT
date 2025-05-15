@@ -8,7 +8,7 @@ if (isset($_POST['admin-login'])) {
 
     $userName = mysqli_real_escape_string($conn, $userName);
 
-    $sqlAccount = "SELECT * FROM employeeaccount WHERE userName = ?";
+    $sqlAccount = "SELECT * FROM employeeaccount WHERE BINARY userName = ?";
     $stmtAcc = $conn->prepare($sqlAccount);
     $stmtAcc->bind_param("s", $userName);
     $stmtAcc->execute();
