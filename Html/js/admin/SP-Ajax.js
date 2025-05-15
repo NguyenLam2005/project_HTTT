@@ -155,16 +155,13 @@ document.getElementById("fix-form-supplier").addEventListener("submit", function
             alert(data.message);
             console.log("Response data:", data);
             
-            // Cập nhật giao diện người dùng ngay lập tức
-            let row = document.querySelector(`tr[data-id='${data.supplier.id}']`);
-            if (row) {
-                // Cập nhật từng ô dữ liệu
-                row.cells[0].textContent = data.supplier.id;
-                row.cells[1].textContent = data.supplier.name;
-                row.cells[2].textContent = data.supplier.address;
-                row.cells[3].textContent = data.supplier.phoneNumber;
-            }
-
+            let suppliertableBody = document.querySelector("#supplier-table-body");
+            fetch("/project_HTTT/Html/PHP/SP-Manager.php")
+                .then(response => response.text())
+                .then(html => {
+                    // Cập nhật lại nội dung bảng
+                    suppliertableBody.innerHTML = html; 
+                })         
             // Ẩn form sửa và hiển thị lại bảng nhà cung cấp
             document.querySelector(".fix-form-supplier").style.display = "none";
             document.querySelector(".supplier-table").style.display = "table";

@@ -20,7 +20,6 @@ if ($result->num_rows > 0) {
                 </div>
               </td>";
         echo "</tr>";
-        $temp=$temp+1;
     }
 } else {
     echo "<tr><td colspan='5' style='text-align: center'>Không có nhà cung cấp</td></tr>";
