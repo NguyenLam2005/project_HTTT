@@ -10,7 +10,7 @@ $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT * FROM products WHERE quantity > 0";
+$sql = "SELECT * FROM products WHERE quantity > 0 AND is_deleted = 0";
 $params = [];
 $types = "";
 

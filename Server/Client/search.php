@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $genderFilter = $_POST['genders'] ?? [];
 
         // Khởi tạo câu truy vấn cơ bản
-        $sql = "SELECT * FROM products WHERE quantity > 0";
+        $sql = "SELECT * FROM products WHERE quantity > 0 and is_deleted = 0";
         
         // Biến lưu trữ các tham số cho bind_param
         $params = [];
