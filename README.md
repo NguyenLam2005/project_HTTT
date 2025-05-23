@@ -1,4 +1,6 @@
-# NHOM_9
+# NHÓM 9
+# ĐỀ TÀI: XÂY DỰNG WEBSITE QUẢN LÝ BÁN ĐỒNG HỒ
+# Các thành viên:
 # 3123410133 - Võ Gia Huy
 # 3123410164 - Tăng Huỳnh Quốc Khánh
 # 3123560045 - Nguyễn Công Lâm
