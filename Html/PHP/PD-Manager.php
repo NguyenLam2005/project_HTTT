@@ -2,11 +2,16 @@
 include __DIR__ . '/config.php';
 
 $supplier_id = $_POST['supplier'] ?? "";
+$product_id = $_POST['name'] ?? "";
 
 $where = [];
 
 if (!empty($supplier_id)) {
     $where[] = "products.supplier_id = " . intval($supplier_id);
+}
+
+if (!empty($product_id)) {
+    $where[] = "products.id = " . intval($product_id);
 }
 
 $whereSQL = "";
@@ -60,7 +65,7 @@ if ($result->num_rows > 0) {
         echo "</tr>";
     }
 } else {
-    echo "<tr><td style= 'text-align: center;'  colspan='6'>Không có sản phẩm nào</td></tr>";
+    echo "<tr><td style= 'text-align: center;'  colspan='7'>Không có sản phẩm nào</td></tr>";
 }
 $conn->close();
 ?>

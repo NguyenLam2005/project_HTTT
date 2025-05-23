@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
             $deleteProducts->bind_param("i", $id);
             $deleteInventory->bind_param("i", $id);
 
-            $success = $deleteProducts->execute() && $deleteInventory->execute();
+            $success = $deleteInventory->execute() && $deleteProducts->execute();
             $deleteProducts->close();
             $deleteInventory->close();
 

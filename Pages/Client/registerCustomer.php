@@ -189,14 +189,14 @@ $(document).ready(function () {
                     });
 
                     if(res.exists){
-                        resolve({valid: false, message: "Tên đăng nhập đã được sử dụng!"});
+                        resolve({valid: false, message: "Email đã được sử dụng!"});
                     }
                     else{
                         resolve({valid: true});
                     }
                 }
                 catch{
-                        resolve({valid: false, message: "Lỗi khi kiểm tra tên đăng nhập!"});
+                        resolve({valid: false, message: "Lỗi khi kiểm tra email!"});
                 }
 
             });

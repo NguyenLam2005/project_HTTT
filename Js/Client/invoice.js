@@ -165,6 +165,7 @@ function savePaymentIntoDatabase()
                 setTimeout(() => {
                     window.location.href = "http://localhost/project_HTTT/index.php";
                 }, timeShown);
+                
             } else {
                 console.log("Fail");
                 showToast("Thanh toán thất bại.", false);

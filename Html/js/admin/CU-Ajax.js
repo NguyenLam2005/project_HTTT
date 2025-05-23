@@ -111,6 +111,14 @@ document.getElementById("fix-form-customer").addEventListener("submit", function
                     </td>
                 `;
 
+                let customertableBody = document.querySelector("#customer-table-body");
+                    fetch("/project_HTTT/Html/PHP/CU-Manager.php")
+                    .then(response => response.text())
+                    .then(html => {
+                        // Cập nhật lại nội dung bảng
+                        customertableBody.innerHTML = html; 
+                    })
+
                 let statusSelect = row.querySelector(".customer-status");
                 updateStatusColor(statusSelect);
 

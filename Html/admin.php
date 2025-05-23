@@ -280,9 +280,9 @@ if (!isset($_SESSION['adminInfo'])) {
     <form id="filter-form-product1" style="margin-bottom: 10px; display: flex; gap: 5px;">
       <div class="form-group">
             <label for="product-supplier" class="form-label">Nhà cung cấp</label>
-            <select name="product-supplier-filter" id="product-supplier-filter" class="form-select" required>
+            <select name="product-supplier-filter" id="product-supplier-filter" class="form-select" >
               <?php
-                include '../../PHP/config.php';
+                include '/PHP/config.php';
                 $sql = "SELECT id, name FROM suppliers ORDER BY id ASC";
                 $result = $conn->query($sql);
                 echo "  <option value=''>-- Chọn nhà cung cấp --</option>";
@@ -295,7 +295,25 @@ if (!isset($_SESSION['adminInfo'])) {
                 }
                 ?>
               </select>  
-          </div>
+      </div>
+      <div class="form-group">
+            <label for="product-name" class="form-label">Tên sản phẩm</label>
+            <select name="product-name-filter" id="product-name-filter" class="form-select" >
+              <?php
+                include '/PHP/config.php';
+                $sql = "SELECT id, name FROM products ORDER BY id ASC";
+                $result = $conn->query($sql);
+                echo "  <option value=''>-- Chọn sản phẩm --</option>";
+                if ($result && $result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                  }
+                } else {
+                  echo "<option value=''>Không sản phẩm nào!</option>";
+                }
+                ?>
+              </select>  
+      </div>
       <div class="form-group">
         <label></label><br>
         <button type="submit" class="form-button"><img src="img/Filter.png" style="height: 17px;"> Lọc</button>
@@ -1012,7 +1030,7 @@ if (!isset($_SESSION['adminInfo'])) {
    <!-- Nhà cung cấp -->
    <div class="supplier-part">
     <div class="supplier-table-container">
-      <div id="supplier-plus">Thêm nhà cung câp</div>
+      <div id="supplier-plus">Thêm nhà cung cấp</div>
       <table class="supplier-table">
         <thead>
           <tr>

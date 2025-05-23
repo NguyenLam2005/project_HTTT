@@ -220,6 +220,13 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Vui lòng nhập đủ số lượng và giá nhập!');
             return;
         }
+
+        let quantityRegex = /^[1-9][0-9]*$/;
+        if (!quantityRegex.test(quantity)) {
+            showError(document.getElementById("quantity"), "Số lượng phải là số nguyên dương.");
+            return;
+        }
+
         // Tính thành tiền
         const cleanImportPrice = getRawPrice(importPrice);
         const total = (cleanImportPrice * parseInt(quantity)).toFixed(0);
@@ -299,6 +306,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasError = true;
                 return;
             }
+
+            // let quantityRegex = /^[1-9][0-9]*$/;
+            // if (!quantityRegex.test(quantity)) {
+            //     showError(document.getElementById("quantity"), "Số lượng phải là số nguyên dương.");
+            //     return;
+            // }
 
             if (isNaN(import_price) || import_price <= 0) {
                 alert('Giá nhập phải lớn hơn 0!');

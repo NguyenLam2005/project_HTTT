@@ -8,9 +8,11 @@
      event.preventDefault();
 
      let supplier = document.getElementById("product-supplier-filter").value;
+     let name = document.getElementById("product-name-filter").value;
 
      let formData = new URLSearchParams();
      formData.append("supplier", supplier);
+     formData.append("name", name);
 
      fetch("/project_HTTT/Html/PHP/PD-Manager.php", {
          method: "POST",
